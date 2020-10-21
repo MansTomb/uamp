@@ -12,9 +12,9 @@ set(TARGET uamp)
 
 find_package(Qt5 COMPONENTS Widgets REQUIRED)
 
-set(SOURCES main.cpp src/mainwindow.cpp)
-set(HEADERS src/mainwindow.h)
-set(UI src/mainwindow.ui)
+set(SOURCES main.cpp src/mainwindow.cpp src/LoginWindow.cpp)
+set(HEADERS src/mainwindow.h src/LoginWindow.h)
+set(UI src/mainwindow.ui src/LoginWindow.ui)
 
 include_directories(../cmake-build-debug/app/uamp_autogen/include)
 

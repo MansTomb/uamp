@@ -1,15 +1,14 @@
-#include "mainwindow.h"
-
 #include <QApplication>
 #include <QDebug>
-#include <QtWidgets/QStyleFactory>
+
+#include "LoginWindow.h"
 
 int main(int argc, char *argv[]) {
     QApplication a(argc, argv);
     QApplication::setOrganizationName("uAmp");
     QApplication::setApplicationName("uAmp");
 
-    MainWindow w("uAmp", 0);
+    LoginWindow w("uAmp", 0);
     w.setAutoFillBackground(true);
     w.show();
 

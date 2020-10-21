@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>LoginWindow</class>
+ <widget class="QMainWindow" name="LoginWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>566</width>
+    <height>417</height>
+   </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>0</width>
+    <height>0</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>700</width>
+    <height>530</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QGridLayout" name="gridLayout">
+    <property name="leftMargin">
+     <number>150</number>
+    </property>
+    <property name="topMargin">
+     <number>100</number>
+    </property>
+    <property name="rightMargin">
+     <number>150</number>
+    </property>
+    <property name="bottomMargin">
+     <number>25</number>
+    </property>
+    <item row="0" column="0">
+     <widget class="QTabWidget" name="tabWidget">
+      <property name="styleSheet">
+       <string notr="true"/>
+      </property>
+      <property name="currentIndex">
+       <number>0</number>
+      </property>
+      <widget class="QWidget" name="Login">
+       <attribute name="title">
+        <string>Login</string>
+       </attribute>
+       <widget class="QPushButton" name="loginButton">
+        <property name="geometry">
+         <rect>
+          <x>80</x>
+          <y>170</y>
+          <width>91</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Log in</string>
+        </property>
+       </widget>
+       <widget class="QWidget" name="">
+        <property name="geometry">
+         <rect>
+          <x>60</x>
+          <y>60</y>
+          <width>127</width>
+          <height>100</height>
+         </rect>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout">
+         <item>
+          <widget class="QLabel" name="loginUsername">
+           <property name="text">
+            <string>Username</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="loginUsernameEdit">
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="loginPassword">
+           <property name="text">
+            <string>Password</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="loginPasswordEdit"/>
+         </item>
+        </layout>
+       </widget>
+      </widget>
+      <widget class="QWidget" name="Register">
+       <attribute name="title">
+        <string>Register</string>
+       </attribute>
+       <widget class="QPushButton" name="registerButton">
+        <property name="geometry">
+         <rect>
+          <x>90</x>
+          <y>190</y>
+          <width>91</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Register</string>
+        </property>
+       </widget>
+       <widget class="QWidget" name="">
+        <property name="geometry">
+         <rect>
+          <x>70</x>
+          <y>20</y>
+          <width>127</width>
+          <height>152</height>
+         </rect>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout_2">
+         <item>
+          <widget class="QLabel" name="registerUsername">
+           <property name="text">
+            <string>Username</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="registerUsernameEdit"/>
+         </item>
+         <item>
+          <widget class="QLabel" name="registerPassword">
+           <property name="text">
+            <string>Password</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="registerPasswordEdit"/>
+         </item>
+         <item>
+          <widget class="QLabel" name="registerPasswordConf">
+           <property name="text">
+            <string>Confirm Password</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="registerPasswordConfEdit"/>
+         </item>
+        </layout>
+       </widget>
+      </widget>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QStatusBar" name="statusBar"/>
+ </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>loginButton</sender>
+   <signal>clicked()</signal>
+   <receiver>LoginWindow</receiver>
+   <slot>onLoginClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>288</x>
+     <y>325</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>444</x>
+     <y>332</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>registerButton</sender>
+   <signal>clicked()</signal>
+   <receiver>LoginWindow</receiver>
+   <slot>onRegisterClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>287</x>
+     <y>337</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>427</x>
+     <y>358</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <signal>RegisterSuccess()</signal>
+  <signal>LoginSuccess()</signal>
+  <slot>onLoginClicked()</slot>
+  <slot>onRegisterClicked()</slot>
+ </slots>
+</ui>
