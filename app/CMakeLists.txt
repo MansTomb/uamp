@@ -7,16 +7,59 @@ set(CMAKE_CXX_STANDARD_REQUIRED YES)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC ON)
+set(TAGLIB_PATH "../3dparty/taglib/taglib")
 
 set(TARGET uamp)
 
+find_library(TAGLIB taglib)
 find_package(Qt5 COMPONENTS Widgets REQUIRED)
 
-set(SOURCES main.cpp src/mainwindow.cpp src/LoginWindow.cpp)
-set(HEADERS src/mainwindow.h src/LoginWindow.h)
-set(UI src/mainwindow.ui src/LoginWindow.ui)
+set(SOURCES main.cpp
+    src/mainwindow.cpp
+    src/LoginWindow.cpp
+    src/PlayerView.cpp
+    src/PlaylistView.cpp
+    src/ImageFile.cpp
+    src/FileTag.cpp
+    )
+
+set(HEADERS src/mainwindow.h
+    src/LoginWindow.h
+    src/PlayerView.h
+    src/PlaylistView.h
+    src/ImageFile.h
+    src/FileTag.h
+    )
+
+set(UI src/mainwindow.ui
+    src/LoginWindow.ui
+    )
 
 include_directories(../cmake-build-debug/app/uamp_autogen/include)
+include_directories(
+    ./src
+    ../build/3dparty/taglib
+    ../cmake-build-debug
+    ../cmake-build-debug/3dparty/taglib/
+    ${TAGLIB_PATH}/ape
+    ${TAGLIB_PATH}/asf
+    ${TAGLIB_PATH}/flac
+    ${TAGLIB_PATH}/it
+    ${TAGLIB_PATH}/mod
+    ${TAGLIB_PATH}/mp4
+    ${TAGLIB_PATH}/mpc
+    ${TAGLIB_PATH}/mpeg
+    ${TAGLIB_PATH}/mpeg/id3v2
+    ${TAGLIB_PATH}/mpeg/id3v2/frames
+    ${TAGLIB_PATH}/ogg
+    ${TAGLIB_PATH}/riff
+    ${TAGLIB_PATH}/s3m
+    ${TAGLIB_PATH}/toolkit
+    ${TAGLIB_PATH}/trueaudio
+    ${TAGLIB_PATH}/wavpack
+    ${TAGLIB_PATH}/xm
+    ${TAGLIB_PATH}
+)
 
 qt5_add_resources(SOURCES res/resources.qrc)
 
@@ -25,7 +68,7 @@ add_executable(${TARGET} ${SOURCES} ${HEADERS} ${UI})
 add_subdirectory(src)
 include_directories(./src)
 
-target_link_libraries(${TARGET} Qt5::Gui Qt5::Core Qt5::Widgets)
+target_link_libraries(${TARGET} tag Qt5::Gui Qt5::Core Qt5::Widgets)
 
 set_target_properties(${TARGET} PROPERTIES RUNTIME_OUTPUT_DIRECTORY ../..)
 #cmake_minimum_required(VERSION 3.5)
