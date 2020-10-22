@@ -1,8 +1,9 @@
-<!DOCTYPE RCC><RCC version="1.0">
-    <qresource>
+<RCC>
+    <qresource prefix="/">
         <file>qss/Default.qss</file>
         <file>qss/Light.qss</file>
         <file>qss/Dark.qss</file>
         <file>qss/Obit.qss</file>
+        <file>googleAuth/googleAuth.apps.googleusercontent.com.json</file>
     </qresource>
 </RCC>

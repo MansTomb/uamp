@@ -40,3 +40,6 @@ void LoginWindow::OpenMainWindow() {
     main->show();
     hide();
 }
+void LoginWindow::onGoogleLoginClicked() {
+    google.StartAuth();
+}

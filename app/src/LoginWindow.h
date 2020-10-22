@@ -4,6 +4,7 @@
 
 #include "ui_loginwindow.h"
 #include "mainwindow.h"
+#include "GoogleAuthWrapper.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class LoginWindow; }
@@ -17,6 +18,7 @@ class LoginWindow : public QMainWindow {
     private slots:
         void onLoginClicked();
         void onRegisterClicked();
+        void onGoogleLoginClicked();
 
         void InvalidCredentials() {return;};
         void InvalidPassword() {return;};
@@ -31,5 +33,6 @@ class LoginWindow : public QMainWindow {
         void OpenMainWindow();
 
         Ui::LoginWindow *ui;
+        GoogleAuthWrapper google;
         MainWindow *main {Q_NULLPTR};
 };

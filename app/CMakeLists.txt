@@ -12,7 +12,7 @@ set(TAGLIB_PATH "../3dparty/taglib/taglib")
 set(TARGET uamp)
 
 find_library(TAGLIB taglib)
-find_package(Qt5 COMPONENTS Widgets REQUIRED)
+find_package(Qt5 COMPONENTS Widgets Network NetworkAuth REQUIRED)
 
 set(SOURCES main.cpp
     src/mainwindow.cpp
@@ -21,6 +21,7 @@ set(SOURCES main.cpp
     src/PlaylistView.cpp
     src/ImageFile.cpp
     src/FileTag.cpp
+    src/GoogleAuthWrapper.cpp
     )
 
 set(HEADERS src/mainwindow.h
@@ -29,11 +30,11 @@ set(HEADERS src/mainwindow.h
     src/PlaylistView.h
     src/ImageFile.h
     src/FileTag.h
+    src/GoogleAuthWrapper.h
     )
 
 set(UI src/mainwindow.ui
-    src/LoginWindow.ui
-    )
+    src/LoginWindow.ui)
 
 include_directories(../cmake-build-debug/app/uamp_autogen/include)
 include_directories(
@@ -68,7 +69,7 @@ add_executable(${TARGET} ${SOURCES} ${HEADERS} ${UI})
 add_subdirectory(src)
 include_directories(./src)
 
-target_link_libraries(${TARGET} tag Qt5::Gui Qt5::Core Qt5::Widgets)
+target_link_libraries(${TARGET} tag Qt5::Gui Qt5::Core Qt5::Widgets Qt5::Network Qt5::NetworkAuth)
 
 set_target_properties(${TARGET} PROPERTIES RUNTIME_OUTPUT_DIRECTORY ../..)
 #cmake_minimum_required(VERSION 3.5)
