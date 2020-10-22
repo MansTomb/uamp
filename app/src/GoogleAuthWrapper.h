@@ -18,6 +18,7 @@ Q_OBJECT
     void StartAuth();
     ~GoogleAuthWrapper() override;
  private:
+    void ParseProfile(const QByteArray& array);
     void Configure();
 
     QNetworkReply *reply;
