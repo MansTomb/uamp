@@ -1,6 +1,7 @@
 #pragma  once
 
 #include <QMainWindow>
+#include <QWidget>
 
 #include "ui_loginwindow.h"
 #include "mainwindow.h"
@@ -15,22 +16,25 @@ class LoginWindow : public QMainWindow {
     public:
         LoginWindow(const QString &name, QWidget *parent = nullptr);
         ~LoginWindow();
-    private slots:
+ private slots:
         void onLoginClicked();
         void onRegisterClicked();
         void onGoogleLoginClicked();
 
+        void onRegisterSuccess();
+
         void InvalidCredentials() {return;};
         void InvalidPassword() {return;};
         void InvalidUsername() {return;};
-    signals:
+
+        void OpenMainWindow();
+ signals:
         void RegisterSuccess();
         void LoginSuccess();
     private:
         bool CheckCredentials() {return true;};
         bool CheckUsernameExist() {return true;};
         bool CheckPasswordConfirm() {return true;};
-        void OpenMainWindow();
 
         Ui::LoginWindow *ui;
         GoogleAuthWrapper google;

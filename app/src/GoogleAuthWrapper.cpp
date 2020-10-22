@@ -58,9 +58,10 @@ void GoogleAuthWrapper::ParseProfile(const QByteArray& array) {
     auto object = mainObject["names"].toArray();
 
     qDebug() << object[0].toObject()["displayName"].toString();
+    emit AuthComplete(object[0].toObject()["displayName"].toString());
 }
 
 GoogleAuthWrapper::~GoogleAuthWrapper() {
-//    delete google;
-//    delete reply;
+    delete google;
+    delete reply_handler;
 }

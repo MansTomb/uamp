@@ -10,6 +10,10 @@ LoginWindow::LoginWindow(const QString &name, QWidget *parent)
     this->setWindowTitle("uText");
     setObjectName(name);
     setWindowTitle(name);
+
+    connect(&google, &GoogleAuthWrapper::AuthComplete, this, [=]{OpenMainWindow();});
+    connect(this, &LoginWindow::LoginSuccess, this, [=]{OpenMainWindow();});
+    connect(this, &LoginWindow::RegisterSuccess, this, &LoginWindow::onRegisterSuccess);
 }
 
 LoginWindow::~LoginWindow() {
@@ -19,7 +23,6 @@ LoginWindow::~LoginWindow() {
 
 void LoginWindow::onLoginClicked() {
     if (CheckCredentials()) {
-        OpenMainWindow();
         emit LoginSuccess();
     }
     else {
@@ -36,10 +39,15 @@ void LoginWindow::onRegisterClicked() {
         emit RegisterSuccess();
 }
 
+void LoginWindow::onGoogleLoginClicked() {
+    google.StartAuth();
+}
+
 void LoginWindow::OpenMainWindow() {
     main->show();
     hide();
 }
-void LoginWindow::onGoogleLoginClicked() {
-    google.StartAuth();
+
+void LoginWindow::onRegisterSuccess() {
+    ui->tabWidget->setCurrentIndex(0);
 }

@@ -17,12 +17,14 @@ Q_OBJECT
 
     void StartAuth();
     ~GoogleAuthWrapper() override;
+  signals:
+    void AuthComplete(QString username);
  private:
     void ParseProfile(const QByteArray& array);
     void Configure();
 
-    QNetworkReply *reply;
-    QOAuthHttpServerReplyHandler *reply_handler;
-    QOAuth2AuthorizationCodeFlow *google;
+    QNetworkReply *reply {Q_NULLPTR};
+    QOAuthHttpServerReplyHandler *reply_handler {Q_NULLPTR};
+    QOAuth2AuthorizationCodeFlow *google {Q_NULLPTR};
     QJsonDocument document;
 };
