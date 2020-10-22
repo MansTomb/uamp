@@ -35,5 +35,4 @@ class FileTags {
 
     private:
     TagLib::FileRef m_fileRef;
-    std::map<std::string, QString> m_file_tags;
 };
