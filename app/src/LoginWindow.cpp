@@ -11,6 +11,14 @@ LoginWindow::LoginWindow(const QString &name, QWidget *parent)
     setObjectName(name);
     setWindowTitle(name);
 
+    //Засетил тему
+    QFile File(":/qss/Default.qss");
+    File.open(QFile::ReadOnly);
+    QString StyleSheet;
+
+    StyleSheet = QLatin1String(File.readAll());
+    qApp->setStyleSheet(StyleSheet);
+
     connect(&google, &GoogleAuthWrapper::AuthComplete, this, [=]{OpenMainWindow();});
     connect(this, &LoginWindow::LoginSuccess, this, [=]{OpenMainWindow();});
     connect(this, &LoginWindow::RegisterSuccess, this, &LoginWindow::onRegisterSuccess);
