@@ -22,6 +22,7 @@ set(SOURCES main.cpp
     src/ImageFile.cpp
     src/FileTag.cpp
     src/GoogleAuthWrapper.cpp
+    src/playerlistitem.cpp
     )
 
 set(HEADERS src/mainwindow.h
@@ -31,10 +32,12 @@ set(HEADERS src/mainwindow.h
     src/ImageFile.h
     src/FileTag.h
     src/GoogleAuthWrapper.h
+    src/playerlistitem.h
     )
 
 set(UI src/mainwindow.ui
-    src/LoginWindow.ui)
+    src/LoginWindow.ui
+    src/playerlistitem.ui)
 
 include_directories(../cmake-build-debug/app/uamp_autogen/include)
 include_directories(
