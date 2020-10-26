@@ -12,7 +12,7 @@ set(TAGLIB_PATH "../3dparty/taglib/taglib")
 set(TARGET uamp)
 
 find_library(TAGLIB taglib)
-find_package(Qt5 COMPONENTS Widgets Network NetworkAuth REQUIRED)
+find_package(Qt5 COMPONENTS Widgets Network NetworkAuth Multimedia MultimediaWidgets REQUIRED)
 
 set(SOURCES main.cpp
     src/mainwindow.cpp
@@ -23,7 +23,8 @@ set(SOURCES main.cpp
     src/FileTag.cpp
     src/GoogleAuthWrapper.cpp
     src/playerlistitem.cpp
-    )
+    src/PlayerController.cpp
+        )
 
 set(HEADERS src/mainwindow.h
     src/LoginWindow.h
@@ -33,6 +34,7 @@ set(HEADERS src/mainwindow.h
     src/FileTag.h
     src/GoogleAuthWrapper.h
     src/playerlistitem.h
+    src/PlayerController.h
     )
 
 set(UI src/mainwindow.ui
@@ -73,7 +75,8 @@ add_executable(${TARGET} ${SOURCES} ${HEADERS} ${UI})
 add_subdirectory(src)
 include_directories(./src)
 
-target_link_libraries(${TARGET} tag Qt5::Gui Qt5::Core Qt5::Widgets Qt5::Network Qt5::NetworkAuth)
+target_link_libraries(${TARGET} tag Qt5::Gui Qt5::Core Qt5::Widgets Qt5::Network Qt5::NetworkAuth
+        Qt5::Multimedia Qt5::MultimediaWidgets)
 
 set_target_properties(${TARGET} PROPERTIES RUNTIME_OUTPUT_DIRECTORY ../..)
 #cmake_minimum_required(VERSION 3.5)

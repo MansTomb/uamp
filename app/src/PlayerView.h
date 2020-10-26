@@ -3,6 +3,8 @@
 
 #include <QWidget>
 
+#include "PlayerController.h"
+
 namespace Ui {
 class PlayerView;
 }
@@ -17,6 +19,7 @@ public:
 
 private:
     Ui::PlayerView *ui;
+    PlayerController m_player;
 };
 
 #endif // PLAYERVIEW_H
