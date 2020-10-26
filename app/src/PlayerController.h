@@ -3,7 +3,7 @@
 #include <QtMultimedia>
 #include <QtMultimediaWidgets>
 
-#include "PlayerView.h"
+//#include "PlayerView.h"
 
 class PlayerController : public QObject {
     Q_OBJECT

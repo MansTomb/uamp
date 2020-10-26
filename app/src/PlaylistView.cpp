@@ -8,3 +8,18 @@ PlaylistView::PlaylistView(QWidget *parent) : QListWidget(parent) {
         setItemWidget(item, new PlayerlistItem(i));
     }
 }
+
+void PlaylistView::dragMoveEvent(QDragMoveEvent *event) {
+}
+
+void PlaylistView::dragEnterEvent(QDragEnterEvent *event) {
+    event->acceptProposedAction();
+}
+
+void PlaylistView::dragLeaveEvent(QDragLeaveEvent *event) {
+    event->accept();
+}
+
+void PlaylistView::dropEvent(QDropEvent *event) {
+    event->accept();
+}
