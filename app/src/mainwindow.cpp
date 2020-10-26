@@ -7,6 +7,7 @@ MainWindow::MainWindow(const QString &name, QWidget *parent)
     this->setWindowTitle("uText");
     setObjectName(name);
     setWindowTitle(name);
+    QApplication::setAttribute(Qt::AA_UseHighDpiPixmaps);
 }
 
 MainWindow::~MainWindow() {

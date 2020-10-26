@@ -1,5 +1,4 @@
-#ifndef TOOLBAR_H
-#define TOOLBAR_H
+#pragma once
 
 #include <QWidget>
 
@@ -18,5 +17,3 @@ public:
 private:
     Ui::ToolBar *ui;
 };
-
-#endif // TOOLBAR_H

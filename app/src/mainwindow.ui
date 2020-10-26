@@ -14,7 +14,7 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QGridLayout" name="gridLayout">
+   <layout class="QGridLayout" name="gridLayout" rowstretch="10,1">
     <item row="0" column="0">
      <widget class="QSplitter" name="splitter">
       <property name="orientation">
@@ -106,6 +106,29 @@ QPushButton:pressed {
       </widget>
      </widget>
     </item>
+    <item row="1" column="0">
+     <widget class="ToolBar" name="toolBar" native="true">
+      <property name="autoFillBackground">
+       <bool>false</bool>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QWidget#toolBar {
+	background-color: rgb(189, 185, 0);
+}
+
+QPushButton {
+	background-color: rgba(255, 250, 0, 0);
+	border-color: rgba(255, 255, 255, 0);
+}
+
+QPushButton:pressed {
+	background-color: rgba(84, 83, 85, 179);
+	border-radius: 14px;
+}
+</string>
+      </property>
+     </widget>
+    </item>
    </layout>
   </widget>
   <widget class="QMenuBar" name="menubar">
@@ -130,6 +153,12 @@ QPushButton:pressed {
    <class>PlayerView</class>
    <extends>QWidget</extends>
    <header>PlayerView.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>ToolBar</class>
+   <extends>QWidget</extends>
+   <header>ToolBar.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

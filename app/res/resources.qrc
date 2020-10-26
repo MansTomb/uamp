@@ -6,5 +6,59 @@
         <file>qss/Obit.qss</file>
         <file>googleAuth/googleAuth.apps.googleusercontent.com.json</file>
         <file>googleAuth/signInWithGoogle.png</file>
+        <file>toolbarIcons/001-music.svg</file>
+        <file>toolbarIcons/002-play.svg</file>
+        <file>toolbarIcons/003-pause.svg</file>
+        <file>toolbarIcons/004-disc.svg</file>
+        <file>toolbarIcons/005-note.svg</file>
+        <file>toolbarIcons/006-playlist.svg</file>
+        <file>toolbarIcons/007-add.svg</file>
+        <file>toolbarIcons/008-volume.svg</file>
+        <file>toolbarIcons/009-speak.svg</file>
+        <file>toolbarIcons/010-music album.svg</file>
+        <file>toolbarIcons/011-list.svg</file>
+        <file>toolbarIcons/012-microphone.svg</file>
+        <file>toolbarIcons/013-no sound.svg</file>
+        <file>toolbarIcons/014-sound control.svg</file>
+        <file>toolbarIcons/015-volume up.svg</file>
+        <file>toolbarIcons/016-volume up.svg</file>
+        <file>toolbarIcons/017-volume down.svg</file>
+        <file>toolbarIcons/018-speak.svg</file>
+        <file>toolbarIcons/019-pause.svg</file>
+        <file>toolbarIcons/020-play.svg</file>
+        <file>toolbarIcons/021-pause.svg</file>
+        <file>toolbarIcons/022-repeat.svg</file>
+        <file>toolbarIcons/023-next.svg</file>
+        <file>toolbarIcons/024-previous.svg</file>
+        <file>toolbarIcons/025-notification.svg</file>
+        <file>toolbarIcons/026-repeat.svg</file>
+        <file>toolbarIcons/027-shuffle arrows.svg</file>
+        <file>toolbarIcons/028-repeat.svg</file>
+        <file>toolbarIcons/029-volume down.svg</file>
+        <file>toolbarIcons/030-volume up.svg</file>
+        <file>toolbarIcons/031-radio.svg</file>
+        <file>toolbarIcons/032-disc.svg</file>
+        <file>toolbarIcons/033-music album.svg</file>
+        <file>toolbarIcons/034-sound mixer.svg</file>
+        <file>toolbarIcons/035-like.svg</file>
+        <file>toolbarIcons/036-add.svg</file>
+        <file>toolbarIcons/037-delete.svg</file>
+        <file>toolbarIcons/038-new.svg</file>
+        <file>toolbarIcons/039-playlist.svg</file>
+        <file>toolbarIcons/040-playlist.svg</file>
+        <file>toolbarIcons/041-sound mixer.svg</file>
+        <file>toolbarIcons/042-music album.svg</file>
+        <file>toolbarIcons/043-music album.svg</file>
+        <file>toolbarIcons/044-music.svg</file>
+        <file>toolbarIcons/045-disc.svg</file>
+        <file>toolbarIcons/046-add.svg</file>
+        <file>toolbarIcons/047-favorite.svg</file>
+        <file>toolbarIcons/048-delete.svg</file>
+        <file>toolbarIcons/049-playlist.svg</file>
+        <file>toolbarIcons/050-favorite.svg</file>
+        <file>toolbarIcons/051-Forward.svg</file>
+        <file>toolbarIcons/052-Backward.svg</file>
+        <file>toolbarIcons/053-Search.svg</file>
+        <file>toolbarIcons/054-Menu.svg</file>
     </qresource>
 </RCC>

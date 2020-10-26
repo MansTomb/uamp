@@ -1,4 +1,4 @@
-#include "toolbar.h"
+#include "ToolBar.h"
 #include "ui_toolbar.h"
 
 ToolBar::ToolBar(QWidget *parent) :
@@ -6,6 +6,7 @@ ToolBar::ToolBar(QWidget *parent) :
     ui(new Ui::ToolBar)
 {
     ui->setupUi(this);
+    setAttribute(Qt::WA_StyledBackground, true);
 }
 
 ToolBar::~ToolBar()
