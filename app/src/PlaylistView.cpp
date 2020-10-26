@@ -8,4 +8,3 @@ PlaylistView::PlaylistView(QWidget *parent) : QListWidget(parent) {
         setItemWidget(item, new PlayerlistItem(i));
     }
 }
-

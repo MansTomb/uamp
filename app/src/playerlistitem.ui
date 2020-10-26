@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>380</width>
+    <width>312</width>
     <height>52</height>
    </rect>
   </property>
@@ -28,7 +28,7 @@
   <property name="styleSheet">
    <string notr="true">font: 14pt &quot;PT Mono&quot;;</string>
   </property>
-  <layout class="QHBoxLayout" name="horizontalLayout" stretch="20,1,0,1,0">
+  <layout class="QHBoxLayout" name="horizontalLayout" stretch="20,1,0,0,0">
    <property name="spacing">
     <number>0</number>
    </property>
@@ -84,7 +84,7 @@
     </layout>
    </item>
    <item>
-    <layout class="QVBoxLayout" name="verticalLayout_2" stretch="1,2,0">
+    <layout class="QVBoxLayout" name="verticalLayout_2" stretch="0,2,0">
      <item>
       <spacer name="verticalSpacer_2">
        <property name="orientation">
@@ -125,7 +125,7 @@
        <property name="sizeHint" stdset="0">
         <size>
          <width>20</width>
-         <height>40</height>
+         <height>60</height>
         </size>
        </property>
       </spacer>
@@ -139,8 +139,8 @@
      </property>
      <property name="sizeHint" stdset="0">
       <size>
-       <width>5</width>
-       <height>20</height>
+       <width>13</width>
+       <height>17</height>
       </size>
      </property>
     </spacer>
@@ -177,8 +177,8 @@
      </property>
      <property name="sizeHint" stdset="0">
       <size>
-       <width>20</width>
-       <height>20</height>
+       <width>13</width>
+       <height>49</height>
       </size>
      </property>
     </spacer>

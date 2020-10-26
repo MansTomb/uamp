@@ -137,7 +137,28 @@
          </layout>
         </item>
         <item row="1" column="0">
-         <widget class="PlaylistView" name="listView"/>
+         <widget class="PlaylistView" name="listView">
+          <property name="styleSheet">
+           <string notr="true">QListWidget::item:selected {
+    border: 1px solid #6a6ea9;
+}</string>
+          </property>
+          <property name="selectionBehavior">
+           <enum>QAbstractItemView::SelectItems</enum>
+          </property>
+          <property name="resizeMode">
+           <enum>QListView::Fixed</enum>
+          </property>
+          <property name="layoutMode">
+           <enum>QListView::SinglePass</enum>
+          </property>
+          <property name="uniformItemSizes">
+           <bool>false</bool>
+          </property>
+          <property name="selectionRectVisible">
+           <bool>false</bool>
+          </property>
+         </widget>
         </item>
        </layout>
       </widget>

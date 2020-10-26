@@ -20,11 +20,6 @@ public:
 
 private:
     Ui::PlayerlistItem *ui;
-    QWidget *track;
-    QLabel *trackNameAndArtist;
-    QLabel *infoAboutTrack;
-    QLabel *duration;
-    QPushButton *menu;
 };
 
 #endif // PLAYERLISTITEM_H
