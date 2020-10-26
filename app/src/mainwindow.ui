@@ -20,7 +20,7 @@
       <property name="orientation">
        <enum>Qt::Horizontal</enum>
       </property>
-      <widget class="QWidget" name="playerView" native="true">
+      <widget class="PlayerView" name="playerView" native="true">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
          <horstretch>1</horstretch>
@@ -28,70 +28,8 @@
         </sizepolicy>
        </property>
        <property name="styleSheet">
-        <string notr="true">QWidget {
-	background-color: rgb(87, 86, 88);
-}</string>
+        <string notr="true">background-color: rgb(98, 96, 98);</string>
        </property>
-       <layout class="QGridLayout" name="gridLayout_5">
-        <item row="0" column="0">
-         <layout class="QVBoxLayout" name="verticalLayout_2" stretch="8,1,2">
-          <item>
-           <widget class="QLabel" name="albumImage">
-            <property name="text">
-             <string>AlbumImage</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignCenter</set>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="15,1">
-            <item>
-             <layout class="QVBoxLayout" name="verticalLayout_3">
-              <item>
-               <widget class="QLabel" name="trackName">
-                <property name="text">
-                 <string>trackname</string>
-                </property>
-                <property name="alignment">
-                 <set>Qt::AlignCenter</set>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QLabel" name="artistName">
-                <property name="text">
-                 <string>artist</string>
-                </property>
-                <property name="alignment">
-                 <set>Qt::AlignCenter</set>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </item>
-            <item>
-             <widget class="QPushButton" name="pushButton">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Ignored" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="text">
-               <string>...</string>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </item>
-          <item>
-           <widget class="QWidget" name="widget_3" native="true"/>
-          </item>
-         </layout>
-        </item>
-       </layout>
       </widget>
       <widget class="QWidget" name="playListView" native="true">
        <property name="sizePolicy">
@@ -141,6 +79,10 @@
           <property name="styleSheet">
            <string notr="true">QListWidget::item:selected {
     border: 1px solid #6a6ea9;
+}
+
+QPushButton:pressed {
+	background-color: rgb(103, 0, 0);
 }</string>
           </property>
           <property name="selectionBehavior">
@@ -194,6 +136,12 @@
    <class>PlaylistView</class>
    <extends>QListView</extends>
    <header>PlaylistView.h</header>
+  </customwidget>
+  <customwidget>
+   <class>PlayerView</class>
+   <extends>QWidget</extends>
+   <header>PlayerView.h</header>
+   <container>1</container>
   </customwidget>
  </customwidgets>
  <resources/>

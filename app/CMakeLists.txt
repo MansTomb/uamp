@@ -37,7 +37,8 @@ set(HEADERS src/mainwindow.h
 
 set(UI src/mainwindow.ui
     src/LoginWindow.ui
-    src/playerlistitem.ui)
+    src/playerlistitem.ui
+    src/PlayerView.ui)
 
 include_directories(../cmake-build-debug/app/uamp_autogen/include)
 include_directories(

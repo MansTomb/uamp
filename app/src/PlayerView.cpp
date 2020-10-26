@@ -1,4 +1,4 @@
-#include "playerview.h"
+#include "PlayerView.h"
 #include "ui_playerview.h"
 
 PlayerView::PlayerView(QWidget *parent) :
