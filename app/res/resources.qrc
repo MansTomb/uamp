@@ -60,5 +60,6 @@
         <file>toolbarIcons/052-Backward.svg</file>
         <file>toolbarIcons/053-Search.svg</file>
         <file>toolbarIcons/054-Menu.svg</file>
+        <file>playerIcons/01-Menu.svg</file>
     </qresource>
 </RCC>

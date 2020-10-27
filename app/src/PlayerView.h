@@ -4,6 +4,7 @@
 #include <QWidget>
 
 #include "PlayerController.h"
+#include "ui_playerview.h"
 
 namespace Ui {
 class PlayerView;
@@ -17,6 +18,7 @@ public:
     explicit PlayerView(QWidget *parent = nullptr);
     ~PlayerView();
 
+    void SetSong(QUrl song);
  public slots:
     void ChangeVolume(int value);
     void Play(bool state);
@@ -25,9 +27,6 @@ public:
     void Next();
     void Backward();
     void Forward();
-
-
-
 
  private:
     Ui::PlayerView *ui;

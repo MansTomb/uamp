@@ -37,6 +37,9 @@
      <property name="spacing">
       <number>0</number>
      </property>
+     <property name="topMargin">
+      <number>10</number>
+     </property>
      <item>
       <layout class="QHBoxLayout" name="horizontalLayout_4" stretch="0,2,0,0,0,0,0,2,0,2,0,0,0,2,0,1,0">
        <property name="spacing">
@@ -188,7 +191,7 @@
         </widget>
        </item>
        <item>
-        <layout class="QVBoxLayout" name="verticalLayout" stretch="1,0">
+        <layout class="QVBoxLayout" name="verticalLayout" stretch="1">
          <property name="spacing">
           <number>0</number>
          </property>
@@ -196,6 +199,12 @@
           <layout class="QHBoxLayout" name="horizontalLayout_5">
            <property name="spacing">
             <number>0</number>
+           </property>
+           <property name="leftMargin">
+            <number>10</number>
+           </property>
+           <property name="rightMargin">
+            <number>10</number>
            </property>
            <item>
             <widget class="QPushButton" name="PauseBtn">
@@ -246,25 +255,6 @@
             </widget>
            </item>
           </layout>
-         </item>
-         <item>
-          <widget class="QLabel" name="InfoLabel">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>16777215</width>
-             <height>16777215</height>
-            </size>
-           </property>
-           <property name="text">
-            <string>TextLabel</string>
-           </property>
-          </widget>
          </item>
         </layout>
        </item>
@@ -674,6 +664,12 @@ border-width: 28px;</string>
      </item>
      <item>
       <widget class="QSlider" name="VolumeSlider">
+       <property name="autoFillBackground">
+        <bool>false</bool>
+       </property>
+       <property name="styleSheet">
+        <string notr="true"/>
+       </property>
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
        </property>

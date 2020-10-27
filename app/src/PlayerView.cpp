@@ -1,10 +1,19 @@
 #include "PlayerView.h"
-#include "ui_playerview.h"
 
-PlayerView::PlayerView(QWidget *parent) :
-    QWidget(parent),
-    ui(new Ui::PlayerView) {
+#include "FileTag.h"
+
+PlayerView::PlayerView(QWidget *parent) : QWidget(parent), ui(new Ui::PlayerView) {
     ui->setupUi(this);
+//
+//    QMediaPlaylist *playlist = new QMediaPlaylist;
+//
+//    playlist->addMedia(QUrl::fromLocalFile("/Users/abalabin/Desktop/test.mp3"));
+//    playlist->addMedia(QUrl::fromLocalFile("/Users/abalabin/Desktop/test.mp3"));
+//    playlist->addMedia(QUrl::fromLocalFile("/Users/abalabin/Desktop/test.mp3"));
+//
+//    playlist->save(QUrl::fromLocalFile("/Users/abalabin/Desktop/pylist.m3u"), "m3u");
+
+    SetSong(QUrl::fromLocalFile("/Users/abalabin/Desktop/test.mp3"));
 }
 
 PlayerView::~PlayerView() {
@@ -40,4 +49,15 @@ void PlayerView::Backward() {
 
 void PlayerView::Forward() {
     m_player.Forward();
+}
+
+void PlayerView::SetSong(QUrl song) {
+    QString path(song.toString().remove(0, 7));
+    QString fname(song.toString());
+    FileTags tagger(path.remove(path.lastIndexOf("/"), path.size()), fname.remove(0, fname.lastIndexOf("/")));
+
+    ui->playerArtistName->setText(tagger.tags.artist);
+    ui->playerTrackName->setText(tagger.tags.name);
+
+    m_player.SetSong(song);
 }

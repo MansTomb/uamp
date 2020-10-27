@@ -29,7 +29,7 @@ class FileTags {
         QString trackNumber;
     } tags;
 
-    FileTags(const std::string& path, QString& fileName);
+    FileTags(QString& path, QString& fileName);
     void upgradeFileTags(const FileTags& new_tags);
     friend std::ostream& operator<<(std::ostream& out, const FileTags& file);
 

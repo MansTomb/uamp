@@ -1,10 +1,10 @@
 #include "FileTag.h"
 
-FileTags::FileTags(const std::string &path, QString &fileName) {
-    std::string fullPath(path + fileName.toStdString());
+FileTags::FileTags(QString &path, QString &fileName) {
+    QString fullPath(path + fileName);
     tags.filename = fileName;
-    tags.path = QString::fromStdString(fullPath);
-    m_fileRef = TagLib::FileRef(fullPath.c_str());
+    tags.path = fullPath;
+    m_fileRef = TagLib::FileRef(fullPath.toStdString().c_str());
 
     if (!m_fileRef.isNull() && m_fileRef.tag()) {
         TagLib::Tag *tag = m_fileRef.tag();

@@ -6,15 +6,21 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>878</width>
-    <height>577</height>
+    <width>992</width>
+    <height>651</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">background-color: rgb(55, 55,55);</string>
+  </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QGridLayout" name="gridLayout" rowstretch="10,1">
+   <layout class="QHBoxLayout" name="horizontalLayout" stretch="1,2">
+    <property name="spacing">
+     <number>0</number>
+    </property>
     <property name="leftMargin">
      <number>0</number>
     </property>
@@ -27,108 +33,143 @@
     <property name="bottomMargin">
      <number>0</number>
     </property>
-    <property name="spacing">
-     <number>0</number>
-    </property>
-    <item row="0" column="0">
-     <widget class="QSplitter" name="splitter">
-      <property name="orientation">
-       <enum>Qt::Horizontal</enum>
+    <item>
+     <widget class="SideMenu" name="sideMenu" native="true">
+      <property name="styleSheet">
+       <string notr="true">background-color:rgb(31, 31, 31);</string>
       </property>
-      <widget class="PlayerView" name="playerView" native="true">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-         <horstretch>1</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">background-color: rgb(98, 96, 98);</string>
-       </property>
-      </widget>
-      <widget class="QWidget" name="playListView" native="true">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="baseSize">
-        <size>
-         <width>0</width>
-         <height>0</height>
-        </size>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">QWidget {
+     </widget>
+    </item>
+    <item>
+     <layout class="QGridLayout" name="gridLayout_2" rowstretch="10,1">
+      <property name="leftMargin">
+       <number>0</number>
+      </property>
+      <property name="verticalSpacing">
+       <number>0</number>
+      </property>
+      <item row="0" column="0">
+       <widget class="QSplitter" name="splitter">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <widget class="PlayerView" name="playerView" native="true">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+           <horstretch>1</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="styleSheet">
+          <string notr="true"/>
+         </property>
+        </widget>
+        <widget class="QWidget" name="playListView" native="true">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="baseSize">
+          <size>
+           <width>0</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QWidget {
 	background-color: rgb(52, 52, 53);
 }</string>
-       </property>
-       <layout class="QGridLayout" name="gridLayout_3">
-        <item row="0" column="0">
-         <layout class="QVBoxLayout" name="verticalLayout">
-          <item>
-           <widget class="QLabel" name="PlaylistName">
-            <property name="text">
-             <string>palylistname</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignCenter</set>
-            </property>
-           </widget>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_3">
+          <item row="0" column="0">
+           <layout class="QVBoxLayout" name="verticalLayout">
+            <item>
+             <widget class="QLabel" name="PlaylistName">
+              <property name="text">
+               <string>palylistname</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="playlistInfo">
+              <property name="text">
+               <string>playlistInfo</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+           </layout>
           </item>
-          <item>
-           <widget class="QLabel" name="playlistInfo">
-            <property name="text">
-             <string>playlistInfo</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignCenter</set>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </item>
-        <item row="1" column="0">
-         <widget class="PlaylistView" name="listView">
-          <property name="styleSheet">
-           <string notr="true">QListWidget::item:selected {
+          <item row="1" column="0">
+           <widget class="PlaylistView" name="listView">
+            <property name="styleSheet">
+             <string notr="true">QListWidget::item:selected {
     border: 1px solid #6a6ea9;
 }
 
 QPushButton:pressed {
 	background-color: rgb(103, 0, 0);
 }</string>
-          </property>
-          <property name="selectionBehavior">
-           <enum>QAbstractItemView::SelectItems</enum>
-          </property>
-          <property name="resizeMode">
-           <enum>QListView::Fixed</enum>
-          </property>
-          <property name="layoutMode">
-           <enum>QListView::SinglePass</enum>
-          </property>
-          <property name="uniformItemSizes">
-           <bool>false</bool>
-          </property>
-          <property name="selectionRectVisible">
-           <bool>false</bool>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </widget>
-     </widget>
-    </item>
-    <item row="1" column="0">
-     <widget class="ToolBar" name="toolBar" native="true">
-      <property name="autoFillBackground">
-       <bool>false</bool>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">QWidget#toolBar {
-	background-color: rgb(189, 185, 0);
+            </property>
+            <property name="selectionBehavior">
+             <enum>QAbstractItemView::SelectItems</enum>
+            </property>
+            <property name="resizeMode">
+             <enum>QListView::Fixed</enum>
+            </property>
+            <property name="layoutMode">
+             <enum>QListView::SinglePass</enum>
+            </property>
+            <property name="uniformItemSizes">
+             <bool>false</bool>
+            </property>
+            <property name="selectionRectVisible">
+             <bool>false</bool>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="ToolBar" name="toolBar" native="true">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="autoFillBackground">
+         <bool>false</bool>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QWidget#toolBar {
+	background-color: rgb(200, 115, 0);
+}
+
+QLabel {
+	background-color: rgb(200, 115, 0);
+}
+
+QSlider {
+	background-color: rgb(200, 115, 0);
+}
+
+QSlider::groove:horizontal {
+    height: 8px;
+    background-color: rgb(255, 255, 255);
+}
+
+QSlider::add-page:vertical {
+    background: white;
 }
 
 QPushButton {
@@ -141,8 +182,10 @@ QPushButton:pressed {
 	border-radius: 14px;
 }
 </string>
-      </property>
-     </widget>
+        </property>
+       </widget>
+      </item>
+     </layout>
     </item>
    </layout>
   </widget>
@@ -151,12 +194,11 @@ QPushButton:pressed {
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>878</width>
+     <width>992</width>
      <height>22</height>
     </rect>
    </property>
   </widget>
-  <widget class="QStatusBar" name="statusbar"/>
  </widget>
  <customwidgets>
   <customwidget>
@@ -200,6 +242,12 @@ QPushButton:pressed {
     <signal>Menu()</signal>
     <signal>Mute(bool)</signal>
    </slots>
+  </customwidget>
+  <customwidget>
+   <class>SideMenu</class>
+   <extends>QWidget</extends>
+   <header>SideMenu.h</header>
+   <container>1</container>
   </customwidget>
  </customwidgets>
  <resources/>
