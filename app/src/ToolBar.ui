@@ -66,7 +66,10 @@
           </size>
          </property>
          <property name="styleSheet">
-          <string notr="true"/>
+          <string notr="true">QPushButton#ShuffleBtn:checked {
+	background-color: rgba(84, 83, 85, 179);
+	border-radius: 14px;
+}</string>
          </property>
          <property name="text">
           <string/>
@@ -377,6 +380,12 @@
            <height>32</height>
           </size>
          </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton#RepeatBtn:checked {
+	background-color: rgba(84, 83, 85, 179);
+	border-radius: 14px;
+}</string>
+         </property>
          <property name="text">
           <string/>
          </property>
@@ -678,6 +687,12 @@ border-width: 28px;</string>
          <height>32</height>
         </size>
        </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton#MuteBtn:checked {
+	background-color: rgba(84, 83, 85, 179);
+	border-radius: 14px;
+}</string>
+       </property>
        <property name="text">
         <string/>
        </property>
@@ -694,6 +709,9 @@ border-width: 28px;</string>
        <property name="checkable">
         <bool>true</bool>
        </property>
+       <property name="checked">
+        <bool>false</bool>
+       </property>
        <property name="flat">
         <bool>true</bool>
        </property>
@@ -706,5 +724,260 @@ border-width: 28px;</string>
  <resources>
   <include location="../res/resources.qrc"/>
  </resources>
- <connections/>
+ <connections>
+  <connection>
+   <sender>ShuffleBtn</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>ToolBar</receiver>
+   <slot>shuffleClicked(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>19</x>
+     <y>34</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>12</x>
+     <y>106</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>PrevBtn</sender>
+   <signal>clicked()</signal>
+   <receiver>ToolBar</receiver>
+   <slot>prevClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>183</x>
+     <y>35</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>178</x>
+     <y>124</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>BackWardBtn</sender>
+   <signal>clicked()</signal>
+   <receiver>ToolBar</receiver>
+   <slot>backwardClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>229</x>
+     <y>30</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>225</x>
+     <y>121</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>PauseBtn</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>ToolBar</receiver>
+   <slot>playClicked(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>272</x>
+     <y>31</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>266</x>
+     <y>125</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>ForwardBtn</sender>
+   <signal>clicked()</signal>
+   <receiver>ToolBar</receiver>
+   <slot>forwardClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>320</x>
+     <y>38</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>322</x>
+     <y>126</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>NextBtn</sender>
+   <signal>clicked()</signal>
+   <receiver>ToolBar</receiver>
+   <slot>nextClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>340</x>
+     <y>35</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>356</x>
+     <y>165</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>RepeatBtn</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>ToolBar</receiver>
+   <slot>repeatClicked(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>512</x>
+     <y>32</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>520</x>
+     <y>131</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>AddBtn</sender>
+   <signal>clicked()</signal>
+   <receiver>ToolBar</receiver>
+   <slot>addClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>675</x>
+     <y>25</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>686</x>
+     <y>128</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>DeleteBtn</sender>
+   <signal>clicked()</signal>
+   <receiver>ToolBar</receiver>
+   <slot>delClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>715</x>
+     <y>39</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>727</x>
+     <y>118</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>ReposBtn</sender>
+   <signal>clicked()</signal>
+   <receiver>ToolBar</receiver>
+   <slot>reposClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>745</x>
+     <y>34</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>750</x>
+     <y>155</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>SearchBtn</sender>
+   <signal>clicked()</signal>
+   <receiver>ToolBar</receiver>
+   <slot>searchClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>915</x>
+     <y>40</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>915</x>
+     <y>146</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>MenuBtn</sender>
+   <signal>clicked()</signal>
+   <receiver>ToolBar</receiver>
+   <slot>menuClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1012</x>
+     <y>27</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>987</x>
+     <y>133</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>MuteBtn</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>ToolBar</receiver>
+   <slot>muteClicked(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1018</x>
+     <y>90</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1018</x>
+     <y>136</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>VolumeSlider</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>ToolBar</receiver>
+   <slot>volumeChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>443</x>
+     <y>86</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>441</x>
+     <y>116</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <signal>Shuffle(bool)</signal>
+  <signal>Previous()</signal>
+  <signal>Backward()</signal>
+  <signal>Play(bool)</signal>
+  <signal>Forward()</signal>
+  <signal>Next()</signal>
+  <signal>Repeat(bool)</signal>
+  <signal>AddSong()</signal>
+  <signal>DeleteSong()</signal>
+  <signal>Reposition()</signal>
+  <signal>Search()</signal>
+  <signal>Menu()</signal>
+  <signal>Mute(bool)</signal>
+  <signal>VolumeValue(int)</signal>
+  <slot>shuffleClicked(bool)</slot>
+  <slot>prevClicked()</slot>
+  <slot>backwardClicked()</slot>
+  <slot>playClicked(bool)</slot>
+  <slot>forwardClicked()</slot>
+  <slot>nextClicked()</slot>
+  <slot>repeatClicked(bool)</slot>
+  <slot>addClicked()</slot>
+  <slot>delClicked()</slot>
+  <slot>reposClicked()</slot>
+  <slot>searchClicked()</slot>
+  <slot>menuClicked()</slot>
+  <slot>muteClicked(bool)</slot>
+  <slot>volumeChanged(int)</slot>
+ </slots>
 </ui>

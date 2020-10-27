@@ -15,6 +15,21 @@
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout" rowstretch="10,1">
+    <property name="leftMargin">
+     <number>0</number>
+    </property>
+    <property name="topMargin">
+     <number>0</number>
+    </property>
+    <property name="rightMargin">
+     <number>0</number>
+    </property>
+    <property name="bottomMargin">
+     <number>0</number>
+    </property>
+    <property name="spacing">
+     <number>0</number>
+    </property>
     <item row="0" column="0">
      <widget class="QSplitter" name="splitter">
       <property name="orientation">
@@ -154,16 +169,154 @@ QPushButton:pressed {
    <extends>QWidget</extends>
    <header>PlayerView.h</header>
    <container>1</container>
+   <slots>
+    <slot>ChangeVolume(int)</slot>
+    <slot>Previous()</slot>
+    <slot>Play(bool)</slot>
+    <slot>Next()</slot>
+    <slot>Mute(bool)</slot>
+    <slot>Forward()</slot>
+    <slot>Backward()</slot>
+   </slots>
   </customwidget>
   <customwidget>
    <class>ToolBar</class>
    <extends>QWidget</extends>
    <header>ToolBar.h</header>
    <container>1</container>
+   <slots>
+    <signal>VolumeValue(int)</signal>
+    <signal>Shuffle(bool)</signal>
+    <signal>Repeat(bool)</signal>
+    <signal>Play(bool)</signal>
+    <signal>Previous()</signal>
+    <signal>Backward()</signal>
+    <signal>Forward()</signal>
+    <signal>Next()</signal>
+    <signal>AddSong()</signal>
+    <signal>DeleteSong()</signal>
+    <signal>Reposition()</signal>
+    <signal>Search()</signal>
+    <signal>Menu()</signal>
+    <signal>Mute(bool)</signal>
+   </slots>
   </customwidget>
  </customwidgets>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>toolBar</sender>
+   <signal>Play(bool)</signal>
+   <receiver>playerView</receiver>
+   <slot>Play(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>286</x>
+     <y>531</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>275</x>
+     <y>378</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>toolBar</sender>
+   <signal>Backward()</signal>
+   <receiver>playerView</receiver>
+   <slot>Backward()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>385</x>
+     <y>532</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>364</x>
+     <y>406</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>toolBar</sender>
+   <signal>Forward()</signal>
+   <receiver>playerView</receiver>
+   <slot>Forward()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>446</x>
+     <y>522</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>426</x>
+     <y>427</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>toolBar</sender>
+   <signal>Mute(bool)</signal>
+   <receiver>playerView</receiver>
+   <slot>Mute(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>322</x>
+     <y>533</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>324</x>
+     <y>478</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>toolBar</sender>
+   <signal>Next()</signal>
+   <receiver>playerView</receiver>
+   <slot>Next()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>244</x>
+     <y>515</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>249</x>
+     <y>476</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>toolBar</sender>
+   <signal>Previous()</signal>
+   <receiver>playerView</receiver>
+   <slot>Previous()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>206</x>
+     <y>524</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>213</x>
+     <y>490</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>toolBar</sender>
+   <signal>VolumeValue(int)</signal>
+   <receiver>playerView</receiver>
+   <slot>ChangeVolume(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>460</x>
+     <y>518</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>460</x>
+     <y>462</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
  <slots>
   <slot>ChangeTheme(bool)</slot>
   <slot>SaveAllFiles()</slot>

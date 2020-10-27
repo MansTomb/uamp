@@ -17,7 +17,19 @@ public:
     explicit PlayerView(QWidget *parent = nullptr);
     ~PlayerView();
 
-private:
+ public slots:
+    void ChangeVolume(int value);
+    void Play(bool state);
+    void Mute(bool state);
+    void Previous();
+    void Next();
+    void Backward();
+    void Forward();
+
+
+
+
+ private:
     Ui::PlayerView *ui;
     PlayerController m_player;
 };
