@@ -32,6 +32,7 @@ private slots:
 //    void on_pushButton_clicked();
 
 private:
+    QString getFormat();
     Ui::PlayerlistItem *ui;
     QString m_pathToTrack;
     QString m_trackName;

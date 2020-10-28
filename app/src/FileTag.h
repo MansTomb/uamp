@@ -5,6 +5,7 @@
 #include <dirent.h>
 #include <string>
 #include <map>
+#include <fstream>
 
 #include "../../taglib/taglib/tag.h"
 #include <../taglib/fileref.h>
@@ -27,6 +28,10 @@ class FileTags {
         QString genre;
         QString year;
         QString trackNumber;
+        QString bitrate;
+        QString sampleRate;
+        QString channels;
+        QString length;
     } tags;
 
     FileTags(const std::string &path, const std::string &fileName);

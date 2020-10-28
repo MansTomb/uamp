@@ -16,6 +16,17 @@ FileTags::FileTags(const std::string &path, const std::string &fileName) {
 //        tags.year = QString::number(tag->year());
 //        tags.trackNumber = QString::number(tag->track());
     }
+
+    if(!m_fileRef.isNull() && m_fileRef.audioProperties()) {
+        TagLib::AudioProperties *properties = m_fileRef.audioProperties();
+        int seconds = properties->length() % 60;
+        int minutes = (properties->length() - seconds) / 60;
+
+        tags.bitrate = QString::number(properties->bitrate());
+        tags.sampleRate = QString::number(properties->sampleRate());
+        tags.channels = QString::number(properties->channels());
+        tags.length = QString::number(minutes) + ":" + (seconds != 0 ? QString::number(seconds) : "00");
+    }
 }
 
 std::ostream &operator<<(std::ostream &out, const FileTags &file) {

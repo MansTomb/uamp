@@ -184,7 +184,7 @@ QTabBar::tab:first {
 	color: #d3dae3;
 	padding: 3px;
 	margin-left:0px;
-	background-color: #151a1e;
+	background-color: #1e282c;
 }
 QTabBar::tab:last {
 	border-style: solid;
@@ -197,7 +197,7 @@ QTabBar::tab:last {
 	color: #d3dae3;
 	padding: 3px;
 	margin-left:0px;
-	background-color: #151a1e;
+	background-color: #1e282c;
 }
 QTabBar::tab {
 	border-style: solid;
@@ -210,7 +210,7 @@ QTabBar::tab {
 	color: #d3dae3;
 	padding: 3px;
 	margin-left:0px;
-	background-color: #151a1e;
+	background-color: #1e282c;
 }
 QTabBar::tab:selected, QTabBar::tab:last:selected, QTabBar::tab:hover {
 	border-style: solid;
