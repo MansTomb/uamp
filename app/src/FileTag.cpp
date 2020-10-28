@@ -13,8 +13,8 @@ FileTags::FileTags(const std::string &path, const std::string &fileName) {
         tags.artist = tag->artist().toCString();
         tags.album = tag->album().toCString();
         tags.genre = tag->genre().toCString();
-        tags.year = QString::number(tag->year());
-        tags.trackNumber = QString::number(tag->track());
+//        tags.year = QString::number(tag->year());
+//        tags.trackNumber = QString::number(tag->track());
     }
 }
 
@@ -24,26 +24,21 @@ std::ostream &operator<<(std::ostream &out, const FileTags &file) {
                         << file.tags.title << "\n"
                         << file.tags.artist << "\n"
                         << file.tags.album << "\n"
-                        << file.tags.genre << "\n"
-                        << file.tags.year << "\n"
-                        << file.tags.trackNumber;
+                        << file.tags.genre << "\n";
+//                        << file.tags.year << "\n"
+//                        << file.tags.trackNumber;
     return out;
 }
 
-void FileTags::upgradeFileTags(const FileTags &new_tags) {
-    TagLib::FileRef file(new_tags.tags.path.toStdString().c_str());
+void FileTags::upgradeFileTags(const std::string &new_tags) {
+    TagLib::FileRef file(new_tags.c_str());
 
-    file.tag()->setTitle(new_tags.tags.title.toStdString());
-    tags.title = new_tags.tags.title;
-    file.tag()->setArtist(new_tags.tags.artist.toStdString());
-    tags.artist = new_tags.tags.artist;
-    file.tag()->setAlbum(new_tags.tags.album.toStdString());
-    tags.album = new_tags.tags.album;
-    file.tag()->setGenre(new_tags.tags.genre.toStdString());
-    tags.genre = new_tags.tags.genre;
-    file.tag()->setYear(new_tags.tags.year.toInt());
-    tags.year = new_tags.tags.year;
-    file.tag()->setTrack(new_tags.tags.trackNumber.toInt());
-    tags.trackNumber = new_tags.tags.trackNumber;
+    file.tag()->setTitle(tags.title.toStdString());
+    file.tag()->setArtist(tags.artist.toStdString());
+    file.tag()->setAlbum(tags.album.toStdString());
+    file.tag()->setGenre(tags.genre.toStdString());
+//    file.tag()->setYear(tags.year.toInt());
+//    file.tag()->setTrack(tags.trackNumber.toInt());
+
     file.save();
 }

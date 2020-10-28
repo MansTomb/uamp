@@ -30,7 +30,7 @@ class FileTags {
     } tags;
 
     FileTags(const std::string &path, const std::string &fileName);
-    void upgradeFileTags(const FileTags& new_tags);
+    void upgradeFileTags(const std::string &new_tags);
     friend std::ostream& operator<<(std::ostream& out, const FileTags& file);
 
     private:

@@ -2,6 +2,8 @@
 #define EDITFILETAGSDIALOG_H
 
 #include <QDialog>
+#include <QMap>
+#include <QString>
 
 #include "FileTag.h"
 
@@ -16,7 +18,11 @@ class EditFileTagsDialog : public QDialog {
     explicit EditFileTagsDialog(FileTags& file, QWidget *parent = nullptr);
     ~EditFileTagsDialog();
 
+
     private:
+    void accept() override;
+
+    FileTags& m_file;
     Ui::EditFileTagsDialog *ui;
 };
 

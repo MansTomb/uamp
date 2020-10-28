@@ -2,7 +2,7 @@
 #include "ui_EditFileTagsDialog.h"
 
 EditFileTagsDialog::EditFileTagsDialog(FileTags& file, QWidget *parent) :
-    QDialog(parent), ui(new Ui::EditFileTagsDialog) {
+    QDialog(parent), ui(new Ui::EditFileTagsDialog), m_file(file) {
     ui->setupUi(this);
     setWindowTitle(tr("Edit audio-file tags"));
     ui->trackName->setText(QString(file.tags.filename.begin(), file.tags.filename.lastIndexOf(".")));
@@ -18,15 +18,11 @@ EditFileTagsDialog::~EditFileTagsDialog() {
     delete ui;
 }
 
-/*
-void Preferences::accept() {
-    m_preferences["font"] = ui->comboBox->currentText();
-    m_preferences["size_font"] = ui->comboBox_2->currentText();
-    m_preferences["theme"] = ui->comboBox_3->currentText();
-    m_preferences["language"] = ui->comboBox_4->currentText();
-    emit ReturnValues(m_preferences);
+void EditFileTagsDialog::accept() {
+    m_file.tags.artist = ui->artistText_2->toPlainText();
+    m_file.tags.title = ui->titleText_2->toPlainText();
+    m_file.tags.album = ui->albumText_2->toPlainText();
+    m_file.tags.genre = ui->genreText_2->toPlainText();
+    m_file.upgradeFileTags(m_file.tags.path.toStdString());
     QDialog::accept();
 }
-
-
- */
