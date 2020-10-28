@@ -9,7 +9,7 @@ FileTags::FileTags(const std::string &path, const std::string &fileName) {
     if (!m_fileRef.isNull() && m_fileRef.tag()) {
         TagLib::Tag *tag = m_fileRef.tag();
 
-        tags.name = tag->title().toCString();
+        tags.title = tag->title().toCString();
         tags.artist = tag->artist().toCString();
         tags.album = tag->album().toCString();
         tags.genre = tag->genre().toCString();
@@ -21,7 +21,7 @@ FileTags::FileTags(const std::string &path, const std::string &fileName) {
 std::ostream &operator<<(std::ostream &out, const FileTags &file) {
         qDebug() << file.tags.filename<< "\n"
                         << file.tags.path << "\n"
-                        << file.tags.name << "\n"
+                        << file.tags.title << "\n"
                         << file.tags.artist << "\n"
                         << file.tags.album << "\n"
                         << file.tags.genre << "\n"
@@ -33,8 +33,8 @@ std::ostream &operator<<(std::ostream &out, const FileTags &file) {
 void FileTags::upgradeFileTags(const FileTags &new_tags) {
     TagLib::FileRef file(new_tags.tags.path.toStdString().c_str());
 
-    file.tag()->setTitle(new_tags.tags.name.toStdString());
-    tags.name = new_tags.tags.name;
+    file.tag()->setTitle(new_tags.tags.title.toStdString());
+    tags.title = new_tags.tags.title;
     file.tag()->setArtist(new_tags.tags.artist.toStdString());
     tags.artist = new_tags.tags.artist;
     file.tag()->setAlbum(new_tags.tags.album.toStdString());

@@ -21,7 +21,7 @@ class FileTags {
     struct  Tags{
         QString filename;
         QString path;
-        QString name;
+        QString title;
         QString artist;
         QString album;
         QString genre;

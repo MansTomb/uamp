@@ -6,26 +6,140 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>300</height>
+    <width>421</width>
+    <height>448</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <widget class="QRadioButton" name="radioButton">
-   <property name="geometry">
-    <rect>
-     <x>110</x>
-     <y>190</y>
-     <width>101</width>
-     <height>22</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>RadioButton</string>
-   </property>
-  </widget>
+  <layout class="QGridLayout" name="gridLayout">
+   <item row="0" column="0">
+    <layout class="QVBoxLayout" name="verticalLayout" stretch="2,10">
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_2">
+       <item>
+        <spacer name="horizontalSpacer">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QLabel" name="trackName">
+         <property name="text">
+          <string>TextLabel</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer_2">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_3">
+       <item>
+        <widget class="QTabWidget" name="tabWidget">
+         <property name="tabPosition">
+          <enum>QTabWidget::West</enum>
+         </property>
+         <property name="tabShape">
+          <enum>QTabWidget::Rounded</enum>
+         </property>
+         <property name="currentIndex">
+          <number>0</number>
+         </property>
+         <widget class="QWidget" name="Filetags">
+          <attribute name="title">
+           <string>Filetags</string>
+          </attribute>
+          <layout class="QGridLayout" name="gridLayout_3" rowstretch="1,2,3,4,5" rowminimumheight="1,2,3,4,5">
+           <item row="0" column="0">
+            <widget class="QLabel" name="artist_2">
+             <property name="text">
+              <string>artist</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="1">
+            <widget class="QPlainTextEdit" name="artistText_2"/>
+           </item>
+           <item row="1" column="0">
+            <widget class="QLabel" name="title_2">
+             <property name="text">
+              <string>title</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="1">
+            <widget class="QPlainTextEdit" name="titleText_2"/>
+           </item>
+           <item row="2" column="0">
+            <widget class="QLabel" name="album_2">
+             <property name="text">
+              <string>album</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="1">
+            <widget class="QPlainTextEdit" name="albumText_2"/>
+           </item>
+           <item row="3" column="0">
+            <widget class="QLabel" name="genre_2">
+             <property name="text">
+              <string>genre</string>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="1">
+            <widget class="QPlainTextEdit" name="genreText_2"/>
+           </item>
+           <item row="4" column="0">
+            <widget class="QLabel" name="pathToFile_2">
+             <property name="text">
+              <string>path</string>
+             </property>
+            </widget>
+           </item>
+           <item row="4" column="1">
+            <widget class="QPlainTextEdit" name="pathText_2"/>
+           </item>
+          </layout>
+         </widget>
+         <widget class="QWidget" name="Lyrics">
+          <attribute name="title">
+           <string>Lyrics</string>
+          </attribute>
+          <layout class="QGridLayout" name="gridLayout_2">
+           <item row="0" column="0">
+            <widget class="QPlainTextEdit" name="lyrics"/>
+           </item>
+          </layout>
+         </widget>
+        </widget>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </item>
+  </layout>
  </widget>
  <resources/>
  <connections/>

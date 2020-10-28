@@ -58,7 +58,7 @@ void PlayerView::SetSong(QUrl song) {
                     fname.remove(0, fname.lastIndexOf("/")).toStdString());
 
     ui->playerArtistName->setText(tagger.tags.artist);
-    ui->playerTrackName->setText(tagger.tags.name);
+    ui->playerTrackName->setText(tagger.tags.title);
 
     m_player.SetSong(song);
 }

@@ -1,7 +1,7 @@
 #include "EditFileTagsDialog.h"
 #include "ui_EditFileTagsDialog.h"
 
-EditFileTagsDialog::EditFileTagsDialog(QWidget *parent) :
+EditFileTagsDialog::EditFileTagsDialog(FileTags& file, QWidget *parent) :
     QDialog(parent), ui(new Ui::EditFileTagsDialog) {
     ui->setupUi(this);
 

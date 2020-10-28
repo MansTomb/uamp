@@ -3,6 +3,8 @@
 
 #include <QDialog>
 
+#include "FileTag.h"
+
 namespace Ui {
 class EditFileTagsDialog;
 }
@@ -11,7 +13,7 @@ class EditFileTagsDialog : public QDialog {
     Q_OBJECT
 
 public:
-    explicit EditFileTagsDialog(QWidget *parent = nullptr);
+    explicit EditFileTagsDialog(FileTags& file, QWidget *parent = nullptr);
     ~EditFileTagsDialog();
 
 private:
