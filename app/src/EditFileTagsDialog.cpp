@@ -4,8 +4,14 @@
 EditFileTagsDialog::EditFileTagsDialog(FileTags& file, QWidget *parent) :
     QDialog(parent), ui(new Ui::EditFileTagsDialog) {
     ui->setupUi(this);
-
-    setObjectName(tr("Edit audio-file tags"));
+    setWindowTitle(tr("Edit audio-file tags"));
+    ui->trackName->setText(QString(file.tags.filename.begin(), file.tags.filename.lastIndexOf(".")));
+    ui->artistText_2->setPlainText(file.tags.artist);
+    ui->titleText_2->setPlainText(file.tags.title);
+    ui->albumText_2->setPlainText(file.tags.album);
+    ui->genreText_2->setPlainText(file.tags.album);
+    ui->pathText_2->setPlainText(file.tags.path);
+    ui->pathText_2->setReadOnly(true);
 }
 
 EditFileTagsDialog::~EditFileTagsDialog() {

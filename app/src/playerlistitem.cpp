@@ -28,7 +28,7 @@ PlayerlistItem::~PlayerlistItem() {
     delete ui;
 }
 void PlayerlistItem::execEditFileTagsDialog() {
-    auto *tagsDialog = new EditFileTagsDialog(m_fileInfo);
+    auto *tagsDialog = new EditFileTagsDialog(m_fileInfo, this);
     tagsDialog->exec();
 }
 

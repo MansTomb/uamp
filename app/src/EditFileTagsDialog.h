@@ -12,11 +12,11 @@ class EditFileTagsDialog;
 class EditFileTagsDialog : public QDialog {
     Q_OBJECT
 
-public:
+    public:
     explicit EditFileTagsDialog(FileTags& file, QWidget *parent = nullptr);
     ~EditFileTagsDialog();
 
-private:
+    private:
     Ui::EditFileTagsDialog *ui;
 };
 
