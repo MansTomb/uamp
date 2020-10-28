@@ -1,15 +1,16 @@
 #include "FileTag.h"
 
-FileTags::FileTags(QString &path, QString &fileName) {
-    QString fullPath(path + fileName);
-    tags.filename = fileName;
-    tags.path = fullPath;
-    m_fileRef = TagLib::FileRef(fullPath.toStdString().c_str());
+FileTags::FileTags(const std::string &path, const std::string &fileName) {
+    std::string fullPath(path + fileName);
+    tags.filename = QString::fromStdString(fileName);
+    tags.path = QString::fromStdString(fullPath);
+    m_fileRef = TagLib::FileRef(fullPath.c_str());
 
     if (!m_fileRef.isNull() && m_fileRef.tag()) {
         TagLib::Tag *tag = m_fileRef.tag();
 
         tags.name = tag->title().toCString();
+        qDebug() << tags.name;
         tags.artist = tag->artist().toCString();
         tags.album = tag->album().toCString();
         tags.genre = tag->genre().toCString();

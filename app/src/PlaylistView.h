@@ -1,16 +1,26 @@
 #pragma once
+//
+//#include "../../taglib/taglib/tag.h"
+//#include <../taglib/fileref.h>
+//#include <toolkit/tpropertymap.h>
+//#include <mpegfile.h>
+//#include <id3v2tag.h>
 
 #include <QListWidget>
 #include <QDragEnterEvent>
+#include <QMimeData>
+#include <QDir>
+#include <QDebug>
 
 #include "playerlistitem.h"
 
 class PlaylistView : public QListWidget {
- Q_OBJECT
- public:
+    Q_OBJECT
+    public:
     explicit PlaylistView(QWidget *parent = Q_NULLPTR);
+    void addWidget(const QString& pathTrack, const QString &trackName);
 
- protected:
+    protected:
     void dragMoveEvent(QDragMoveEvent *event) override;
     void dragEnterEvent(QDragEnterEvent *event) override;
     void dragLeaveEvent(QDragLeaveEvent *event) override;
