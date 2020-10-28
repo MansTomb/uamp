@@ -27,8 +27,9 @@ set(SOURCES main.cpp
     src/ToolBar.cpp
     src/SideMenu.cpp
     src/PlaylistListView.cpp
-        src/MenuPlaylistItemView.cpp
-        )
+    src/MenuPlaylistItemView.cpp
+    src/EditFileTagsDialog.cpp
+    )
 
 set(HEADERS src/mainwindow.h
     src/LoginWindow.h
@@ -42,7 +43,8 @@ set(HEADERS src/mainwindow.h
     src/ToolBar.h
     src/SideMenu.h
     src/PlaylistListView.h
-        src/MenuPlaylistItemView.h
+    src/MenuPlaylistItemView.h
+    src/EditFileTagsDialog.h
     )
 
 set(UI src/mainwindow.ui
@@ -51,8 +53,10 @@ set(UI src/mainwindow.ui
     src/PlayerView.ui
     src/ToolBar.ui
     src/SideMenu.ui
-        src/PlaylistListView.ui
-        src/MenuPlaylistItemView.ui)
+    src/PlaylistListView.ui
+    src/MenuPlaylistItemView.ui
+    src/EditFileTagsDialog.ui
+    )
 
 include_directories(../cmake-build-debug/app/uamp_autogen/include)
 include_directories(

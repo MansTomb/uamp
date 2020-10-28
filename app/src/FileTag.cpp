@@ -10,7 +10,6 @@ FileTags::FileTags(const std::string &path, const std::string &fileName) {
         TagLib::Tag *tag = m_fileRef.tag();
 
         tags.name = tag->title().toCString();
-        qDebug() << tags.name;
         tags.artist = tag->artist().toCString();
         tags.album = tag->album().toCString();
         tags.genre = tag->genre().toCString();

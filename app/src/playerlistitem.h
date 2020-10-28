@@ -6,9 +6,11 @@
 #include <QPushButton>
 #include <QHBoxLayout>
 #include <QVBoxLayout>
+#include <QMenu>
 
 
 #include "FileTag.h"
+#include "EditFileTagsDialog.h"
 
 namespace Ui {
 class PlayerlistItem;
@@ -22,10 +24,12 @@ public:
     ~PlayerlistItem() override;
 
 public slots:
-    void ShowContextMenu(const QPoint &pos);
+    void print();
+    void execEditFileTagsDialog();
+//    void ShowContextMenu(const QPoint &pos);
 
 private slots:
-    void on_pushButton_clicked();
+//    void on_pushButton_clicked();
 
 private:
     Ui::PlayerlistItem *ui;
