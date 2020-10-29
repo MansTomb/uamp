@@ -168,10 +168,15 @@
          </property>
          <property name="font">
           <font>
+           <family>PT Mono</family>
            <pointsize>18</pointsize>
-           <weight>75</weight>
-           <bold>true</bold>
+           <weight>9</weight>
+           <italic>false</italic>
+           <bold>false</bold>
           </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">font: 75 18pt &quot;PT Mono&quot;;</string>
          </property>
          <property name="text">
           <string>TrackName</string>
@@ -191,8 +196,15 @@
          </property>
          <property name="font">
           <font>
+           <family>PT Mono</family>
            <pointsize>12</pointsize>
+           <weight>9</weight>
+           <italic>false</italic>
+           <bold>false</bold>
           </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">font: 75 12pt &quot;PT Mono&quot;;</string>
          </property>
          <property name="text">
           <string>ArtistName</string>

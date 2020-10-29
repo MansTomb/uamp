@@ -28,6 +28,7 @@ public slots:
 signals:
     void CurrentSongChanged(FileTags *song);
     void FileAdded(QString playlistName, FileTags *song);
+    void SetImage(QPixmap *img);
 
 protected:
     void dragMoveEvent(QDragMoveEvent *event) override;

@@ -45,6 +45,7 @@ void PlaylistView::addWidget(const QString &pathTrack, const QString &trackName)
     auto *widget = new PlayerlistItem(count(), pathTrack, trackName);
     setItemWidget(item, widget);
     connect(widget, &PlayerlistItem::CurrentSong, this, &PlaylistView::CurrentSongChanged);
+    connect(widget, &PlayerlistItem::SetImage, this, &PlaylistView::SetImage);
     emit FileAdded(m_playlistName, widget->song());
 }
 
@@ -88,4 +89,5 @@ void PlaylistView::addLotOfSongs(const QList<QUrl> &droppedData) {
             addWidget(fileInfo.absolutePath() + "/", fileInfo.fileName());
     }
 }
+
 

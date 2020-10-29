@@ -1,3 +1,4 @@
+#include <QFileDialog>
 #include "EditFileTagsDialog.h"
 #include "ui_EditFileTagsDialog.h"
 
@@ -24,5 +25,16 @@ void EditFileTagsDialog::accept() {
     m_file.tags.album = ui->albumText_2->toPlainText();
     m_file.tags.genre = ui->genreText_2->toPlainText();
     m_file.upgradeFileTags(m_file.tags.path.toStdString());
+    if (m_changeImg) {
+        m_file.setImage(m_pathToImg.toStdString().c_str());
+        QImage img(m_pathToImg.toStdString().c_str());
+        m_file.setM_picture(new QPixmap(QPixmap::fromImage(img)));
+    }
     QDialog::accept();
+}
+
+void EditFileTagsDialog::on_pushButton_clicked() {
+    m_pathToImg = QFileDialog::getOpenFileName(this, tr("Open Image"), "/home",
+                                               tr("Image Files (*.png *.jpg *.bmp)"));
+    m_changeImg = true;
 }

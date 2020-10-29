@@ -57,6 +57,10 @@ void PlayerView::SetSong(FileTags *song) {
     ui->playerTrackName->setText(song->tags.title);
 
     m_player.SetSong(song);
+    if (song->getImage() != nullptr)
+        ui->playerAlbumImage->setPixmap(*song->getImage());
+    else
+        setDefaultImage();
 }
 
 void PlayerView::setDefaultImage() {
@@ -66,5 +70,8 @@ void PlayerView::setDefaultImage() {
 }
 
 void PlayerView::SetImage(QPixmap *img) {
-    qDebug() << "img";
+    if (img != nullptr)
+        ui->playerAlbumImage->setPixmap(*img);
+    else
+        setDefaultImage();
 }

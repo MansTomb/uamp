@@ -41,8 +41,9 @@ class FileTags {
     friend std::ostream& operator<<(std::ostream& out, const FileTags& file);
     void setLyrics(const QString& songText);
     QString getLyrics(std::string path);
-    void setImage(const char *file_path, const char *image_path);
+    void setImage(const char *image_path);
     QPixmap *getImage();
+    void setM_picture(QPixmap *picture);
 
 public:
     signals:
@@ -50,5 +51,5 @@ public:
 
     private:
     TagLib::FileRef m_fileRef;
-    QPixmap *m_picture;
+    QPixmap *m_picture = nullptr;
 };

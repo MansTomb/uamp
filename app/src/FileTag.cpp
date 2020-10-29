@@ -59,11 +59,9 @@ QPixmap *FileTags::getImage() {
     TagLib::ID3v2::Tag *m_tag = file.ID3v2Tag(true);
     TagLib::ID3v2::FrameList frameList = m_tag->frameList("APIC");
 
-//    if(frameList.isEmpty()) {
-//        m_ui->pictureLabel->setPixmap(m_picture->scaled(m_ui->pictureLabel->width(),
-//                                                        m_ui->pictureLabel->height(), Qt::KeepAspectRatio));
-//        return ;
-//    }
+    if(frameList.isEmpty()) {
+        return nullptr;
+    }
     auto *coverImg = dynamic_cast<TagLib::ID3v2::AttachedPictureFrame *>(frameList.front());
 
     QImage coverQImg;
@@ -73,6 +71,31 @@ QPixmap *FileTags::getImage() {
     return m_picture;
 }
 
+void FileTags::setImage(const char *image_path) {
+    TagLib::MPEG::File mpegFile(tags.path.toStdString().c_str());
+    TagLib::ID3v2::Tag *tag = mpegFile.ID3v2Tag();
+    TagLib::ID3v2::FrameList frames = tag->frameList("APIC");
+    TagLib::ID3v2::AttachedPictureFrame *frame = nullptr;
+
+    if(frames.isEmpty()) {
+        frame = new TagLib::ID3v2::AttachedPictureFrame;
+        tag->addFrame(frame);
+    }
+    else {
+        frame = dynamic_cast<TagLib::ID3v2::AttachedPictureFrame *>(frames.front());
+    }
+
+    ImageFile imageFile(image_path);
+    TagLib::ByteVector imageData = imageFile.data();
+    frame->setMimeType("image/jpeg");
+    frame->setPicture(imageData);
+    mpegFile.save();
+
+}
+
+void FileTags::setM_picture(QPixmap *picture) {
+    m_picture = picture;
+}
 
 /*
  * void MainWindow::setLyrics(std::string songText) {
@@ -117,23 +140,5 @@ void MainWindow::on_saveLyrics_clicked() {
         QMessageBox::warning(this, "Warning", "Select a one of files in the main window!");
     }
 }
- void MainWindow::setImage(const char *file_path, const char *image_path) {
-    TagLib::MPEG::File mpegFile(file_path);
-    TagLib::ID3v2::Tag *tag = mpegFile.ID3v2Tag();
-    TagLib::ID3v2::FrameList frames = tag->frameList("APIC");
-    TagLib::ID3v2::AttachedPictureFrame *frame = 0;
-    if(frames.isEmpty()) {
-        frame = new TagLib::ID3v2::AttachedPictureFrame;
-        tag->addFrame(frame);
-    }
-    else {
-        frame = dynamic_cast<TagLib::ID3v2::AttachedPictureFrame *>(frames.front());
-    }
-    ImageFile imageFile(image_path);
-    TagLib::ByteVector imageData = imageFile.data();
-    frame->setMimeType("image/jpeg");
-    frame->setPicture(imageData);
-    mpegFile.save();
-
 
  */

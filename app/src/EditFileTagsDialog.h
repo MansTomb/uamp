@@ -19,10 +19,15 @@ class EditFileTagsDialog : public QDialog {
     ~EditFileTagsDialog();
 
 
-    private:
+private slots:
+    void on_pushButton_clicked();
+
+private:
     void accept() override;
 
     FileTags& m_file;
+    QString m_pathToImg;
+    bool m_changeImg = false;
     Ui::EditFileTagsDialog *ui;
 };
 
