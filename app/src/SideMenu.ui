@@ -148,8 +148,115 @@
    <extends>QWidget</extends>
    <header>PlaylistListView.h</header>
    <container>1</container>
+   <slots>
+    <signal>SongAddedToPlaylist(QString,FileTags*)</signal>
+    <signal>SongRemovedFromPlaylist(QString,FileTags*)</signal>
+    <signal>PlaylistRenamed(QString,QString)</signal>
+    <signal>PlaylistDeleted(QString)</signal>
+    <signal>PlaylistCreated(QString)</signal>
+    <slot>AddSongToPlaylist(FileTags*,QString)</slot>
+    <slot>RemoveSongFromPlaylist(FileTags*,QString)</slot>
+    <slot>RenamePlaylist(QString,QString)</slot>
+    <slot>DeletePlaylist(QString)</slot>
+    <slot>CreateNewPlaylist(QString)</slot>
+   </slots>
   </customwidget>
  </customwidgets>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>playlists</sender>
+   <signal>PlaylistCreated(QString)</signal>
+   <receiver>SideMenu</receiver>
+   <slot>PlaylistCreatedSlot(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>138</x>
+     <y>251</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>296</x>
+     <y>311</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>playlists</sender>
+   <signal>PlaylistDeleted(QString)</signal>
+   <receiver>SideMenu</receiver>
+   <slot>PlaylistDeletedSlot(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>137</x>
+     <y>179</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>498</x>
+     <y>221</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>playlists</sender>
+   <signal>PlaylistRenamed(QString,QString)</signal>
+   <receiver>SideMenu</receiver>
+   <slot>PlaylistRenamedSlot(QString,QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>139</x>
+     <y>249</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>392</x>
+     <y>279</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>playlists</sender>
+   <signal>SongAddedToPlaylist(QString,FileTags*)</signal>
+   <receiver>SideMenu</receiver>
+   <slot>SongAddedToPlaylistSlot(QString,FileTags*)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>207</x>
+     <y>354</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>346</x>
+     <y>354</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>playlists</sender>
+   <signal>SongRemovedFromPlaylist(QString,FileTags*)</signal>
+   <receiver>SideMenu</receiver>
+   <slot>SongRemovedFromPlaylistSlot(QString,FileTags*)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>196</x>
+     <y>338</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>309</x>
+     <y>344</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <signal>PlaylistCreated(QString)</signal>
+  <signal>PlaylistDeleted(QString)</signal>
+  <signal>PlaylistRenamed(QString,QString)</signal>
+  <signal>SongAddedToPlaylist(QString,FileTags*)</signal>
+  <signal>SongRemovedFromPlaylist(QString,FileTags*)</signal>
+  <slot>PlaylistCreatedSlot(QString)</slot>
+  <slot>PlaylistDeletedSlot(QString)</slot>
+  <slot>PlaylistRenamedSlot(QString,QString)</slot>
+  <slot>SongAddedToPlaylistSlot(QString,FileTags*)</slot>
+  <slot>SongRemovedFromPlaylistSlot(QString,FileTags*)</slot>
+  <slot>AddSongToPlaylist(QString,FileTags*)</slot>
+  <slot>RemoveSongFromPlaylist(QString,FIleTags*)</slot>
+ </slots>
 </ui>
