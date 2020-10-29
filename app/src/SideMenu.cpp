@@ -2,13 +2,11 @@
 
 SideMenu::SideMenu(QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::SideMenu)
-{
+    ui(new Ui::SideMenu) {
     ui->setupUi(this);
     setAttribute(Qt::WA_StyledBackground, true);
 }
 
-SideMenu::~SideMenu()
-{
+SideMenu::~SideMenu() {
     delete ui;
 }

@@ -293,6 +293,7 @@ QPushButton:pressed {
     <signal>PlaylistRenamed(QString,QString)</signal>
     <signal>PlaylistDeleted(QString)</signal>
     <signal>PlaylistCreated(QString)</signal>
+    <signal>PlaylistRenamedForLabel(QString)</signal>
     <slot>AddSongToPlaylist(QString,FileTags*)</slot>
     <slot>RemoveSongFromPlayList(QString,FileTags*)</slot>
    </slots>
@@ -457,6 +458,22 @@ QPushButton:pressed {
     <hint type="destinationlabel">
      <x>128</x>
      <y>326</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>sideMenu</sender>
+   <signal>PlaylistRenamedForLabel(QString)</signal>
+   <receiver>PlaylistName</receiver>
+   <slot>setText(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>184</x>
+     <y>125</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>822</x>
+     <y>53</y>
     </hint>
    </hints>
   </connection>

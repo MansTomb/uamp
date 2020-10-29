@@ -32,4 +32,6 @@ class PlaylistListView : public QWidget
     void PlaylistCreated(QString playlistName);
  private:
     Ui::PlaylistsView *ui;
+
+    void LoadDefaultPlaylist();
 };

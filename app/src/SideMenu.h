@@ -20,9 +20,10 @@ public:
  public slots:
     void AddSongToPlaylist(QString playlistName, FileTags *song) { ui->playlists->AddSongToPlaylist(playlistName, song);};
     void RemoveSongToPlaylist(QString playlistName, FileTags *song) {ui->playlists->RemoveSongFromPlaylist(playlistName,song);};
+
     void SongAddedToPlaylistSlot(QString playlistName, FileTags *song) {emit SongAddedToPlaylist(playlistName, song);};
     void SongRemovedFromPlaylistSlot(QString playlistName, FileTags *song) {emit SongRemovedFromPlaylist(playlistName, song);};
-    void PlaylistRenamedSlot(QString old, QString newName) {emit PlaylistRenamed(old, newName);};
+    void PlaylistRenamedSlot(QString old, QString newName) {emit PlaylistRenamed(old, newName); emit PlaylistRenamedForLabel(newName);};
     void PlaylistDeletedSlot(QString playlistName) {emit PlaylistDeleted(playlistName);};
     void PlaylistCreatedSlot(QString playlistName) {emit PlaylistCreated(playlistName);};
 
@@ -30,6 +31,7 @@ public:
     void SongAddedToPlaylist(QString playlistName, FileTags *song);
     void SongRemovedFromPlaylist(QString playlistName, FileTags *song);
     void PlaylistRenamed(QString old, QString newName);
+    void PlaylistRenamedForLabel(QString newName);
     void PlaylistDeleted(QString playlistName);
     void PlaylistCreated(QString playlistName);
 

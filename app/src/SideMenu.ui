@@ -154,8 +154,8 @@
     <signal>PlaylistRenamed(QString,QString)</signal>
     <signal>PlaylistDeleted(QString)</signal>
     <signal>PlaylistCreated(QString)</signal>
-    <slot>AddSongToPlaylist(FileTags*,QString)</slot>
-    <slot>RemoveSongFromPlaylist(FileTags*,QString)</slot>
+    <slot>AddSongToPlaylist(QString,FileTags*)</slot>
+    <slot>RemoveSongFromPlaylist(QString,FileTags*)</slot>
     <slot>RenamePlaylist(QString,QString)</slot>
     <slot>DeletePlaylist(QString)</slot>
     <slot>CreateNewPlaylist(QString)</slot>
@@ -198,22 +198,6 @@
   </connection>
   <connection>
    <sender>playlists</sender>
-   <signal>PlaylistRenamed(QString,QString)</signal>
-   <receiver>SideMenu</receiver>
-   <slot>PlaylistRenamedSlot(QString,QString)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>139</x>
-     <y>249</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>392</x>
-     <y>279</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>playlists</sender>
    <signal>SongAddedToPlaylist(QString,FileTags*)</signal>
    <receiver>SideMenu</receiver>
    <slot>SongAddedToPlaylistSlot(QString,FileTags*)</slot>
@@ -244,6 +228,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>playlists</sender>
+   <signal>PlaylistRenamed(QString,QString)</signal>
+   <receiver>SideMenu</receiver>
+   <slot>PlaylistRenamedSlot(QString,QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>124</x>
+     <y>330</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>124</x>
+     <y>315</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <signal>PlaylistCreated(QString)</signal>
@@ -251,6 +251,7 @@
   <signal>PlaylistRenamed(QString,QString)</signal>
   <signal>SongAddedToPlaylist(QString,FileTags*)</signal>
   <signal>SongRemovedFromPlaylist(QString,FileTags*)</signal>
+  <signal>PlaylistRenamedForLabel(QString)</signal>
   <slot>PlaylistCreatedSlot(QString)</slot>
   <slot>PlaylistDeletedSlot(QString)</slot>
   <slot>PlaylistRenamedSlot(QString,QString)</slot>
