@@ -9,7 +9,7 @@ GoogleAuthWrapper::GoogleAuthWrapper() {
     json.open(QIODevice::ReadOnly);
     const auto bytes = json.readAll();
     document = QJsonDocument(QJsonDocument::fromJson(bytes, &error));
-    qDebug() << error.errorString();
+//    qDebug() << error.errorString();
     json.close();
 
     google->setModifyParametersFunction([](QAbstractOAuth::Stage stage, QVariantMap* parameters) {

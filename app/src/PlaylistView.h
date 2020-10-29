@@ -15,8 +15,10 @@
 #include "playerlistitem.h"
 
 class PlaylistView : public QListWidget {
+
     Q_OBJECT
-    public:
+
+public:
     explicit PlaylistView(QWidget *parent = Q_NULLPTR);
     void addWidget(const QString& pathTrack, const QString &trackName);
 
@@ -26,9 +28,16 @@ public slots:
 signals:
     void CurrentSongChanged(FileTags *song);
 
-    protected:
+protected:
     void dragMoveEvent(QDragMoveEvent *event) override;
     void dragEnterEvent(QDragEnterEvent *event) override;
     void dragLeaveEvent(QDragLeaveEvent *event) override;
     void dropEvent(QDropEvent *event) override;
+
+private:
+    bool checkPerm(const QFileInfo &fileInfo);
+    void addSong(const QFileInfo &fileInfo);
+    void addLotOfSongs(const QList<QUrl> &droppedData);
+    void addSongsDir(const QList<QUrl> &droppedData);
+    static QStringList m_allFiles;
 };
