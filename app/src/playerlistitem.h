@@ -30,6 +30,7 @@ public slots:
 
 signals:
     void CurrentSong(FileTags *song);
+    void SetImage(QPixmap *img);
 
 private:
     QString getFormat();

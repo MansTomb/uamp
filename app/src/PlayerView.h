@@ -29,8 +29,10 @@ public:
     void SetSong(FileTags *song);
 
  private:
+    void setDefaultImage();
     Ui::PlayerView *ui;
     PlayerController m_player;
+    QPixmap *m_picture;
 };
 
 #endif // PLAYERVIEW_H

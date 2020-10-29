@@ -14,10 +14,12 @@
 #include <id3v2tag.h>
 #include <QString>
 #include <QDebug>
+#include <QPixmap>
 
 #include "ImageFile.h"
 
 class FileTags {
+
     public:
     struct  Tags{
         QString filename;
@@ -37,7 +39,16 @@ class FileTags {
     FileTags(const std::string &path, const std::string &fileName);
     void upgradeFileTags(const std::string &new_tags);
     friend std::ostream& operator<<(std::ostream& out, const FileTags& file);
+    void setLyrics(const QString& songText);
+    QString getLyrics(std::string path);
+    void setImage(const char *file_path, const char *image_path);
+    void getImage(std::string path);
+
+public:
+    signals:
+
 
     private:
     TagLib::FileRef m_fileRef;
+    QPixmap *m_picture;
 };

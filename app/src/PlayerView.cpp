@@ -4,6 +4,7 @@
 
 PlayerView::PlayerView(QWidget *parent) : QWidget(parent), ui(new Ui::PlayerView) {
     ui->setupUi(this);
+    setDefaultImage();
 //
 //    QMediaPlaylist *playlist = new QMediaPlaylist;
 //
@@ -56,4 +57,10 @@ void PlayerView::SetSong(FileTags *song) {
     ui->playerTrackName->setText(song->tags.title);
 
     m_player.SetSong(song);
+}
+
+void PlayerView::setDefaultImage() {
+    QImage def_cover(":/playerIcons/default.png");
+    m_picture = new QPixmap(QPixmap::fromImage(def_cover));
+    ui->playerAlbumImage->setPixmap(*m_picture);
 }
