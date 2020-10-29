@@ -41,4 +41,5 @@ private:
     void addLotOfSongs(const QList<QUrl> &droppedData);
     void addSongsDir(const QList<QUrl> &droppedData);
     static QStringList m_allFiles;
+    QString m_playlistName;
 };

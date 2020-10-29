@@ -1,7 +1,7 @@
 #include <QErrorMessage>
 #include "PlaylistView.h"
 
-PlaylistView::PlaylistView(QWidget *parent) : QListWidget(parent) {
+PlaylistView::PlaylistView(QWidget *parent) : QListWidget(parent), m_playlistName("Default") {
 }
 
 void PlaylistView::dragMoveEvent(QDragMoveEvent *event) {
@@ -45,6 +45,7 @@ void PlaylistView::addWidget(const QString &pathTrack, const QString &trackName)
     auto *widget = new PlayerlistItem(count(), pathTrack, trackName);
     setItemWidget(item, widget);
     connect(widget, &PlayerlistItem::CurrentSong, this, &PlaylistView::CurrentSongChanged);
+    emit FileAdded(m_playlistName, widget->song());
 }
 
 void PlaylistView::addSong(const QFileInfo &fileInfo) {

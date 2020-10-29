@@ -22,12 +22,10 @@ class PlayerlistItem : public QWidget{
 public:
     explicit PlayerlistItem(int number, const QString &pathTrack, const QString &trackName, QWidget *parent = nullptr);
     ~PlayerlistItem() override;
+    FileTags *song();
 
 public slots:
- protected:
     void mouseDoubleClickEvent(QMouseEvent *event) override;
- public:
-    void print();
     void execEditFileTagsDialog();
 
 signals:
@@ -38,7 +36,7 @@ private:
     Ui::PlayerlistItem *ui;
     QString m_pathToTrack;
     QString m_trackName;
-    FileTags m_fileInfo;
+    FileTags *m_fileInfo;
 };
 
 #endif // PLAYERLISTITEM_H

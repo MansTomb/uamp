@@ -16,7 +16,7 @@ void PlaylistListView::CreateNewPlaylist(QString playlistName) {
 
 void PlaylistListView::AddSongToPlaylist(const QString &playlistName, FileTags *song) {
     ui->list->findChild<MenuPlaylistItemView *>(playlistName)->AddSong(song);
-    qDebug() << ui->list->findChild<MenuPlaylistItemView *>(playlistName)->Playlist().count();
+//    qDebug() << ui->list->findChild<MenuPlaylistItemView *>(playlistName)->Playlist().count();
 }
 
 void PlaylistListView::RemoveSongFromPlaylist(const QString &playlistName, FileTags *song) {
