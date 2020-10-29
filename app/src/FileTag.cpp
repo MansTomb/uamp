@@ -54,6 +54,26 @@ void FileTags::upgradeFileTags(const std::string &new_tags) {
     file.save();
 }
 
+QPixmap *FileTags::getImage() {
+    TagLib::MPEG::File file(tags.path.toStdString().c_str());
+    TagLib::ID3v2::Tag *m_tag = file.ID3v2Tag(true);
+    TagLib::ID3v2::FrameList frameList = m_tag->frameList("APIC");
+
+//    if(frameList.isEmpty()) {
+//        m_ui->pictureLabel->setPixmap(m_picture->scaled(m_ui->pictureLabel->width(),
+//                                                        m_ui->pictureLabel->height(), Qt::KeepAspectRatio));
+//        return ;
+//    }
+    auto *coverImg = dynamic_cast<TagLib::ID3v2::AttachedPictureFrame *>(frameList.front());
+
+    QImage coverQImg;
+    coverQImg.loadFromData((const uchar *)coverImg->picture().data(),
+                           coverImg->picture().size());
+    m_picture = new QPixmap(QPixmap::fromImage(coverQImg));
+    return m_picture;
+}
+
+
 /*
  * void MainWindow::setLyrics(std::string songText) {
     if (!m_songPath.empty()) {
@@ -74,19 +94,7 @@ void FileTags::upgradeFileTags(const std::string &new_tags) {
 
 
 
-std::string MainWindow::getLyrics(std::string path) {
-    TagLib::String lyrics;
-    TagLib::MPEG::File file(path.c_str());
-    TagLib::ID3v2::FrameList frames = file.ID3v2Tag()->frameListMap()["USLT"];
-    TagLib::ID3v2::UnsynchronizedLyricsFrame *frame = NULL;
 
-    if (!frames.isEmpty()) {
-        frame = dynamic_cast<TagLib::ID3v2::UnsynchronizedLyricsFrame *>(frames.front());
-        if (frame)
-            lyrics = frame->text();
-    }
-    return std::string(lyrics.toCString());
-}
 
 void MainWindow::on_saveLyrics_clicked() {
     if (!m_songPath.empty()) {
@@ -127,25 +135,5 @@ void MainWindow::on_saveLyrics_clicked() {
     frame->setPicture(imageData);
     mpegFile.save();
 
-void MainWindow::getImage(std::string path) {
-    TagLib::MPEG::File file(path.c_str());
-    TagLib::ID3v2::Tag *m_tag = file.ID3v2Tag(true);
-    TagLib::ID3v2::FrameList frameList = m_tag->frameList("APIC");
 
-    if(frameList.isEmpty()) {
-        m_ui->pictureLabel->setPixmap(m_picture->scaled(m_ui->pictureLabel->width(),
-                                                        m_ui->pictureLabel->height(), Qt::KeepAspectRatio));
-        return ;
-    }
-    auto *coverImg = dynamic_cast<TagLib::ID3v2::AttachedPictureFrame *>(frameList.front());
-
-    QImage coverQImg;
-    coverQImg.loadFromData((const uchar *)coverImg->picture().data(),
-                            coverImg->picture().size());
-    QPixmap pic = QPixmap::fromImage(coverQImg);
-    m_ui->pictureLabel->setPixmap(pic.scaled(m_ui->pictureLabel->width(),
-                                             m_ui->pictureLabel->height(), Qt::KeepAspectRatio));
-}
-
-}
  */

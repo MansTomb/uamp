@@ -7,6 +7,7 @@ PlayerlistItem::PlayerlistItem(int number, const QString& pathTrack, const QStri
     m_fileInfo(new FileTags(pathTrack.toStdString(), trackName.toStdString())) {
     ui->setupUi(this);
 
+    emit SetImage(m_fileInfo->getImage());
     QString name(trackName.begin(), trackName.lastIndexOf("."));
     ui->trackNameAndArtist->setText(QString::number(number) + ": " + name);
     ui->infoAboutTrack->setText(getFormat() + "::" + m_fileInfo->tags.bitrate + "::" + m_fileInfo->tags.channels

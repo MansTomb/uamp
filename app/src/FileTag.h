@@ -42,7 +42,7 @@ class FileTags {
     void setLyrics(const QString& songText);
     QString getLyrics(std::string path);
     void setImage(const char *file_path, const char *image_path);
-    void getImage(std::string path);
+    QPixmap *getImage();
 
 public:
     signals:

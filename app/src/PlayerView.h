@@ -2,6 +2,7 @@
 #define PLAYERVIEW_H
 
 #include <QWidget>
+#include <QPixmap>
 
 #include "PlayerController.h"
 #include "ui_playerview.h"
@@ -18,7 +19,8 @@ public:
     explicit PlayerView(QWidget *parent = nullptr);
     ~PlayerView();
 
- public slots:
+
+public slots:
     void ChangeVolume(int value);
     void Play(bool state);
     void Mute(bool state);
@@ -27,6 +29,7 @@ public:
     void Backward();
     void Forward();
     void SetSong(FileTags *song);
+    void SetImage(QPixmap *img);
 
  private:
     void setDefaultImage();

@@ -242,6 +242,7 @@ QPushButton:pressed {
    <slots>
     <signal>CurrentSongChanged(FileTags*)</signal>
     <signal>FileAdded(QString,FileTags*)</signal>
+    <signal>SetImage(QPixmap*)</signal>
    </slots>
   </customwidget>
   <customwidget>
@@ -258,6 +259,7 @@ QPushButton:pressed {
     <slot>Forward()</slot>
     <slot>Backward()</slot>
     <slot>SetSong(FileTags*)</slot>
+    <slot>SetImage(QPixmap*)</slot>
    </slots>
   </customwidget>
   <customwidget>
@@ -457,6 +459,22 @@ QPushButton:pressed {
     <hint type="destinationlabel">
      <x>128</x>
      <y>326</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>listView</sender>
+   <signal>SetImage(QPixmap*)</signal>
+   <receiver>playerView</receiver>
+   <slot>SetImage(QPixmap*)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>776</x>
+     <y>278</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>583</x>
+     <y>272</y>
     </hint>
    </hints>
   </connection>

@@ -64,3 +64,7 @@ void PlayerView::setDefaultImage() {
     m_picture = new QPixmap(QPixmap::fromImage(def_cover));
     ui->playerAlbumImage->setPixmap(*m_picture);
 }
+
+void PlayerView::SetImage(QPixmap *img) {
+    qDebug() << "img";
+}
