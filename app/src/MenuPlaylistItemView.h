@@ -23,7 +23,7 @@ public:
     void AddSong(FileTags *song) {m_playlist.append(song); emit SongAdded(m_name, song);};
     void RemoveSong(FileTags *song) {m_playlist.removeOne(song); emit SongRemoved(m_name, song);};
 
-    void Rename(QString newName) {m_name = newName; ui->playListname->setText(m_name);};
+    void Rename(QString newName) {emit PlaylistRenamed(m_name, newName);m_name = newName; ui->playListname->setText(m_name);};
 
     QList<FileTags *> Playlist() const {return m_playlist;};
     QListWidgetItem *ParentItem() {return m_parent;};
@@ -31,6 +31,7 @@ public:
  signals:
     void SongRemoved(QString name, FileTags *song);
     void SongAdded(QString name, FileTags *song);
+    void PlaylistRenamed(QString old, QString newName);
 
 private:
     QListWidgetItem *m_parent {Q_NULLPTR};
