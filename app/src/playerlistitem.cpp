@@ -38,4 +38,8 @@ QString PlayerlistItem::getFormat() {
     std::string formatFile = m_fileInfo.tags.filename.toStdString();
     return QString::fromStdString(formatFile.substr(formatFile.find_last_of('.') + 1)).toUpper();
 }
+void PlayerlistItem::mouseDoubleClickEvent(QMouseEvent *event) {
+    QWidget::mouseDoubleClickEvent(event);
+    emit CurrentSong(&m_fileInfo);
+}
 

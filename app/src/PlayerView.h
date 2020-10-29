@@ -18,7 +18,6 @@ public:
     explicit PlayerView(QWidget *parent = nullptr);
     ~PlayerView();
 
-    void SetSong(QUrl song);
  public slots:
     void ChangeVolume(int value);
     void Play(bool state);
@@ -27,6 +26,7 @@ public:
     void Next();
     void Backward();
     void Forward();
+    void SetSong(FileTags *song);
 
  private:
     Ui::PlayerView *ui;

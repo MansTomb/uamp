@@ -20,6 +20,12 @@ class PlaylistView : public QListWidget {
     explicit PlaylistView(QWidget *parent = Q_NULLPTR);
     void addWidget(const QString& pathTrack, const QString &trackName);
 
+public slots:
+    void ChangeCurrentSong(FileTags *song) {emit CurrentSongChanged(song);};
+
+signals:
+    void CurrentSongChanged(FileTags *song);
+
     protected:
     void dragMoveEvent(QDragMoveEvent *event) override;
     void dragEnterEvent(QDragEnterEvent *event) override;

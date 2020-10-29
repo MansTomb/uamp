@@ -26,10 +26,11 @@ public:
 public slots:
     void print();
     void execEditFileTagsDialog();
-//    void ShowContextMenu(const QPoint &pos);
+    protected:
+    void mouseDoubleClickEvent(QMouseEvent *event) override;
 
-private slots:
-//    void on_pushButton_clicked();
+signals:
+    void CurrentSong(FileTags *song);
 
 private:
     QString getFormat();

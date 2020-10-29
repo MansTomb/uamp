@@ -6,7 +6,9 @@ PlaylistView::PlaylistView(QWidget *parent) : QListWidget(parent) {
 //        auto *item = new QListWidgetItem;
 //        addItem(item);
 //        item->setSizeHint(QSize(50,75));
-//        setItemWidget(item, new PlayerlistItem(i));
+//        auto widget = new PlayerlistItem(i);
+//        connect(widget, &PlayerlistItem::CurrentSong, this, &PlaylistView::CurrentSongChanged);
+//        setItemWidget(item, );
 //    }
 }
 
@@ -45,6 +47,9 @@ void PlaylistView::addWidget(const QString &pathTrack, const QString &trackName)
     auto *item = new QListWidgetItem;
     addItem(item);
     item->setSizeHint(QSize(50,75));
-    setItemWidget(item, new PlayerlistItem(count(), pathTrack, trackName));
+    auto *widget = new PlayerlistItem(count(), pathTrack, trackName);
+    setItemWidget(item, widget);
+    connect(widget, &PlayerlistItem::CurrentSong, this, &PlaylistView::CurrentSongChanged);
+
 }
 

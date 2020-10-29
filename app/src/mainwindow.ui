@@ -217,6 +217,9 @@ QPushButton:pressed {
    <class>PlaylistView</class>
    <extends>QListView</extends>
    <header>PlaylistView.h</header>
+   <slots>
+    <signal>CurrentSongChanged(FileTags*)</signal>
+   </slots>
   </customwidget>
   <customwidget>
    <class>PlayerView</class>
@@ -231,6 +234,7 @@ QPushButton:pressed {
     <slot>Mute(bool)</slot>
     <slot>Forward()</slot>
     <slot>Backward()</slot>
+    <slot>SetSong(FileTags*)</slot>
    </slots>
   </customwidget>
   <customwidget>
@@ -271,12 +275,12 @@ QPushButton:pressed {
    <slot>Play(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>286</x>
-     <y>531</y>
+     <x>618</x>
+     <y>649</y>
     </hint>
     <hint type="destinationlabel">
-     <x>275</x>
-     <y>378</y>
+     <x>607</x>
+     <y>401</y>
     </hint>
    </hints>
   </connection>
@@ -287,8 +291,8 @@ QPushButton:pressed {
    <slot>Backward()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>385</x>
-     <y>532</y>
+     <x>717</x>
+     <y>649</y>
     </hint>
     <hint type="destinationlabel">
      <x>364</x>
@@ -303,8 +307,8 @@ QPushButton:pressed {
    <slot>Forward()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>446</x>
-     <y>522</y>
+     <x>778</x>
+     <y>649</y>
     </hint>
     <hint type="destinationlabel">
      <x>426</x>
@@ -319,12 +323,12 @@ QPushButton:pressed {
    <slot>Mute(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>322</x>
-     <y>533</y>
+     <x>654</x>
+     <y>649</y>
     </hint>
     <hint type="destinationlabel">
-     <x>324</x>
-     <y>478</y>
+     <x>656</x>
+     <y>501</y>
     </hint>
    </hints>
   </connection>
@@ -335,12 +339,12 @@ QPushButton:pressed {
    <slot>Next()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>244</x>
-     <y>515</y>
+     <x>576</x>
+     <y>649</y>
     </hint>
     <hint type="destinationlabel">
-     <x>249</x>
-     <y>476</y>
+     <x>581</x>
+     <y>499</y>
     </hint>
    </hints>
   </connection>
@@ -351,12 +355,12 @@ QPushButton:pressed {
    <slot>Previous()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>206</x>
-     <y>524</y>
+     <x>538</x>
+     <y>649</y>
     </hint>
     <hint type="destinationlabel">
-     <x>213</x>
-     <y>490</y>
+     <x>545</x>
+     <y>513</y>
     </hint>
    </hints>
   </connection>
@@ -367,12 +371,28 @@ QPushButton:pressed {
    <slot>ChangeVolume(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>460</x>
-     <y>518</y>
+     <x>792</x>
+     <y>649</y>
     </hint>
     <hint type="destinationlabel">
      <x>460</x>
      <y>462</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>listView</sender>
+   <signal>CurrentSongChanged(FileTags*)</signal>
+   <receiver>playerView</receiver>
+   <slot>SetSong(FileTags*)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>837</x>
+     <y>224</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>514</x>
+     <y>247</y>
     </hint>
    </hints>
   </connection>

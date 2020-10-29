@@ -13,7 +13,7 @@ PlayerView::PlayerView(QWidget *parent) : QWidget(parent), ui(new Ui::PlayerView
 //
 //    playlist->save(QUrl::fromLocalFile("/Users/abalabin/Desktop/pylist.m3u"), "m3u");
 
-    SetSong(QUrl::fromLocalFile("/Users/mmasniy/Desktop/Music For Uamp/Rag'n'Bone Man - Human.mp3"));
+//    SetSong(FileTags(QUrl::fromLocalFile("/Users/mmasniy/Desktop/Music For Uamp/Rag'n'Bone Man - Human.mp3")));
 }
 
 PlayerView::~PlayerView() {
@@ -51,14 +51,9 @@ void PlayerView::Forward() {
     m_player.Forward();
 }
 
-void PlayerView::SetSong(QUrl song) {
-    QString path(song.toString().remove(0, 7));
-    QString fname(song.toString());
-    FileTags tagger(path.remove(path.lastIndexOf("/"), path.size()).toStdString(),
-                    fname.remove(0, fname.lastIndexOf("/")).toStdString());
-
-    ui->playerArtistName->setText(tagger.tags.artist);
-    ui->playerTrackName->setText(tagger.tags.title);
+void PlayerView::SetSong(FileTags *song) {
+    ui->playerArtistName->setText(song->tags.artist);
+    ui->playerTrackName->setText(song->tags.title);
 
     m_player.SetSong(song);
 }
