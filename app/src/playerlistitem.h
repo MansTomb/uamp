@@ -24,10 +24,11 @@ public:
     ~PlayerlistItem() override;
 
 public slots:
+ protected:
+    void mouseDoubleClickEvent(QMouseEvent *event) override;
+ public:
     void print();
     void execEditFileTagsDialog();
-    protected:
-    void mouseDoubleClickEvent(QMouseEvent *event) override;
 
 signals:
     void CurrentSong(FileTags *song);

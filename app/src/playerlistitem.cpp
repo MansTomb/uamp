@@ -42,4 +42,3 @@ void PlayerlistItem::mouseDoubleClickEvent(QMouseEvent *event) {
     QWidget::mouseDoubleClickEvent(event);
     emit CurrentSong(&m_fileInfo);
 }
-
