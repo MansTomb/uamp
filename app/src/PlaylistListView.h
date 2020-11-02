@@ -2,6 +2,10 @@
 
 #include <QListWidget>
 #include <QDebug>
+#include <QErrorMessage>
+#include <QMenu>
+#include <QInputDialog>
+#include <QDir>
 
 #include "ui_playlistlistview.h"
 #include "FileTag.h"
@@ -23,6 +27,7 @@ class PlaylistListView : public QWidget
     void RenamePlaylist(const QString& old, QString newName);
     void DeletePlaylist(const QString& playlistName);
     void CreateNewPlaylist(QString playlistName);
+    bool ImportNewPlaylist(QString filepath, QString playlistName);
 
  signals:
     void SongAddedToPlaylist(QString playlistName, FileTags *song);
@@ -30,8 +35,14 @@ class PlaylistListView : public QWidget
     void PlaylistRenamed(QString old, QString newName);
     void PlaylistDeleted(QString playlistName);
     void PlaylistCreated(QString playlistName);
+    void Playlists(const QList<MenuPlaylistItemView *>& playlists);
+    void PlaylistChoosed(MenuPlaylistItemView *playlist);
+
  private:
     Ui::PlaylistsView *ui;
 
     void LoadDefaultPlaylist();
+    void CreatePlaylistView();
+    void CreateImportPlaylistView();
+    void SetupPlaylist(const QString &playlistName, QListWidgetItem *item, MenuPlaylistItemView *playlist);
 };
