@@ -27,8 +27,8 @@ public:
     void PlaylistDeletedSlot(QString playlistName) {emit PlaylistDeleted(playlistName);};
     void PlaylistCreatedSlot(QString playlistName) {emit PlaylistCreated(playlistName);};
     void PlaylistChoosedNameSlot(QString playlistName) {emit PlaylistChoosedName(playlistName);};
-    void PlaylistsSlot(QStringList playlists) {
-        qDebug() << playlists;emit ThrowPlaylists(playlists);};
+    void PlaylistChoosedSlot(MenuPlaylistItemView *playlist) {emit PlaylistChoosed(playlist);};
+    void PlaylistsSlot(QStringList playlists) {emit ThrowPlaylists(playlists);};
 
  signals:
     void SongAddedToPlaylist(QString playlistName, FileTags *song);
@@ -38,6 +38,7 @@ public:
     void PlaylistDeleted(QString playlistName);
     void PlaylistCreated(QString playlistName);
     void PlaylistChoosedName(QString playlistName);
+    void PlaylistChoosed(MenuPlaylistItemView *playlist);
     void ThrowPlaylists(QStringList playlists);
 
 private:
