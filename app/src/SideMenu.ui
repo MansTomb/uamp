@@ -40,12 +40,25 @@
         <widget class="QPushButton" name="pushButton_3">
          <property name="maximumSize">
           <size>
-           <width>100</width>
-           <height>25</height>
+           <width>120</width>
+           <height>24</height>
           </size>
          </property>
          <property name="text">
           <string>MainWindow</string>
+         </property>
+         <property name="icon">
+          <iconset resource="../res/resources.qrc">
+           <normaloff>:/menuIcons/01-MainScreen.svg</normaloff>:/menuIcons/01-MainScreen.svg</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>20</width>
+           <height>20</height>
+          </size>
+         </property>
+         <property name="flat">
+          <bool>true</bool>
          </property>
         </widget>
        </item>
@@ -107,7 +120,18 @@
     </layout>
    </item>
    <item>
-    <widget class="PlaylistListView" name="playlists" native="true"/>
+    <widget class="PlaylistListView" name="playlists" native="true">
+     <property name="styleSheet">
+      <string notr="true">
+QListWidget::item:selected {
+    border: 1px solid #6a6ea9;
+}
+
+QPushButton:pressed {
+	background-color: rgb(103, 0, 0);
+}</string>
+     </property>
+    </widget>
    </item>
    <item>
     <layout class="QHBoxLayout" name="bottomMenus" stretch="0,0,2">
@@ -115,6 +139,19 @@
       <widget class="QPushButton" name="pushButton">
        <property name="text">
         <string>Exit</string>
+       </property>
+       <property name="icon">
+        <iconset resource="../res/resources.qrc">
+         <normaloff>:/menuIcons/02-Exit.svg</normaloff>:/menuIcons/02-Exit.svg</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>20</width>
+         <height>20</height>
+        </size>
+       </property>
+       <property name="flat">
+        <bool>true</bool>
        </property>
       </widget>
      </item>
@@ -135,6 +172,19 @@
       <widget class="QPushButton" name="pushButton_2">
        <property name="text">
         <string>Settings</string>
+       </property>
+       <property name="icon">
+        <iconset resource="../res/resources.qrc">
+         <normaloff>:/menuIcons/03-Settings.svg</normaloff>:/menuIcons/03-Settings.svg</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>24</width>
+         <height>24</height>
+        </size>
+       </property>
+       <property name="flat">
+        <bool>true</bool>
        </property>
       </widget>
      </item>
@@ -163,7 +213,9 @@
    </slots>
   </customwidget>
  </customwidgets>
- <resources/>
+ <resources>
+  <include location="../res/resources.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>playlists</sender>

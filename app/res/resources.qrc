@@ -10,7 +10,6 @@
         <file>toolbarIcons/002-play.svg</file>
         <file>toolbarIcons/003-pause.svg</file>
         <file>toolbarIcons/004-disc.svg</file>
-        <file>toolbarIcons/005-note.svg</file>
         <file>toolbarIcons/006-playlist.svg</file>
         <file>toolbarIcons/007-add.svg</file>
         <file>toolbarIcons/008-volume.svg</file>
@@ -62,5 +61,10 @@
         <file>toolbarIcons/054-Menu.svg</file>
         <file>playerIcons/01-Menu.svg</file>
         <file>playerIcons/default.png</file>
+        <file>menuIcons/02-Exit.svg</file>
+        <file>menuIcons/03-Settings.svg</file>
+        <file>menuIcons/04-Add.svg</file>
+        <file>toolbarIcons/005-note.svg</file>
+        <file>menuIcons/01-MainScreen.svg</file>
     </qresource>
 </RCC>

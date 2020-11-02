@@ -30,7 +30,7 @@ public:
     void RemoveSong(FileTags *song) {m_playlist.removeOne(song); emit SongRemoved(m_name, song);};
     void Rename(QString newName) {emit PlaylistRenamed(m_name, newName);m_name = newName; ui->playListname->setText(m_name); setObjectName(m_name);};
 
-    QString PlaylistName() {return m_name;} const;
+    QString PlaylistName() const {return m_name;};
     QList<FileTags *> Playlist() const {return m_playlist;};
     QListWidgetItem *ParentItem() {return m_parent;};
 
