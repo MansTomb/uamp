@@ -7,10 +7,13 @@
 #include <QHBoxLayout>
 #include <QVBoxLayout>
 #include <QMenu>
+#include <QInputDialog>
+#include <QList>
 
 
 #include "FileTag.h"
 #include "EditFileTagsDialog.h"
+#include "MenuPlaylistItemView.h"
 
 namespace Ui {
 class PlayerlistItem;
@@ -27,10 +30,14 @@ public:
 public slots:
     void mouseDoubleClickEvent(QMouseEvent *event) override;
     void execEditFileTagsDialog();
+    void removeFromPlaylist();
+    void addToPlaylist();
+    void updateListPlaylist(const QList<MenuPlaylistItemView *> &playlists);
 
 signals:
     void CurrentSong(FileTags *song);
     void SetImage(QPixmap *img);
+
 
 private:
     QString getFormat();
@@ -38,6 +45,7 @@ private:
     QString m_pathToTrack;
     QString m_trackName;
     FileTags *m_fileInfo;
+    QStringList m_playlists;
 };
 
 #endif // PLAYERLISTITEM_H

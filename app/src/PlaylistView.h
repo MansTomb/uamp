@@ -13,6 +13,7 @@
 #include <QDebug>
 
 #include "playerlistitem.h"
+#include "MenuPlaylistItemView.h"
 
 class PlaylistView : public QListWidget {
 
@@ -24,11 +25,13 @@ public:
 
 public slots:
     void ChangeCurrentSong(FileTags *song) {emit CurrentSongChanged(song);};
+    void updatePlaylists(const QList<MenuPlaylistItemView *>& playlists) {emit SetPlaylists(playlists);};
 
 signals:
     void CurrentSongChanged(FileTags *song);
     void FileAdded(QString playlistName, FileTags *song);
     void SetImage(QPixmap *img);
+    void SetPlaylists(const QList<MenuPlaylistItemView *>& playlists);
 
 protected:
     void dragMoveEvent(QDragMoveEvent *event) override;

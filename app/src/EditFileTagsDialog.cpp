@@ -13,6 +13,7 @@ EditFileTagsDialog::EditFileTagsDialog(FileTags& file, QWidget *parent) :
     ui->genreText_2->setPlainText(file.tags.album);
     ui->pathText_2->setPlainText(file.tags.path);
     ui->pathText_2->setReadOnly(true);
+    ui->lyrics->setPlainText(file.tags.lyrics);
 }
 
 EditFileTagsDialog::~EditFileTagsDialog() {
@@ -25,6 +26,8 @@ void EditFileTagsDialog::accept() {
     m_file.tags.album = ui->albumText_2->toPlainText();
     m_file.tags.genre = ui->genreText_2->toPlainText();
     m_file.upgradeFileTags(m_file.tags.path.toStdString());
+    m_file.tags.lyrics = ui->lyrics->toPlainText();
+    m_file.setLyrics();
     if (m_changeImg) {
         m_file.setImage(m_pathToImg.toStdString().c_str());
         QImage img(m_pathToImg.toStdString().c_str());

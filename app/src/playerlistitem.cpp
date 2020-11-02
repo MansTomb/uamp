@@ -1,4 +1,5 @@
 
+#include <QDir>
 #include "playerlistitem.h"
 #include "ui_playerlistitem.h"
 
@@ -15,11 +16,17 @@ PlayerlistItem::PlayerlistItem(int number, const QString& pathTrack, const QStri
 
     auto *contextMenu = new QMenu(this);
     auto *editTags = new QAction(tr("Edit file tags"), contextMenu);
+    auto *remove = new QAction(tr("Remove from playlist"), contextMenu);
+    auto *addToPlaylist = new QAction(tr("Add to playlist"), contextMenu);
+
 
     contextMenu->addAction(editTags);
+    contextMenu->addAction(remove);
+    contextMenu->addAction(addToPlaylist);
     connect(editTags, &QAction::triggered, this, &PlayerlistItem::execEditFileTagsDialog);
+    connect(remove, &QAction::triggered, this, &PlayerlistItem::removeFromPlaylist);
+    connect(addToPlaylist, &QAction::triggered, this, &PlayerlistItem::addToPlaylist);
     ui->pushButton->setMenu(contextMenu);
-
 }
 
 PlayerlistItem::~PlayerlistItem() {
@@ -36,10 +43,32 @@ QString PlayerlistItem::getFormat() {
     std::string formatFile = m_fileInfo->tags.filename.toStdString();
     return QString::fromStdString(formatFile.substr(formatFile.find_last_of('.') + 1)).toUpper();
 }
+
 void PlayerlistItem::mouseDoubleClickEvent(QMouseEvent *event) {
     QWidget::mouseDoubleClickEvent(event);
     emit CurrentSong(m_fileInfo);
 }
+
 FileTags *PlayerlistItem::song() {
     return m_fileInfo;
 }
+
+void PlayerlistItem::removeFromPlaylist() {
+    qDebug() << "remove from playlist";
+    bool ok = false;
+    QString text = QInputDialog::getItem(this, tr("Remove track"), tr("Choose playlist:"), m_playlists);
+    qDebug() << text;
+    //remove
+}
+
+void PlayerlistItem::addToPlaylist() {
+    qDebug() << "add to playlist";
+    //add
+}
+void PlayerlistItem::updateListPlaylist(const QList<MenuPlaylistItemView *> &playlists) {
+    m_playlists.clear();
+    for (const auto &item : playlists) {
+        m_playlists << item->PlaylistName();
+    }
+}
+

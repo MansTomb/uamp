@@ -26,6 +26,7 @@ public:
     void PlaylistRenamedSlot(QString old, QString newName) {emit PlaylistRenamed(old, newName); emit PlaylistRenamedForLabel(newName);};
     void PlaylistDeletedSlot(QString playlistName) {emit PlaylistDeleted(playlistName);};
     void PlaylistCreatedSlot(QString playlistName) {emit PlaylistCreated(playlistName);};
+    void Playlists(const QList<MenuPlaylistItemView *>& playlists) {emit ThrowPlaylists(playlists);};
 
  signals:
     void SongAddedToPlaylist(QString playlistName, FileTags *song);
@@ -34,6 +35,7 @@ public:
     void PlaylistRenamedForLabel(QString newName);
     void PlaylistDeleted(QString playlistName);
     void PlaylistCreated(QString playlistName);
+    void ThrowPlaylists(const QList<MenuPlaylistItemView *>& playlists);
 
 private:
     Ui::SideMenu *ui;

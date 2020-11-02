@@ -1,3 +1,4 @@
+#include <QMessageBox>
 #include "FileTag.h"
 
 FileTags::FileTags(const std::string &path, const std::string &fileName) {
@@ -13,8 +14,9 @@ FileTags::FileTags(const std::string &path, const std::string &fileName) {
         tags.artist = tag->artist().toCString();
         tags.album = tag->album().toCString();
         tags.genre = tag->genre().toCString();
-//        tags.year = QString::number(tag->year());
-//        tags.trackNumber = QString::number(tag->track());
+        tags.year = QString::number(tag->year());
+        tags.trackNumber = QString::number(tag->track());
+        getLyrics();
     }
 
     if(!m_fileRef.isNull() && m_fileRef.audioProperties()) {
@@ -35,9 +37,9 @@ std::ostream &operator<<(std::ostream &out, const FileTags &file) {
                         << file.tags.title << "\n"
                         << file.tags.artist << "\n"
                         << file.tags.album << "\n"
-                        << file.tags.genre << "\n";
-//                        << file.tags.year << "\n"
-//                        << file.tags.trackNumber;
+                        << file.tags.genre << "\n"
+                        << file.tags.year << "\n"
+                        << file.tags.trackNumber;
     return out;
 }
 
@@ -48,8 +50,8 @@ void FileTags::upgradeFileTags(const std::string &new_tags) {
     file.tag()->setArtist(tags.artist.toStdString());
     file.tag()->setAlbum(tags.album.toStdString());
     file.tag()->setGenre(tags.genre.toStdString());
-//    file.tag()->setYear(tags.year.toInt());
-//    file.tag()->setTrack(tags.trackNumber.toInt());
+    file.tag()->setYear(tags.year.toInt());
+    file.tag()->setTrack(tags.trackNumber.toInt());
 
     file.save();
 }
@@ -97,48 +99,33 @@ void FileTags::setM_picture(QPixmap *picture) {
     m_picture = picture;
 }
 
-/*
- * void MainWindow::setLyrics(std::string songText) {
-    if (!m_songPath.empty()) {
-        TagLib::MPEG::File file(m_songPath.c_str());
-        TagLib::ID3v2::FrameList frames = file.ID3v2Tag()->frameListMap()["USLT"];
+void FileTags::getLyrics() {
+    TagLib::String lyrics;
+    TagLib::MPEG::File file(tags.path.toStdString().c_str());
+    TagLib::ID3v2::FrameList frames = file.ID3v2Tag()->frameListMap()["USLT"];
+    TagLib::ID3v2::UnsynchronizedLyricsFrame *frame = NULL;
+
+    if (!frames.isEmpty()) {
+        frame = dynamic_cast<TagLib::ID3v2::UnsynchronizedLyricsFrame *>(frames.front());
+        if (frame)
+            lyrics = frame->text();
+    }
+    tags.lyrics = QString(lyrics.toCString());
+}
+
+void FileTags::setLyrics() {
+    if (!tags.path.toStdString().empty()) {
+        TagLib::MPEG::File file(tags.path.toStdString().c_str());
+        TagLib::ID3v2::FrameList
+            frames = file.ID3v2Tag()->frameListMap()["USLT"];
         auto *frame = new TagLib::ID3v2::UnsynchronizedLyricsFrame;
 
         if (!file.ID3v2Tag()->frameListMap()["USLT"].isEmpty()) {
             file.ID3v2Tag()->removeFrames(file.ID3v2Tag()->frameListMap()["USLT"].front()->frameID());
         }
-        frame->setText(songText);
+        frame->setText(tags.lyrics.toStdString());
         file.ID3v2Tag()->addFrame(frame);
         file.save();
-    } else {
-        QMessageBox::warning(this, "Warning", "Select a one of files in the main window!");
     }
 }
 
-
-
-
-
-void MainWindow::on_saveLyrics_clicked() {
-    if (!m_songPath.empty()) {
-        std::string text = m_ui->lyrics->toPlainText().toStdString();
-        if (!text.empty()) {
-            setLyrics(text);
-            m_ui->textBrowser->insertPlainText(QTime::currentTime().toString() + " : Lyrics set!\n");
-        } else {
-            QMessageBox::StandardButton but = QMessageBox::question(this, "Save", "Do you want to save empty lyrics?",
-                                                                QMessageBox::Yes | QMessageBox::No);
-            if (but == QMessageBox::Yes) {
-                setLyrics(text);
-                m_ui->textBrowser->insertPlainText(QTime::currentTime().toString() + " : Lyrics set!\n");
-            } else {
-                QMessageBox::about(this, "Information", "Empty lyrics wasn`t saved to file!");
-            }
-        }
-        m_ui->lyrics->setPlainText("");
-    } else {
-        QMessageBox::warning(this, "Warning", "Select a one of files in the main window!");
-    }
-}
-
- */

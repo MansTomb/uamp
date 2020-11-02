@@ -34,13 +34,14 @@ class FileTags {
         QString sampleRate;
         QString channels;
         QString length;
+        QString lyrics;
     } tags;
 
     FileTags(const std::string &path, const std::string &fileName);
     void upgradeFileTags(const std::string &new_tags);
     friend std::ostream& operator<<(std::ostream& out, const FileTags& file);
-    void setLyrics(const QString& songText);
-    QString getLyrics(std::string path);
+    void setLyrics();
+    void getLyrics();
     void setImage(const char *image_path);
     QPixmap *getImage();
     void setM_picture(QPixmap *picture);

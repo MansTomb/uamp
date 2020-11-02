@@ -154,6 +154,7 @@
     <signal>PlaylistRenamed(QString,QString)</signal>
     <signal>PlaylistDeleted(QString)</signal>
     <signal>PlaylistCreated(QString)</signal>
+    <signal>Playlists(QList)</signal>
     <slot>AddSongToPlaylist(QString,FileTags*)</slot>
     <slot>RemoveSongFromPlaylist(QString,FileTags*)</slot>
     <slot>RenamePlaylist(QString,QString)</slot>
@@ -244,6 +245,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>playlists</sender>
+   <signal>Playlists(QList)</signal>
+   <receiver>SideMenu</receiver>
+   <slot>Playlists(QList)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>148</x>
+     <y>156</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>506</x>
+     <y>162</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <signal>PlaylistCreated(QString)</signal>
@@ -259,5 +276,6 @@
   <slot>SongRemovedFromPlaylistSlot(QString,FileTags*)</slot>
   <slot>AddSongToPlaylist(QString,FileTags*)</slot>
   <slot>RemoveSongFromPlaylist(QString,FIleTags*)</slot>
+  <slot>Playlists(QList)</slot>
  </slots>
 </ui>
