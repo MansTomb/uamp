@@ -26,12 +26,14 @@ public:
 public slots:
     void ChangeCurrentSong(FileTags *song) {emit CurrentSongChanged(song);};
     void updatePlaylists(QStringList playlists) {emit SetPlaylists(playlists);};
+    void setPlaylistName(QString name) {emit ThrowPlaylistName(name);};
 
 signals:
     void CurrentSongChanged(FileTags *song);
     void FileAdded(QString playlistName, FileTags *song);
     void SetImage(QPixmap *img);
     void SetPlaylists(QStringList playlists);
+    void ThrowPlaylistName(QString name);
 
 protected:
     void dragMoveEvent(QDragMoveEvent *event) override;

@@ -33,6 +33,7 @@ public slots:
     void removeFromPlaylist();
     void addToPlaylist();
     void updateListPlaylist(QStringList playlists);
+    void setPlaylistName(QString name) {m_playlistName = name;};
 
 signals:
     void CurrentSong(FileTags *song);
@@ -46,6 +47,7 @@ private:
     QString m_trackName;
     FileTags *m_fileInfo;
     QStringList m_playlists;
+    QString m_playlistName = "Default";
 };
 
 #endif // PLAYERLISTITEM_H
