@@ -32,7 +32,7 @@ public slots:
     void execEditFileTagsDialog();
     void removeFromPlaylist();
     void addToPlaylist();
-    void updateListPlaylist(const QList<MenuPlaylistItemView *> &playlists);
+    void updateListPlaylist(QStringList playlists);
 
 signals:
     void CurrentSong(FileTags *song);

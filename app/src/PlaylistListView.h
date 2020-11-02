@@ -35,8 +35,9 @@ class PlaylistListView : public QWidget
     void PlaylistRenamed(QString old, QString newName);
     void PlaylistDeleted(QString playlistName);
     void PlaylistCreated(QString playlistName);
-    void Playlists(const QList<MenuPlaylistItemView *>& playlists);
+    void Playlists(QStringList playlists);
     void PlaylistChoosed(MenuPlaylistItemView *playlist);
+    void PlaylistChoosedName(QString playlistName);
 
  private:
     Ui::PlaylistsView *ui;
@@ -45,4 +46,5 @@ class PlaylistListView : public QWidget
     void CreatePlaylistView();
     void CreateImportPlaylistView();
     void SetupPlaylist(const QString &playlistName, QListWidgetItem *item, MenuPlaylistItemView *playlist);
+    void ThrowPlaylists();
 };

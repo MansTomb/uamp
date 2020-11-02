@@ -55,6 +55,7 @@ FileTags *PlayerlistItem::song() {
 
 void PlayerlistItem::removeFromPlaylist() {
     qDebug() << "remove from playlist";
+    qDebug() << m_playlists;
     bool ok = false;
     QString text = QInputDialog::getItem(this, tr("Remove track"), tr("Choose playlist:"), m_playlists);
     qDebug() << text;
@@ -65,10 +66,10 @@ void PlayerlistItem::addToPlaylist() {
     qDebug() << "add to playlist";
     //add
 }
-void PlayerlistItem::updateListPlaylist(const QList<MenuPlaylistItemView *> &playlists) {
+void PlayerlistItem::updateListPlaylist(QStringList playlists) {
     m_playlists.clear();
     for (const auto &item : playlists) {
-        m_playlists << item->PlaylistName();
+        m_playlists << item;
     }
 }
 

@@ -204,7 +204,8 @@ QPushButton:pressed {
     <signal>PlaylistRenamed(QString,QString)</signal>
     <signal>PlaylistDeleted(QString)</signal>
     <signal>PlaylistCreated(QString)</signal>
-    <signal>Playlists(QList)</signal>
+    <signal>Playlists(QStringList)</signal>
+    <signal>PlaylistChoosedName(QString)</signal>
     <slot>AddSongToPlaylist(QString,FileTags*)</slot>
     <slot>RemoveSongFromPlaylist(QString,FileTags*)</slot>
     <slot>RenamePlaylist(QString,QString)</slot>
@@ -299,17 +300,33 @@ QPushButton:pressed {
   </connection>
   <connection>
    <sender>playlists</sender>
-   <signal>Playlists(QList)</signal>
+   <signal>Playlists(QStringList)</signal>
    <receiver>SideMenu</receiver>
-   <slot>Playlists(QList)</slot>
+   <slot>Playlists(QStringList)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>148</x>
-     <y>156</y>
+     <x>103</x>
+     <y>252</y>
     </hint>
     <hint type="destinationlabel">
-     <x>506</x>
-     <y>162</y>
+     <x>579</x>
+     <y>276</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>playlists</sender>
+   <signal>PlaylistChoosedName(QString)</signal>
+   <receiver>SideMenu</receiver>
+   <slot>PlaylistChoosedNameSlot(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>143</x>
+     <y>164</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>340</x>
+     <y>167</y>
     </hint>
    </hints>
   </connection>
@@ -328,6 +345,7 @@ QPushButton:pressed {
   <slot>SongRemovedFromPlaylistSlot(QString,FileTags*)</slot>
   <slot>AddSongToPlaylist(QString,FileTags*)</slot>
   <slot>RemoveSongFromPlaylist(QString,FIleTags*)</slot>
-  <slot>Playlists(QList)</slot>
+  <slot>Playlists(QStringList)</slot>
+  <slot>PlaylistChoosedNameSlot(QString)</slot>
  </slots>
 </ui>

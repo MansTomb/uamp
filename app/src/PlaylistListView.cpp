@@ -43,6 +43,17 @@ bool PlaylistListView::ImportNewPlaylist(QString filepath, QString playlistName)
     SetupPlaylist(playlistName, item, playlist);
     return true;
 }
+
+void PlaylistListView::ThrowPlaylists() {
+    auto list = ui->list->findChildren<MenuPlaylistItemView *>();
+    QStringList slist;
+
+    for (const auto &item : list)
+        slist.insert(slist.size(), item->PlaylistName());
+
+    emit Playlists(slist);
+}
+
 void PlaylistListView::SetupPlaylist(const QString &playlistName,
                                      QListWidgetItem *item,
                                      MenuPlaylistItemView *playlist) {
@@ -55,7 +66,8 @@ void PlaylistListView::SetupPlaylist(const QString &playlistName,
     connect(playlist, &MenuPlaylistItemView::SongRemoved, this, &PlaylistListView::SongRemovedFromPlaylist);
     connect(playlist, &MenuPlaylistItemView::DeletePlaylist, this, &PlaylistListView::DeletePlaylist);
     connect(playlist, &MenuPlaylistItemView::PlaylistChoosed, this, &PlaylistListView::PlaylistChoosed);
-    emit Playlists(ui->list->findChildren<MenuPlaylistItemView *>());
+    connect(playlist, &MenuPlaylistItemView::PlaylistChoosed, this, [playlist, this] {emit PlaylistChoosedName(playlist->PlaylistName());});
+    ThrowPlaylists();
     emit PlaylistCreated(playlistName);
 }
 
@@ -82,7 +94,7 @@ void PlaylistListView::RenamePlaylist(const QString& old, QString newName) {
 
 void PlaylistListView::DeletePlaylist(const QString& playlistName) {
     delete ui->list->findChild<MenuPlaylistItemView *>(playlistName)->ParentItem();
-    emit Playlists(ui->list->findChildren<MenuPlaylistItemView *>());
+    ThrowPlaylists();
     emit PlaylistDeleted(playlistName);
 }
 
