@@ -302,7 +302,7 @@ QPushButton:pressed {
    <sender>playlists</sender>
    <signal>Playlists(QStringList)</signal>
    <receiver>SideMenu</receiver>
-   <slot>Playlists(QStringList)</slot>
+   <slot>PlaylistsSlot(QStringList)</slot>
    <hints>
     <hint type="sourcelabel">
      <x>103</x>
@@ -345,7 +345,7 @@ QPushButton:pressed {
   <slot>SongRemovedFromPlaylistSlot(QString,FileTags*)</slot>
   <slot>AddSongToPlaylist(QString,FileTags*)</slot>
   <slot>RemoveSongFromPlaylist(QString,FIleTags*)</slot>
-  <slot>Playlists(QStringList)</slot>
+  <slot>PlaylistsSlot(QStringList)</slot>
   <slot>PlaylistChoosedNameSlot(QString)</slot>
  </slots>
 </ui>

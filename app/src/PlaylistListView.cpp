@@ -49,8 +49,8 @@ void PlaylistListView::ThrowPlaylists() {
     QStringList slist;
 
     for (const auto &item : list)
-        slist.insert(slist.size(), item->PlaylistName());
-
+        if (item->NotGonnaBeDeleted())
+            slist.insert(slist.size(), item->PlaylistName());
     emit Playlists(slist);
 }
 
@@ -80,7 +80,17 @@ void PlaylistListView::AddSongToPlaylist(const QString &playlistName, FileTags *
 }
 
 void PlaylistListView::RemoveSongFromPlaylist(const QString &playlistName, FileTags *song) {
-    ui->list->findChild<MenuPlaylistItemView *>(playlistName)->RemoveSong(song);
+    auto i = 0;
+    for (auto &item : ui->list->findChildren<MenuPlaylistItemView *>())
+        if (item->ContainsSong(song))
+            i++;
+    if (i != 1)
+        ui->list->findChild<MenuPlaylistItemView *>(playlistName)->RemoveSong(song);
+    else {
+        qDebug() << "Unsafe function usage PlaylistListView::RemoveSongFromPlaylist, message for debug. DO NOT DELETE THIS MESSAGE BEFORE END!";
+        ui->list->findChild<MenuPlaylistItemView *>(playlistName)->RemoveSong(song);
+        delete song;
+    }
 }
 
 void PlaylistListView::RenamePlaylist(const QString& old, QString newName) {
@@ -93,7 +103,7 @@ void PlaylistListView::RenamePlaylist(const QString& old, QString newName) {
 }
 
 void PlaylistListView::DeletePlaylist(const QString& playlistName) {
-    delete ui->list->findChild<MenuPlaylistItemView *>(playlistName)->ParentItem();
+    delete ui->list->findChild<MenuPlaylistItemView *>(playlistName)->ParentItemForDelete();
     ThrowPlaylists();
     emit PlaylistDeleted(playlistName);
 }

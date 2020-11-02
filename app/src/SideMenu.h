@@ -27,7 +27,8 @@ public:
     void PlaylistDeletedSlot(QString playlistName) {emit PlaylistDeleted(playlistName);};
     void PlaylistCreatedSlot(QString playlistName) {emit PlaylistCreated(playlistName);};
     void PlaylistChoosedNameSlot(QString playlistName) {emit PlaylistChoosedName(playlistName);};
-    void Playlists(QStringList playlists) {emit ThrowPlaylists(playlists);};
+    void PlaylistsSlot(QStringList playlists) {
+        qDebug() << playlists;emit ThrowPlaylists(playlists);};
 
  signals:
     void SongAddedToPlaylist(QString playlistName, FileTags *song);
