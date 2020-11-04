@@ -19,7 +19,7 @@ public:
 
  public slots:
     void AddSongToPlaylist(QString playlistName, FileTags *song) { ui->playlists->AddSongToPlaylist(playlistName, song);};
-    void RemoveSongToPlaylist(QString playlistName, FileTags *song) {ui->playlists->RemoveSongFromPlaylist(playlistName,song);};
+    void RemoveSongFromPlaylist(QString playlistName, FileTags *song) {ui->playlists->RemoveSongFromPlaylist(playlistName,song);};
 
     void SongAddedToPlaylistSlot(QString playlistName, FileTags *song) {emit SongAddedToPlaylist(playlistName, song);};
     void SongRemovedFromPlaylistSlot(QString playlistName, FileTags *song) {emit SongRemovedFromPlaylist(playlistName, song);};

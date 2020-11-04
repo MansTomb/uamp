@@ -243,7 +243,11 @@ QPushButton:pressed {
     <signal>CurrentSongChanged(FileTags*)</signal>
     <signal>FileAdded(QString,FileTags*)</signal>
     <signal>SetImage(QPixmap*)</signal>
+    <signal>ThrowPlaylistName(QString)</signal>
+    <signal>RemoveTrackFromPlaylist(QString,FileTags*)</signal>
+    <slot>updatePlaylist(QList)</slot>
     <slot>updatePlaylists(QStringList)</slot>
+    <slot>setPlaylistName(QString)</slot>
    </slots>
   </customwidget>
   <customwidget>
@@ -297,9 +301,11 @@ QPushButton:pressed {
     <signal>PlaylistDeleted(QString)</signal>
     <signal>PlaylistCreated(QString)</signal>
     <signal>PlaylistRenamedForLabel(QString)</signal>
+    <signal>ThrowPlaylists(QList)</signal>
     <signal>ThrowPlaylists(QStringList)</signal>
+    <signal>PlaylistChoosedName(QString)</signal>
     <slot>AddSongToPlaylist(QString,FileTags*)</slot>
-    <slot>RemoveSongFromPlayList(QString,FileTags*)</slot>
+    <slot>RemoveSongFromPlaylist(QString,FileTags*)</slot>
    </slots>
   </customwidget>
  </customwidgets>
@@ -483,22 +489,6 @@ QPushButton:pressed {
   </connection>
   <connection>
    <sender>sideMenu</sender>
-   <signal>PlaylistRenamedForLabel(QString)</signal>
-   <receiver>PlaylistName</receiver>
-   <slot>setText(QString)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>170</x>
-     <y>157</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>865</x>
-     <y>52</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>sideMenu</sender>
    <signal>ThrowPlaylists(QStringList)</signal>
    <receiver>listView</receiver>
    <slot>updatePlaylists(QStringList)</slot>
@@ -510,6 +500,54 @@ QPushButton:pressed {
     <hint type="destinationlabel">
      <x>935</x>
      <y>258</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>sideMenu</sender>
+   <signal>PlaylistChoosedName(QString)</signal>
+   <receiver>listView</receiver>
+   <slot>setPlaylistName(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>312</x>
+     <y>388</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>786</x>
+     <y>385</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>listView</sender>
+   <signal>ThrowPlaylistName(QString)</signal>
+   <receiver>PlaylistName</receiver>
+   <slot>setText(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>910</x>
+     <y>181</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>907</x>
+     <y>49</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>listView</sender>
+   <signal>RemoveTrackFromPlaylist(QString,FileTags*)</signal>
+   <receiver>sideMenu</receiver>
+   <slot>RemoveSongFromPlaylist(QString,FileTags*)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>779</x>
+     <y>292</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>243</x>
+     <y>296</y>
     </hint>
    </hints>
   </connection>

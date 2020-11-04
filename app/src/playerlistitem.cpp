@@ -19,7 +19,6 @@ PlayerlistItem::PlayerlistItem(int number, const QString& pathTrack, const QStri
     auto *remove = new QAction(tr("Remove from playlist"), contextMenu);
     auto *addToPlaylist = new QAction(tr("Add to playlist"), contextMenu);
 
-
     contextMenu->addAction(editTags);
     contextMenu->addAction(remove);
     contextMenu->addAction(addToPlaylist);
@@ -27,9 +26,14 @@ PlayerlistItem::PlayerlistItem(int number, const QString& pathTrack, const QStri
     connect(remove, &QAction::triggered, this, &PlayerlistItem::removeFromPlaylist);
     connect(addToPlaylist, &QAction::triggered, this, &PlayerlistItem::addToPlaylist);
     ui->pushButton->setMenu(contextMenu);
+    m_playlists << "Default";
 }
 
 PlayerlistItem::~PlayerlistItem() {
+    for (auto *item : ui->pushButton->menu()->actions()) {
+        delete item;
+    }
+    delete ui->pushButton->menu();
     delete ui;
 }
 
@@ -55,21 +59,22 @@ FileTags *PlayerlistItem::song() {
 
 void PlayerlistItem::removeFromPlaylist() {
     qDebug() << "remove from playlist";
-    qDebug() << m_playlists;
-    bool ok = false;
-    QString text = QInputDialog::getItem(this, tr("Remove track"), tr("Choose playlist:"), m_playlists);
-    qDebug() << text;
-    //remove
+    qDebug() << m_playlistName;
+    emit RemoveTrackFromPlaylist(m_fileInfo);
 }
 
 void PlayerlistItem::addToPlaylist() {
     qDebug() << "add to playlist";
+    bool ok = false;
+    QString text = QInputDialog::getItem(this, tr("Remove track"), tr("Choose playlist:"), m_playlists);
+    qDebug() << text;
     //add
 }
 void PlayerlistItem::updateListPlaylist(QStringList playlists) {
     m_playlists.clear();
     for (const auto &item : playlists) {
         m_playlists << item;
+//        qDebug() << item;
     }
 }
 

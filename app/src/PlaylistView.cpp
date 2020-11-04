@@ -46,7 +46,9 @@ void PlaylistView::addWidget(const QString &pathTrack, const QString &trackName)
     setItemWidget(item, widget);
     connect(widget, &PlayerlistItem::CurrentSong, this, &PlaylistView::CurrentSongChanged);
     connect(widget, &PlayerlistItem::SetImage, this, &PlaylistView::SetImage);
+    connect(widget, &PlayerlistItem::RemoveTrackFromPlaylist, this, &PlaylistView::RemoveTrackFromPlaylistSlot);
     connect(this, &PlaylistView::SetPlaylists, widget, &PlayerlistItem::updateListPlaylist);
+    connect(this, &PlaylistView::ThrowPlaylistName, widget, &PlayerlistItem::setPlaylistName);
     emit FileAdded(m_playlistName, widget->song());
 }
 

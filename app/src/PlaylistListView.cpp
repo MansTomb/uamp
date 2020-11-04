@@ -84,8 +84,9 @@ void PlaylistListView::RemoveSongFromPlaylist(const QString &playlistName, FileT
     for (auto &item : ui->list->findChildren<MenuPlaylistItemView *>())
         if (item->ContainsSong(song))
             i++;
+    qDebug() << playlistName << " " << song->tags.title;
     if (i != 1)
-        ui->list->findChild<MenuPlaylistItemView *>(playlistName)->RemoveSong(song);
+        ui->list->findChild<MenuPlaylistItemView *>(playlistName)->RemoveSong(song);\
     else {
         qDebug() << "Unsafe function usage PlaylistListView::RemoveSongFromPlaylist, message for debug. DO NOT DELETE THIS MESSAGE BEFORE END!";
         ui->list->findChild<MenuPlaylistItemView *>(playlistName)->RemoveSong(song);
