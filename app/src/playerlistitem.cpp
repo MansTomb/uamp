@@ -30,6 +30,10 @@ PlayerlistItem::PlayerlistItem(int number, const QString& pathTrack, const QStri
 }
 
 PlayerlistItem::~PlayerlistItem() {
+    for (auto *item : ui->pushButton->menu()->actions()) {
+        delete item;
+    }
+    delete ui->pushButton->menu();
     delete ui;
 }
 
@@ -55,17 +59,14 @@ FileTags *PlayerlistItem::song() {
 
 void PlayerlistItem::removeFromPlaylist() {
     qDebug() << "remove from playlist";
-    qDebug() << m_playlists;
-//    bool ok = false;
-//    QString text = QInputDialog::getItem(this, tr("Remove track"), tr("Choose playlist:"), m_playlists);
-//    qDebug() << text;
-    //remove
+    qDebug() << m_playlistName;
+    emit RemoveTrackFromPlaylist(m_fileInfo);
 }
 
 void PlayerlistItem::addToPlaylist() {
     qDebug() << "add to playlist";
     bool ok = false;
-    QString text = QInputDialog::getItem(this, tr("Remove track"), tr("Choose playlist:"), m_playlists, 0 ,&ok);
+    QString text = QInputDialog::getItem(this, tr("Remove track"), tr("Choose playlist:"), m_playlists);
     qDebug() << text;
     //add
 }

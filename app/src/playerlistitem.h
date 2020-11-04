@@ -38,6 +38,7 @@ public slots:
 signals:
     void CurrentSong(FileTags *song);
     void SetImage(QPixmap *img);
+    void RemoveTrackFromPlaylist(FileTags *file);
 
 
 private:
