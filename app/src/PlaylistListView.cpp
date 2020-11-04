@@ -76,6 +76,7 @@ void PlaylistListView::LoadDefaultPlaylist() {
 }
 
 void PlaylistListView::AddSongToPlaylist(const QString &playlistName, FileTags *song) {
+    qDebug() << playlistName << ": added song - " << song->tags.title;
     ui->list->findChild<MenuPlaylistItemView *>(playlistName)->AddSong(song);
 }
 
@@ -86,7 +87,7 @@ void PlaylistListView::RemoveSongFromPlaylist(const QString &playlistName, FileT
             i++;
     qDebug() << playlistName << " " << song->tags.title;
     if (i != 1)
-        ui->list->findChild<MenuPlaylistItemView *>(playlistName)->RemoveSong(song);\
+        ui->list->findChild<MenuPlaylistItemView *>(playlistName)->RemoveSong(song);
     else {
         qDebug() << "Unsafe function usage PlaylistListView::RemoveSongFromPlaylist, message for debug. DO NOT DELETE THIS MESSAGE BEFORE END!";
         ui->list->findChild<MenuPlaylistItemView *>(playlistName)->RemoveSong(song);

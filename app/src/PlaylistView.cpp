@@ -1,6 +1,9 @@
 #include <QErrorMessage>
 #include "PlaylistView.h"
 
+
+#include "bass.h"
+
 PlaylistView::PlaylistView(QWidget *parent) : QListWidget(parent), m_playlistName("Default") {
 }
 
@@ -39,14 +42,16 @@ void PlaylistView::dropEvent(QDropEvent *event) {
 }
 
 void PlaylistView::addWidget(const QString &pathTrack, const QString &trackName) {
-    auto *item = new QListWidgetItem;
+    QListWidgetItem *item = new QListWidgetItem;
     addItem(item);
     item->setSizeHint(QSize(50,75));
-    auto *widget = new PlayerlistItem(count(), pathTrack, trackName);
+    auto *widget = new PlayerlistItem(item, pathTrack, trackName);
+    m_widgets.push_back(widget);
     setItemWidget(item, widget);
     connect(widget, &PlayerlistItem::CurrentSong, this, &PlaylistView::CurrentSongChanged);
     connect(widget, &PlayerlistItem::SetImage, this, &PlaylistView::SetImage);
     connect(widget, &PlayerlistItem::RemoveTrackFromPlaylist, this, &PlaylistView::RemoveTrackFromPlaylistSlot);
+    connect(widget, &PlayerlistItem::AddTracktoPlaylist, this, &PlaylistView::AddTracktoPlaylistSlot);
     connect(this, &PlaylistView::SetPlaylists, widget, &PlayerlistItem::updateListPlaylist);
     connect(this, &PlaylistView::ThrowPlaylistName, widget, &PlayerlistItem::setPlaylistName);
     emit FileAdded(m_playlistName, widget->song());
@@ -90,6 +95,24 @@ void PlaylistView::addLotOfSongs(const QList<QUrl> &droppedData) {
         QFileInfo fileInfo(item.toString().remove(0, 7));
         if (fileInfo.isFile() && checkPerm(fileInfo))
             addWidget(fileInfo.absolutePath() + "/", fileInfo.fileName());
+    }
+}
+void PlaylistView::RemoveTrackFromPlaylistSlot(FileTags *file, const QString &objectName) {
+    emit RemoveTrackFromPlaylist(m_playlistName, file);
+    auto item = findChild<PlayerlistItem *>(objectName);
+    auto parentItem = item->getParentToDelete();
+    delete item;
+    delete parentItem;
+}
+
+void PlaylistView::PlaylistDeleted(QString deletedPlaylist) {
+    //Нужно разобраться как удалять в этой ситуации
+    qDebug() << deletedPlaylist << " deleted";
+    if (deletedPlaylist == m_playlistName) {
+        for(auto &item : m_widgets) {
+            delete item->getParentToDelete();
+            delete item;
+        }
     }
 }
 

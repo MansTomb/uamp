@@ -3,13 +3,16 @@
 #include "playerlistitem.h"
 #include "ui_playerlistitem.h"
 
-PlayerlistItem::PlayerlistItem(int number, const QString& pathTrack, const QString &trackName, QWidget *parent) :
+PlayerlistItem::PlayerlistItem(QListWidgetItem *parentItem, const QString& pathTrack, const QString &trackName, QWidget *parent) :
     QWidget(parent), ui(new Ui::PlayerlistItem), m_pathToTrack(pathTrack), m_trackName(trackName),
-    m_fileInfo(new FileTags(pathTrack.toStdString(), trackName.toStdString())) {
+    m_fileInfo(new FileTags(pathTrack.toStdString(), trackName.toStdString())), m_parent(parentItem) {
     ui->setupUi(this);
 
+    setObjectName(pathTrack + trackName);
+//    qDebug() << pathTrack + trackName;
+
     QString name(trackName.begin(), trackName.lastIndexOf("."));
-    ui->trackNameAndArtist->setText(QString::number(number) + ": " + name);
+    ui->trackNameAndArtist->setText(name);
     ui->infoAboutTrack->setText(getFormat() + "::" + m_fileInfo->tags.bitrate + "::" + m_fileInfo->tags.channels
                                 + "::" + m_fileInfo->tags.sampleRate);
     ui->duration->setText(m_fileInfo->tags.length);
@@ -27,6 +30,7 @@ PlayerlistItem::PlayerlistItem(int number, const QString& pathTrack, const QStri
     connect(addToPlaylist, &QAction::triggered, this, &PlayerlistItem::addToPlaylist);
     ui->pushButton->setMenu(contextMenu);
     m_playlists << "Default";
+    emit AddTracktoPlaylist(m_playlistName, m_fileInfo);
 }
 
 PlayerlistItem::~PlayerlistItem() {
@@ -60,15 +64,14 @@ FileTags *PlayerlistItem::song() {
 void PlayerlistItem::removeFromPlaylist() {
     qDebug() << "remove from playlist";
     qDebug() << m_playlistName;
-    emit RemoveTrackFromPlaylist(m_fileInfo);
+    emit RemoveTrackFromPlaylist(m_fileInfo, m_pathToTrack + m_trackName);
 }
 
 void PlayerlistItem::addToPlaylist() {
     qDebug() << "add to playlist";
-    bool ok = false;
-    QString text = QInputDialog::getItem(this, tr("Remove track"), tr("Choose playlist:"), m_playlists);
-    qDebug() << text;
-    //add
+    QString playlist = QInputDialog::getItem(this, tr("Add track to..."), tr("Choose playlist:"), m_playlists);
+    qDebug() << playlist;
+    emit AddTracktoPlaylist(playlist, m_fileInfo);
 }
 void PlayerlistItem::updateListPlaylist(QStringList playlists) {
     m_playlists.clear();

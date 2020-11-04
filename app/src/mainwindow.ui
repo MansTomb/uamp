@@ -245,9 +245,11 @@ QPushButton:pressed {
     <signal>SetImage(QPixmap*)</signal>
     <signal>ThrowPlaylistName(QString)</signal>
     <signal>RemoveTrackFromPlaylist(QString,FileTags*)</signal>
+    <signal>AddTrackToPlaylist(QString,FileTags*)</signal>
     <slot>updatePlaylist(QList)</slot>
     <slot>updatePlaylists(QStringList)</slot>
     <slot>setPlaylistName(QString)</slot>
+    <slot>PlaylistDeleted(QString)</slot>
    </slots>
   </customwidget>
   <customwidget>
@@ -548,6 +550,38 @@ QPushButton:pressed {
     <hint type="destinationlabel">
      <x>243</x>
      <y>296</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>listView</sender>
+   <signal>AddTrackToPlaylist(QString,FileTags*)</signal>
+   <receiver>sideMenu</receiver>
+   <slot>AddSongToPlaylist(QString,FileTags*)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>777</x>
+     <y>442</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>264</x>
+     <y>446</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>sideMenu</sender>
+   <signal>PlaylistDeleted(QString)</signal>
+   <receiver>listView</receiver>
+   <slot>PlaylistDeleted(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>243</x>
+     <y>160</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>838</x>
+     <y>182</y>
     </hint>
    </hints>
   </connection>

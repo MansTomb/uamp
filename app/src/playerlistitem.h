@@ -23,9 +23,10 @@ class PlayerlistItem : public QWidget{
     Q_OBJECT
 
 public:
-    explicit PlayerlistItem(int number, const QString &pathTrack, const QString &trackName, QWidget *parent = nullptr);
+    explicit PlayerlistItem(QListWidgetItem *parentItem, const QString &pathTrack, const QString &trackName, QWidget *parent = nullptr);
     ~PlayerlistItem() override;
     FileTags *song();
+    QListWidgetItem *getParentToDelete() {return m_parent;};
 
 public slots:
     void mouseDoubleClickEvent(QMouseEvent *event) override;
@@ -38,12 +39,14 @@ public slots:
 signals:
     void CurrentSong(FileTags *song);
     void SetImage(QPixmap *img);
-    void RemoveTrackFromPlaylist(FileTags *file);
+    void RemoveTrackFromPlaylist(FileTags *file, const QString &objectName);
+    void AddTracktoPlaylist(const QString& objectName, FileTags *file);
 
 
 private:
     QString getFormat();
     Ui::PlayerlistItem *ui;
+    QListWidgetItem *m_parent;
     QString m_pathToTrack;
     QString m_trackName;
     FileTags *m_fileInfo;
