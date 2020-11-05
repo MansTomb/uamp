@@ -1,7 +1,7 @@
 #include "mainwindow.h"
 
 MainWindow::MainWindow(const QString &name, QWidget *parent)
-    : QMainWindow(parent), ui(new Ui::MainWindow) {
+    : QMainWindow(parent), ui(new Ui::MainWindow), m_base(SqlDatabase()){
     ui->setupUi(this);
 
     BASS_SetConfig(BASS_CONFIG_DEV_DEFAULT, 1);

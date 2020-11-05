@@ -12,7 +12,7 @@ set(TAGLIB_PATH "../3dparty/taglib/taglib")
 set(TARGET uamp)
 
 find_library(TAGLIB taglib)
-find_package(Qt5 COMPONENTS Widgets Network NetworkAuth Multimedia MultimediaWidgets Svg REQUIRED)
+find_package(Qt5 COMPONENTS Sql Widgets Network NetworkAuth Multimedia MultimediaWidgets Svg REQUIRED )
 
 set(SOURCES main.cpp
     src/mainwindow.cpp
@@ -102,11 +102,11 @@ add_subdirectory(src)
 include_directories(./src)
 
 add_custom_command(TARGET ${TARGET}
-        PRE_LINK
-        COMMAND "${CMAKE_SOURCE_DIR}/build.sh"
-        )
+    PRE_LINK
+    COMMAND "${CMAKE_SOURCE_DIR}/build.sh"
+    )
 
-target_link_libraries(${TARGET} tag Qt5::Gui Qt5::Core Qt5::Widgets Qt5::Network Qt5::NetworkAuth
+target_link_libraries(${TARGET} tag Qt5::Sql Qt5::Gui Qt5::Core Qt5::Widgets Qt5::Network Qt5::NetworkAuth
         Qt5::Multimedia Qt5::MultimediaWidgets Qt5::Svg bass)
 
 set_target_properties(${TARGET} PROPERTIES RUNTIME_OUTPUT_DIRECTORY ../..)

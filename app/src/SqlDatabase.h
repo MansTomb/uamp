@@ -1,1 +1,18 @@
 #pragma once
+
+#include <QSqlDatabase.h>
+#include <QSql>
+#include <QSqlDatabase>
+#include <QDebug>
+#include <QApplication>
+
+class SqlDatabase {
+    public:
+    explicit SqlDatabase();
+
+    private:
+    QString m_appPath;
+    QString m_toDbPath;
+    QSqlDatabase m_db;
+    void createTables();
+};

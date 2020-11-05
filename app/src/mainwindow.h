@@ -12,6 +12,7 @@
 #include <QFontDatabase>
 
 #include "ui_mainwindow.h"
+#include "SqlDatabase.h"
 #include "bass.h"
 
 QT_BEGIN_NAMESPACE
@@ -26,4 +27,5 @@ class MainWindow : public QMainWindow {
     ~MainWindow();
  private:
     Ui::MainWindow *ui;
+    SqlDatabase m_base;
 };
