@@ -122,12 +122,14 @@ void PlaylistView::PlaylistDeleted(QString deletedPlaylist,
 
 void PlaylistView::PlaylistChoosedSlot(MenuPlaylistItemView *playlist) {
 //    clearingListWidget();
+    system("leaks -q uamp");
     clear();
     m_playlistName = playlist->PlaylistName();
     qDebug() << "\n\n"  << m_playlistName << " selected";
     for (const auto &playlist_name : playlist->Playlist()) {
         addWidget(playlist_name);
     }
+    system("leaks -q uamp");
     qDebug() << "==============================\n\n";
 }
 
