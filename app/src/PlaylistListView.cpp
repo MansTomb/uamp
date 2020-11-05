@@ -107,7 +107,7 @@ void PlaylistListView::RenamePlaylist(const QString& old, QString newName) {
 void PlaylistListView::DeletePlaylist(const QString& playlistName) {
     delete ui->list->findChild<MenuPlaylistItemView *>(playlistName)->ParentItemForDelete();
     ThrowPlaylists();
-    emit PlaylistDeleted(playlistName);
+    emit PlaylistDeleted(playlistName, ui->list->findChild<MenuPlaylistItemView *>("Default"));
 }
 
 void PlaylistListView::CreatePlaylistView() {

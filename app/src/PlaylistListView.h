@@ -33,7 +33,7 @@ class PlaylistListView : public QWidget
     void SongAddedToPlaylist(QString playlistName, FileTags *song);
     void SongRemovedFromPlaylist(QString playlistName, FileTags *song);
     void PlaylistRenamed(QString old, QString newName);
-    void PlaylistDeleted(QString playlistName);
+    void PlaylistDeleted(QString playlistName, MenuPlaylistItemView *playlist);
     void PlaylistCreated(QString playlistName);
     void Playlists(QStringList playlists);
     void PlaylistChoosed(MenuPlaylistItemView *playlist);
