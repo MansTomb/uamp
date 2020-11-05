@@ -42,6 +42,7 @@ MenuPlaylistItemView::MenuPlaylistItemView(QMediaPlaylist *playlist,
     connect(actionsList.at(2), &QAction::triggered, this, &MenuPlaylistItemView::actionExport);
     connect(actionsList.at(3), &QAction::triggered, this, &MenuPlaylistItemView::actionDelete);
     ui->menu->setMenu(menu);
+    delete playlist;
 }
 
 void MenuPlaylistItemView::AddSongsFromPlaylistMedia(const QMediaPlaylist *playlist) {

@@ -21,6 +21,7 @@ void PlaylistListView::CreateNewPlaylist(QString playlistName) {
         auto msg = new QErrorMessage(this);
         msg->showMessage("Playlist already exists");
         msg->exec();
+        delete msg;
         return;
     }
 
@@ -101,6 +102,8 @@ void PlaylistListView::RenamePlaylist(const QString& old, QString newName) {
     else {
         QErrorMessage *msg = new QErrorMessage(this);
         msg->showMessage("Playlist with that name already exists!");
+        msg->exec();
+        delete msg;
     }
 }
 
@@ -120,10 +123,12 @@ void PlaylistListView::CreatePlaylistView() {
         auto msg = new QErrorMessage(this);
         msg->showMessage("Playlist must have a name!");
         msg->exec();
+        delete msg;
     }
 }
 
 void PlaylistListView::CreateImportPlaylistView() {
     auto dialog = new ImportPlaylistView(this);
     dialog->exec();
+    delete dialog;
 }
