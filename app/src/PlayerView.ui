@@ -16,7 +16,10 @@
   <property name="styleSheet">
    <string notr="true"/>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout_3" stretch="3,0,1,2">
+  <layout class="QVBoxLayout" name="verticalLayout_3" stretch="3,0,1,0">
+   <property name="spacing">
+    <number>6</number>
+   </property>
    <property name="leftMargin">
     <number>0</number>
    </property>
@@ -265,12 +268,46 @@ border-color: rgba(255, 255, 255, 0);</string>
     </layout>
    </item>
    <item>
-    <widget class="QWidget" name="playerTimeBar" native="true"/>
+    <widget class="SongTimeline" name="horizontalSlider">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>SongTimeline</class>
+   <extends>QSlider</extends>
+   <header>SongTimeline.h</header>
+   <slots>
+    <signal>SliderClicked()</signal>
+   </slots>
+  </customwidget>
+ </customwidgets>
  <resources>
   <include location="../res/resources.qrc"/>
  </resources>
- <connections/>
+ <connections>
+  <connection>
+   <sender>horizontalSlider</sender>
+   <signal>SliderClicked()</signal>
+   <receiver>PlayerView</receiver>
+   <slot>SliderClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>264</x>
+     <y>417</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>470</x>
+     <y>530</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>SliderClicked()</slot>
+ </slots>
 </ui>

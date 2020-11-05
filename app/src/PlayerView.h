@@ -31,8 +31,18 @@ public slots:
     void SetSong(FileTags *song);
     void SetImage(QPixmap *img);
 
+    void UpdateSlider();
+    void SliderClicked();
+    void SongEndedSlot() {emit SongEnded();};
+
+signals:
+    void BarPositionChanged(float pos);
+    void SongEnded();
+
  private:
     void setDefaultImage();
+
+    QTimer *m_timer;
     Ui::PlayerView *ui;
     PlayerController m_player;
     QPixmap *m_picture;

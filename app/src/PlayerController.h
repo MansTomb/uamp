@@ -37,6 +37,7 @@ class PlayerController : public QObject {
     void Previous() {};
     void Backward() {BASS_ChannelSetPosition(sample,BASS_ChannelGetPosition(sample, BASS_POS_BYTE) - BASS_ChannelSeconds2Bytes(sample, 10),BASS_POS_BYTE);};
     void Forward() {BASS_ChannelSetPosition(sample,BASS_ChannelGetPosition(sample, BASS_POS_BYTE) + BASS_ChannelSeconds2Bytes(sample, 10), BASS_POS_BYTE);};
+    void SetPosition(int sec) {BASS_ChannelSetPosition(sample, BASS_ChannelSeconds2Bytes(sample, sec), BASS_POS_BYTE);}
     void Mute(bool state) {
         if (state) {
             BASS_ChannelGetAttribute(sample, BASS_ATTRIB_VOL, &m_lastVolume);
@@ -48,6 +49,13 @@ class PlayerController : public QObject {
             m_muted = false;
         }
     };
+    double GetCurrentSongTime() {return BASS_ChannelBytes2Seconds(sample, BASS_ChannelGetPosition(sample, BASS_POS_BYTE));}
+    double GetSongTime() {return BASS_ChannelBytes2Seconds(sample, BASS_ChannelGetLength(sample, BASS_POS_BYTE));}
+ public slots:
+    void ChangeCurrentPos(float value) {emit CurrentPosChanged(value + 1);};
+signals:
+    void CurrentPosChanged(float value);
+    void SongEnded();
  private:
     bool m_muted{false};
     float m_lastVolume;

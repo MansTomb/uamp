@@ -5,16 +5,9 @@
 PlayerView::PlayerView(QWidget *parent) : QWidget(parent), ui(new Ui::PlayerView) {
     ui->setupUi(this);
     setDefaultImage();
-//
-//    QMediaPlaylist *playlist = new QMediaPlaylist;
-//
-//    playlist->addMedia(QUrl::fromLocalFile("/Users/abalabin/Desktop/test.mp3"));
-//    playlist->addMedia(QUrl::fromLocalFile("/Users/abalabin/Desktop/test.mp3"));
-//    playlist->addMedia(QUrl::fromLocalFile("/Users/abalabin/Desktop/test.mp3"));
-//
-//    playlist->save(QUrl::fromLocalFile("/Users/abalabin/Desktop/pylist.m3u"), "m3u");
 
-//    SetSong(FileTags(QUrl::fromLocalFile("/Users/mmasniy/Desktop/Music For Uamp/Rag'n'Bone Man - Human.mp3")));
+   m_timer = new QTimer(this);
+   connect(m_timer, &QTimer::timeout, this, &PlayerView::UpdateSlider);
 }
 
 PlayerView::~PlayerView() {
@@ -26,10 +19,14 @@ void PlayerView::ChangeVolume(int value) {
 }
 
 void PlayerView::Play(bool state) {
-    if (state)
+    if (state) {
         m_player.Play();
-    else
+        m_timer->start(333); //time specified in ms
+    }
+    else {
         m_player.Pause();
+        m_timer->stop();
+    }
 }
 
 void PlayerView::Mute(bool state) {
@@ -55,8 +52,8 @@ void PlayerView::Forward() {
 void PlayerView::SetSong(FileTags *song) {
     ui->playerArtistName->setText(song->tags.artist);
     ui->playerTrackName->setText(song->tags.title);
-
     m_player.SetSong(song);
+    ui->horizontalSlider->setMaximum(m_player.GetSongTime());
     if (song->getImage() != nullptr)
         ui->playerAlbumImage->setPixmap(*song->getImage());
     else
@@ -74,4 +71,17 @@ void PlayerView::SetImage(QPixmap *img) {
         ui->playerAlbumImage->setPixmap(*img);
     else
         setDefaultImage();
+}
+
+void PlayerView::UpdateSlider() {
+    if (static_cast<int>(m_player.GetCurrentSongTime()) == ui->horizontalSlider->maximum()) {
+        emit SongEnded();
+        m_timer->stop();
+        return;
+    }
+    ui->horizontalSlider->setValue(m_player.GetCurrentSongTime());
+}
+
+void PlayerView::SliderClicked() {
+    m_player.SetPosition(ui->horizontalSlider->value());
 }

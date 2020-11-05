@@ -30,6 +30,7 @@ set(SOURCES main.cpp
     src/MenuPlaylistItemView.cpp
     src/EditFileTagsDialog.cpp
         src/ImportPlaylistView.cpp
+        src/SongTimeline.cpp
     )
 
 set(HEADERS src/mainwindow.h
@@ -47,6 +48,7 @@ set(HEADERS src/mainwindow.h
     src/MenuPlaylistItemView.h
     src/EditFileTagsDialog.h
         src/ImportPlaylistView.h
+        src/SongTimeline.h
     )
 
 set(UI src/mainwindow.ui
