@@ -18,5 +18,4 @@ MainWindow::MainWindow(const QString &name, QWidget *parent)
 MainWindow::~MainWindow() {
     BASS_Free();
     delete ui;
-    system("leaks -q uamp");
 }
