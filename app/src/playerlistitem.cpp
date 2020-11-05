@@ -51,10 +51,10 @@ void PlayerlistItem::createInfo(const QString &trackName) {
 }
 
 PlayerlistItem::~PlayerlistItem() {
-//    for (auto *item : ui->pushButton->menu()->actions()) {
-//        delete item;
-//    }
-//    delete ui->pushButton->menu();
+    for (auto *item : ui->pushButton->menu()->actions()) {
+        delete item;
+    }
+    delete ui->pushButton->menu();
     delete ui;
 }
 
