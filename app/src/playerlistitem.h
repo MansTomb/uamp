@@ -24,9 +24,14 @@ class PlayerlistItem : public QWidget{
 
 public:
     explicit PlayerlistItem(QListWidgetItem *parentItem, const QString &pathTrack, const QString &trackName, QWidget *parent = nullptr);
+    explicit PlayerlistItem(QListWidgetItem *parentItem, FileTags *song, QWidget *parent = nullptr);
     ~PlayerlistItem() override;
+    bool IsGonnaBeDeleted() {return GonnaBeDeleted;};
     FileTags *song();
-    QListWidgetItem *getParentToDelete() {return m_parent;};
+    QListWidgetItem *getParentToDelete() {
+        GonnaBeDeleted = true;
+        return m_parent;
+    };
 
 public slots:
     void mouseDoubleClickEvent(QMouseEvent *event) override;
@@ -52,6 +57,9 @@ private:
     FileTags *m_fileInfo;
     QStringList m_playlists;
     QString m_playlistName = "Default";
+    bool GonnaBeDeleted = false;
+    void CreateMenu();
+    void createInfo(const QString &trackName);
 };
 
 #endif // PLAYERLISTITEM_H

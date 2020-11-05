@@ -97,23 +97,58 @@ void PlaylistView::addLotOfSongs(const QList<QUrl> &droppedData) {
             addWidget(fileInfo.absolutePath() + "/", fileInfo.fileName());
     }
 }
+
 void PlaylistView::RemoveTrackFromPlaylistSlot(FileTags *file, const QString &objectName) {
+    qDebug() << "\n\n"  << objectName << " deleted";
     emit RemoveTrackFromPlaylist(m_playlistName, file);
     auto item = findChild<PlayerlistItem *>(objectName);
     auto parentItem = item->getParentToDelete();
     delete item;
     delete parentItem;
+    qDebug() << "==============================\n\n";
 }
 
-void PlaylistView::PlaylistDeleted(QString deletedPlaylist) {
-    //Нужно разобраться как удалять в этой ситуации
-    qDebug() << deletedPlaylist << " deleted";
+void PlaylistView::PlaylistDeleted(QString deletedPlaylist,
+                                   MenuPlaylistItemView *defaultPlaylist) {
+    qDebug() << "\n\n"  << deletedPlaylist << " deleted";
     if (deletedPlaylist == m_playlistName) {
-        for(auto &item : m_widgets) {
-            delete item->getParentToDelete();
-            delete item;
-        }
+        //clear()
+        qDebug() << "chooed";
+        PlaylistChoosedSlot(defaultPlaylist);
+        emit ThrowPlaylistName(m_playlistName);
+    }
+    qDebug() << "==============================\n\n";
+}
+
+void PlaylistView::PlaylistChoosedSlot(MenuPlaylistItemView *playlist) {
+//    clearingListWidget();
+    clear();
+    m_playlistName = playlist->PlaylistName();
+    qDebug() << "\n\n"  << m_playlistName << " selected";
+    for (const auto &playlist_name : playlist->Playlist()) {
+        addWidget(playlist_name);
+    }
+    qDebug() << "==============================\n\n";
+}
+
+void PlaylistView::clearingListWidget() {
+    for(auto &item : m_widgets) {
+        delete item->getParentToDelete();
+        delete item;
     }
 }
 
-
+void PlaylistView::addWidget(FileTags *song) {
+    QListWidgetItem *item = new QListWidgetItem;
+    addItem(item);
+    item->setSizeHint(QSize(50,75));
+    auto *widget = new PlayerlistItem(item, song);
+    m_widgets.push_back(widget);
+    setItemWidget(item, widget);
+    connect(widget, &PlayerlistItem::CurrentSong, this, &PlaylistView::CurrentSongChanged);
+    connect(widget, &PlayerlistItem::SetImage, this, &PlaylistView::SetImage);
+    connect(widget, &PlayerlistItem::RemoveTrackFromPlaylist, this, &PlaylistView::RemoveTrackFromPlaylistSlot);
+    connect(widget, &PlayerlistItem::AddTracktoPlaylist, this, &PlaylistView::AddTracktoPlaylistSlot);
+    connect(this, &PlaylistView::SetPlaylists, widget, &PlayerlistItem::updateListPlaylist);
+    connect(this, &PlaylistView::ThrowPlaylistName, widget, &PlayerlistItem::setPlaylistName);
+}

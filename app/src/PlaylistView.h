@@ -24,14 +24,17 @@ class PlaylistView : public QListWidget {
 public:
     explicit PlaylistView(QWidget *parent = Q_NULLPTR);
     void addWidget(const QString& pathTrack, const QString &trackName);
+    void addWidget(FileTags *song);
+    void clearingListWidget();
 
 public slots:
     void ChangeCurrentSong(FileTags *song) {emit CurrentSongChanged(song);};
     void updatePlaylists(QStringList playlists) {emit SetPlaylists(playlists);};
     void RemoveTrackFromPlaylistSlot(FileTags *file, const QString &objectName);
     void AddTracktoPlaylistSlot(const QString& toPlaylist, FileTags *file) {emit AddTrackToPlaylist(toPlaylist, file);};
-
-    void PlaylistDeleted(QString deletedPlaylist);
+    void PlaylistDeleted(QString deletedPlaylist,
+                         MenuPlaylistItemView *defaultPlaylist);
+    void PlaylistChoosedSlot(MenuPlaylistItemView *playlist);
     void setPlaylistName(QString name) {
         m_playlistName = name;
         emit ThrowPlaylistName(name);

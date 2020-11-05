@@ -249,7 +249,8 @@ QPushButton:pressed {
     <slot>updatePlaylist(QList)</slot>
     <slot>updatePlaylists(QStringList)</slot>
     <slot>setPlaylistName(QString)</slot>
-    <slot>PlaylistDeleted(QString)</slot>
+    <slot>PlaylistDeleted(QString,MenuPlaylistItemView*)</slot>
+    <slot>PlaylistChoosedSlot(MenuPlaylistItemView*)</slot>
    </slots>
   </customwidget>
   <customwidget>
@@ -300,12 +301,13 @@ QPushButton:pressed {
     <signal>SongAddedToPlaylist(QString,FileTags*)</signal>
     <signal>SongRemovedFromPlaylist(QString,FileTags*)</signal>
     <signal>PlaylistRenamed(QString,QString)</signal>
-    <signal>PlaylistDeleted(QString)</signal>
+    <signal>PlaylistDeleted(QString,MenuPlaylistItemView*)</signal>
     <signal>PlaylistCreated(QString)</signal>
     <signal>PlaylistRenamedForLabel(QString)</signal>
     <signal>ThrowPlaylists(QList)</signal>
     <signal>ThrowPlaylists(QStringList)</signal>
     <signal>PlaylistChoosedName(QString)</signal>
+    <signal>PlaylistChoosed(MenuPlaylistItemView*)</signal>
     <slot>AddSongToPlaylist(QString,FileTags*)</slot>
     <slot>RemoveSongFromPlaylist(QString,FileTags*)</slot>
    </slots>
@@ -571,9 +573,9 @@ QPushButton:pressed {
   </connection>
   <connection>
    <sender>sideMenu</sender>
-   <signal>PlaylistDeleted(QString)</signal>
+   <signal>PlaylistDeleted(QString,MenuPlaylistItemView*)</signal>
    <receiver>listView</receiver>
-   <slot>PlaylistDeleted(QString)</slot>
+   <slot>PlaylistDeleted(QString,MenuPlaylistItemView*)</slot>
    <hints>
     <hint type="sourcelabel">
      <x>243</x>
@@ -582,6 +584,22 @@ QPushButton:pressed {
     <hint type="destinationlabel">
      <x>838</x>
      <y>182</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>sideMenu</sender>
+   <signal>PlaylistChoosed(MenuPlaylistItemView*)</signal>
+   <receiver>listView</receiver>
+   <slot>PlaylistChoosedSlot(MenuPlaylistItemView*)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>282</x>
+     <y>127</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>791</x>
+     <y>139</y>
     </hint>
    </hints>
   </connection>

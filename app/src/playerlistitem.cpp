@@ -7,16 +7,25 @@ PlayerlistItem::PlayerlistItem(QListWidgetItem *parentItem, const QString& pathT
     QWidget(parent), ui(new Ui::PlayerlistItem), m_pathToTrack(pathTrack), m_trackName(trackName),
     m_fileInfo(new FileTags(pathTrack.toStdString(), trackName.toStdString())), m_parent(parentItem) {
     ui->setupUi(this);
-
     setObjectName(pathTrack + trackName);
-//    qDebug() << pathTrack + trackName;
 
-    QString name(trackName.begin(), trackName.lastIndexOf("."));
-    ui->trackNameAndArtist->setText(name);
-    ui->infoAboutTrack->setText(getFormat() + "::" + m_fileInfo->tags.bitrate + "::" + m_fileInfo->tags.channels
-                                + "::" + m_fileInfo->tags.sampleRate);
-    ui->duration->setText(m_fileInfo->tags.length);
+    CreateMenu();
+    createInfo(trackName);
+    m_playlists << "Default";
+    emit AddTracktoPlaylist(m_playlistName, m_fileInfo);
+}
 
+PlayerlistItem::PlayerlistItem(QListWidgetItem *parentItem, FileTags *song, QWidget *parent) :
+    QWidget(parent), ui(new Ui::PlayerlistItem), m_pathToTrack(song->tags.path), m_trackName(song->tags.filename),
+m_fileInfo(song), m_parent(parentItem) {
+    ui->setupUi(this);
+    setObjectName(song->tags.path + song->tags.filename);
+    qDebug() << song->tags.path;
+    CreateMenu();
+    createInfo(song->tags.filename);
+}
+
+void PlayerlistItem::CreateMenu() {
     auto *contextMenu = new QMenu(this);
     auto *editTags = new QAction(tr("Edit file tags"), contextMenu);
     auto *remove = new QAction(tr("Remove from playlist"), contextMenu);
@@ -29,15 +38,23 @@ PlayerlistItem::PlayerlistItem(QListWidgetItem *parentItem, const QString& pathT
     connect(remove, &QAction::triggered, this, &PlayerlistItem::removeFromPlaylist);
     connect(addToPlaylist, &QAction::triggered, this, &PlayerlistItem::addToPlaylist);
     ui->pushButton->setMenu(contextMenu);
-    m_playlists << "Default";
-    emit AddTracktoPlaylist(m_playlistName, m_fileInfo);
+}
+
+void PlayerlistItem::createInfo(const QString &trackName) {
+    QString name(trackName.begin(), trackName.lastIndexOf("."));
+    ui->trackNameAndArtist->setText(name);
+    ui->infoAboutTrack->setText(
+        getFormat() + "::" + m_fileInfo->tags.bitrate + "::" + m_fileInfo->tags.channels
+            + "::" + m_fileInfo->tags.sampleRate);
+
+    ui->duration->setText(m_fileInfo->tags.length);
 }
 
 PlayerlistItem::~PlayerlistItem() {
-    for (auto *item : ui->pushButton->menu()->actions()) {
-        delete item;
-    }
-    delete ui->pushButton->menu();
+//    for (auto *item : ui->pushButton->menu()->actions()) {
+//        delete item;
+//    }
+//    delete ui->pushButton->menu();
     delete ui;
 }
 
@@ -80,4 +97,5 @@ void PlayerlistItem::updateListPlaylist(QStringList playlists) {
 //        qDebug() << item;
     }
 }
+
 
