@@ -1,8 +1,9 @@
 #include "PlayerController.h"
 
 PlayerController::PlayerController() {
-    m_player = new QMediaPlayer;
 
-    m_player->setAudioRole(QAudio::Role::MusicRole);
-    m_player->setMedia(QUrl::fromLocalFile("/Users/abalabin/Desktop/test.mp3"));
+}
+
+void PlayerController::SetSong(const FileTags *song) {
+    sample = BASS_StreamCreateFile(FALSE, song->tags.path.toStdString().c_str(), 0, 0, 0);
 }

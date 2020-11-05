@@ -4,6 +4,11 @@ MainWindow::MainWindow(const QString &name, QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindow) {
     ui->setupUi(this);
 
+    BASS_SetConfig(BASS_CONFIG_DEV_DEFAULT, 1);
+
+    if (!BASS_Init(-1, 44100, 0, NULL, NULL)) {
+        qDebug() << ("Can't initialize device");
+    }
     this->setWindowTitle("uText");
     setObjectName(name);
     setWindowTitle(name);
@@ -11,5 +16,6 @@ MainWindow::MainWindow(const QString &name, QWidget *parent)
 }
 
 MainWindow::~MainWindow() {
+    BASS_Free();
     delete ui;
 }
