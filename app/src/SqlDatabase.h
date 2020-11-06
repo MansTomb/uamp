@@ -3,6 +3,7 @@
 #include <QSqlDatabase.h>
 #include <QSql>
 #include <QSqlDatabase>
+#include <QSqlQuery>
 #include <QDebug>
 #include <QApplication>
 

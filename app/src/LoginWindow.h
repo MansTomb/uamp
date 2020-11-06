@@ -1,7 +1,11 @@
 #pragma  once
 
+#define PATHTODB ((static_cast<QApplication *>(QCoreApplication::instance()))->applicationDirPath() + "/app/res/db/uamp.db")
+
 #include <QMainWindow>
 #include <QWidget>
+#include <QSqlQuery>
+#include <QMessageBox>
 
 #include "ui_loginwindow.h"
 #include "mainwindow.h"
@@ -22,19 +26,17 @@ class LoginWindow : public QMainWindow {
         void onGoogleLoginClicked();
 
         void onRegisterSuccess();
-
-        void InvalidCredentials() {return;};
-        void InvalidPassword() {return;};
-        void InvalidUsername() {return;};
-
         void OpenMainWindow();
  signals:
         void RegisterSuccess();
         void LoginSuccess();
     private:
-        bool CheckCredentials() {return true;};
-        bool CheckUsernameExist() {return true;};
-        bool CheckPasswordConfirm() {return true;};
+        bool CheckInputData();
+        bool CheckCredentials();
+        void InvalidCredentials();
+        void InvalidPassword();
+        void InvalidUsername();
+        void InvalidData();
 
         Ui::LoginWindow *ui;
         GoogleAuthWrapper google;

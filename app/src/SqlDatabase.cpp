@@ -9,7 +9,7 @@ SqlDatabase::SqlDatabase() :
     m_db.setDatabaseName(m_toDbPath);
     m_db.setUserName("mmasniy");
     m_db.setHostName("mac");
-    m_db.setPassword("pis'ka_za_schekoy");
+    m_db.setPassword("pas");
 
     if (!m_db.open()) {
         qDebug() << "Db opening failed";
@@ -19,6 +19,16 @@ SqlDatabase::SqlDatabase() :
 }
 
 void SqlDatabase::createTables() {
-    QSqlQuery query(QSqlDatabase::database("uamp.db"));
+    QSqlQuery query(QSqlDatabase::database(m_toDbPath));
 
+    if (!query.exec("SELECT * FROM users")) {
+        query.exec("create table if not exists users (id INTEGER PRIMARY KEY AUTOINCREMENT,"
+                   "login varchar(255) NOT NULL UNIQUE,"
+                   "password varchar(255));");
+        query.exec(R"(INSERT INTO users(login, password) VALUES ("mmasniy", ""))");
+        query.exec(R"(INSERT INTO users(login, password) VALUES ("abalabin", ""))");
+        query.exec(R"(INSERT INTO users(login, password) VALUES ("", ""))");
+    } else {
+        qDebug() << "Opening existing Db";
+    }
 }
