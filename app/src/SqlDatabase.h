@@ -1,6 +1,7 @@
 #pragma once
 
-#define PATHTOPL ((static_cast<QApplication *>(QCoreApplication::instance()))->applicationDirPath() + "/app/res/playlists/")
+#define PATHTOPL ((dynamic_cast<QApplication *>(QCoreApplication::instance()))->applicationDirPath() + "/app/res/playlists/")
+#define PATHTODB ((dynamic_cast<QApplication *>(QCoreApplication::instance()))->applicationDirPath() + "/app/res/db/uamp.db")
 
 #include <QSqlDatabase.h>
 #include <QSql>
@@ -10,13 +11,27 @@
 #include <QApplication>
 
 class SqlDatabase {
-    public:
-    explicit SqlDatabase();
-    ~SqlDatabase();
+public:
+    SqlDatabase(SqlDatabase &other) = delete;
+    void operator=(const SqlDatabase &other) = delete;
 
-    private:
+    static SqlDatabase &instance();
+
+    void connectDataBase();
+    void addUserToDataBase(const QString& login, const QString& pass);
+
+    bool CheckCredentials(const QString& login, const QString& pass);
+//    bool CheckInputData(const QString& login, const QString& pass1, const QString& pass2);
+
+//    QSqlQuery &selectFrom(const QString);
+
+    QString getLogin(const QString& login) const;
+    ~SqlDatabase();
+private:
+    SqlDatabase() {};
     QString m_appPath;
     QString m_toDbPath;
-    QSqlDatabase m_db;
+    QSqlDatabase *m_db;
+
     void createTables();
 };

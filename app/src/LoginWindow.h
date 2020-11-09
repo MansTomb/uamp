@@ -1,7 +1,5 @@
 #pragma  once
 
-#define PATHTODB ((static_cast<QApplication *>(QCoreApplication::instance()))->applicationDirPath() + "/app/res/db/uamp.db")
-
 #include <QMainWindow>
 #include <QWidget>
 #include <QSqlQuery>
@@ -43,6 +41,5 @@ class LoginWindow : public QMainWindow {
         Ui::LoginWindow *ui;
         GoogleAuthWrapper google;
         MainWindow *main {Q_NULLPTR};
-        SqlDatabase m_base;
         QString m_login;
 };

@@ -23,9 +23,10 @@ class MainWindow : public QMainWindow {
  Q_OBJECT
 
  public:
-    MainWindow(const QString &name, SqlDatabase &base, QWidget *parent = nullptr);
+    MainWindow(const QString &name, QWidget *parent = nullptr);
     ~MainWindow();
+    void setLogin(const QString &login);
  private:
     Ui::MainWindow *ui;
-    SqlDatabase m_base;
+    QString m_login;
 };

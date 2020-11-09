@@ -1,7 +1,7 @@
 #include "mainwindow.h"
 
-MainWindow::MainWindow(const QString &name, SqlDatabase &base, QWidget *parent)
-    : QMainWindow(parent), ui(new Ui::MainWindow), m_base(base){
+MainWindow::MainWindow(const QString &name, QWidget *parent)
+    : QMainWindow(parent), ui(new Ui::MainWindow) {
     ui->setupUi(this);
 
     BASS_SetConfig(BASS_CONFIG_DEV_DEFAULT, 1);
@@ -18,4 +18,8 @@ MainWindow::MainWindow(const QString &name, SqlDatabase &base, QWidget *parent)
 MainWindow::~MainWindow() {
     BASS_Free();
     delete ui;
+}
+
+void MainWindow::setLogin(const QString &login) {
+    m_login = login;
 }

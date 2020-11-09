@@ -2,22 +2,6 @@
 #include <QSqlQuery>
 #include "SqlDatabase.h"
 
-SqlDatabase::SqlDatabase() :
-    m_appPath(qApp->applicationDirPath()), m_toDbPath(m_appPath + "/app/res/db/uamp.db"),
-    m_db(QSqlDatabase::addDatabase("QSQLITE", m_toDbPath)) {
-
-    m_db.setDatabaseName(m_toDbPath);
-    m_db.setUserName("mmasniy");
-    m_db.setHostName("mac");
-    m_db.setPassword("pas");
-
-    if (!m_db.open()) {
-        qDebug() << "Db opening failed";
-        exit(1);
-    }
-    createTables();
-}
-
 void SqlDatabase::createTables() {
     QSqlQuery query(QSqlDatabase::database(m_toDbPath));
 
@@ -25,7 +9,6 @@ void SqlDatabase::createTables() {
         //create users table
         query.exec("create table if not exists users (id INTEGER PRIMARY KEY AUTOINCREMENT,"
                    "login VARCHAR(255) NOT NULL UNIQUE,"
-                   "user_name VARCHAR(255) NOT NULL,"
                    "password VARCHAR(255));");
         query.exec(R"(INSERT INTO users(login, password) VALUES ("mmasniy", ""))");
         query.exec(R"(INSERT INTO users(login, password) VALUES ("abalabin", ""))");
@@ -75,6 +58,72 @@ void SqlDatabase::createTables() {
     }
 }
 
-SqlDatabase::~SqlDatabase() {
-    m_db.close();
+SqlDatabase &SqlDatabase::instance() {
+    static SqlDatabase sql;
+    return sql;
 }
+
+void SqlDatabase::connectDataBase() {
+    m_appPath = qApp->applicationDirPath();
+    m_toDbPath = m_appPath + "/app/res/db/uamp.db";
+    m_db = new QSqlDatabase(QSqlDatabase::addDatabase("QSQLITE", m_toDbPath));
+
+    m_db->setDatabaseName(m_toDbPath);
+    m_db->setUserName("mmasniy");
+    m_db->setHostName("mac");
+    m_db->setPassword("pas");
+
+    if (!m_db->open()) {
+        qDebug() << "Db opening failed";
+        exit(1);
+    }
+    createTables();
+}
+
+bool SqlDatabase::CheckCredentials(const QString& login, const QString& pass) {
+    QSqlQuery query(QSqlDatabase::database(PATHTODB));
+    char command[1024];
+
+    //здесь баг, когда пустые поля, оно какого-то чуда заходит в проложение!!
+    //убрать коммент перед релизом!!
+//    if (login.isEmpty() && pass.isEmpty())
+//        return false;
+
+    std::sprintf(command, R"(SELECT login, password FROM users WHERE users.login = "%s" AND users.password = "%s")",
+                 login.toStdString().c_str(), pass.toStdString().c_str());
+    query.exec(command);
+    query.first();
+
+    if (login == query.value(0).toString() && pass == query.value(1).toString()) {
+        return true;
+    }
+    qDebug() << "login: " + query.value(0).toString() + " | pass: " + query.value(1).toString();
+    return false;
+}
+
+QString SqlDatabase::getLogin(const QString& login) const {
+    QSqlQuery query(QSqlDatabase::database(PATHTODB));
+    char command[1024];
+
+    std::sprintf(command, "SELECT login FROM users WHERE users.login=\"%s\"", login.toStdString().c_str());
+    query.exec(command);
+    query.first();
+    qDebug() << "get login " + query.value(0).toString();
+    return query.value(0).toString();
+}
+
+SqlDatabase::~SqlDatabase() {
+    qDebug() << "disconnect BD";
+    m_db->close();
+}
+
+void SqlDatabase::addUserToDataBase(const QString& login, const QString& pass) {
+    qDebug() << "add user " + login;
+    QSqlQuery query(QSqlDatabase::database(PATHTODB));
+    char command[1024];
+
+    std::sprintf(command, R"(INSERT INTO users(login, password) VALUES("%s", "%s"))",
+                 login.toStdString().c_str(), pass.toStdString().c_str());
+    query.exec(command);
+}
+
