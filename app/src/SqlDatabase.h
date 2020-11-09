@@ -10,6 +10,9 @@
 #include <QDebug>
 #include <QApplication>
 
+
+#include "FileTag.h"
+
 class SqlDatabase {
 public:
     SqlDatabase(SqlDatabase &other) = delete;
@@ -19,6 +22,8 @@ public:
 
     void connectDataBase();
     void addUserToDataBase(const QString& login, const QString& pass);
+    void addInfoAboutSong(FileTags *tag, const QString &name, const QString &path);
+    void addSongNameToSongInfo(const QString& name, const QString& path);
 
     bool CheckCredentials(const QString& login, const QString& pass);
 //    bool CheckInputData(const QString& login, const QString& pass1, const QString& pass2);

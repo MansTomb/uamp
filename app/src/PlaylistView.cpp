@@ -46,6 +46,7 @@ void PlaylistView::addWidget(const QString &pathTrack, const QString &trackName)
     addItem(item);
     item->setSizeHint(QSize(50,75));
     auto *widget = new PlayerlistItem(item, pathTrack, trackName);
+    SqlDatabase::instance().addInfoAboutSong(widget->song(), m_login, m_playlistName);
     m_widgets.push_back(widget);
     setItemWidget(item, widget);
     connect(widget, &PlayerlistItem::CurrentSong, this, &PlaylistView::CurrentSongChanged);
@@ -143,6 +144,7 @@ void PlaylistView::addWidget(FileTags *song) {
     addItem(item);
     item->setSizeHint(QSize(50,75));
     auto *widget = new PlayerlistItem(item, song);
+    SqlDatabase::instance().addInfoAboutSong(widget->song(), m_login, m_playlistName);
     m_widgets.push_back(widget);
     setItemWidget(item, widget);
     connect(widget, &PlayerlistItem::CurrentSong, this, &PlaylistView::CurrentSongChanged);
@@ -151,4 +153,8 @@ void PlaylistView::addWidget(FileTags *song) {
     connect(widget, &PlayerlistItem::AddTracktoPlaylist, this, &PlaylistView::AddTracktoPlaylistSlot);
     connect(this, &PlaylistView::SetPlaylists, widget, &PlayerlistItem::updateListPlaylist);
     connect(this, &PlaylistView::ThrowPlaylistName, widget, &PlayerlistItem::setPlaylistName);
+}
+
+void PlaylistView::GetLogin(QString login) {
+    m_login = login;
 }

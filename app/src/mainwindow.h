@@ -20,13 +20,16 @@ namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
 
 class MainWindow : public QMainWindow {
- Q_OBJECT
+Q_OBJECT
 
- public:
+public:
     MainWindow(const QString &name, QWidget *parent = nullptr);
     ~MainWindow();
     void setLogin(const QString &login);
- private:
+
+signals:
+    void ThrowLogin(QString login);
+private:
     Ui::MainWindow *ui;
     QString m_login;
 };

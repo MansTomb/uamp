@@ -84,7 +84,7 @@ bool SqlDatabase::CheckCredentials(const QString& login, const QString& pass) {
     QSqlQuery query(QSqlDatabase::database(PATHTODB));
     char command[1024];
 
-    //здесь баг, когда пустые поля, оно какого-то чуда заходит в проложение!!
+    //здесь баг, когда пустые поля, оно какого-то чуда заходит в приложение!!
     //убрать коммент перед релизом!!
 //    if (login.isEmpty() && pass.isEmpty())
 //        return false;
@@ -126,4 +126,41 @@ void SqlDatabase::addUserToDataBase(const QString& login, const QString& pass) {
                  login.toStdString().c_str(), pass.toStdString().c_str());
     query.exec(command);
 }
+
+void SqlDatabase::addInfoAboutSong(FileTags *tag, const QString &name, const QString &path) {
+    qDebug() << "add new song to db";
+    QSqlQuery query(QSqlDatabase::database(PATHTODB));
+    query.prepare("INSERT INTO songs(songsName, filename, pathToFile, title, artist, album, genre, year,"
+                  "trackNumber, bitrate, sampleRate, channels, length, lyrics, picture) "
+                  "VALUES(:songsName, :filename, :pathToFile, :title, :artist, :album, :genre, :year,"
+                  ":trackNumber, :bitrate, :sampleRate, :channels, :length, :lyrics, :picture)");
+    query.bindValue(":songsName", tag->tags.artist + tag->tags.title);
+    query.bindValue(":filename", tag->tags.filename);
+    query.bindValue(":pathToFile", tag->tags.path);
+    query.bindValue(":title", tag->tags.title);
+    query.bindValue(":artist", tag->tags.artist);
+    query.bindValue(":album", tag->tags.album);
+    query.bindValue(":genre", tag->tags.genre);
+    query.bindValue(":year", tag->tags.year);
+    query.bindValue(":trackNumber", tag->tags.trackNumber);
+    query.bindValue(":bitrate", tag->tags.bitrate);
+    query.bindValue(":sampleRate", tag->tags.sampleRate);
+    query.bindValue(":channels", tag->tags.channels);
+    query.bindValue(":length", tag->tags.length);
+    query.bindValue(":lyrics", tag->tags.lyrics);
+    query.bindValue(":picture", 0);
+    query.exec();
+
+    addSongNameToSongInfo(tag->tags.artist + tag->tags.title, qApp->applicationDirPath()
+                            + "/app/res/playlist/" + name + "_" + path + ".m3u");
+}
+
+void SqlDatabase::addSongNameToSongInfo(const QString &name, const QString &path) {
+    QSqlQuery query(QSqlDatabase::database(PATHTODB));
+    query.prepare("INSERT INTO songs_info(songsName, playlist) VALUES(:songsName, :playlist)");
+    query.bindValue(":songsName", name);
+    query.bindValue(":playlist", path);
+    query.exec();
+}
+
 

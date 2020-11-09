@@ -16,6 +16,7 @@
 
 #include "playerlistitem.h"
 #include "MenuPlaylistItemView.h"
+#include "SqlDatabase.h"
 
 class PlaylistView : public QListWidget {
 
@@ -35,6 +36,7 @@ public slots:
     void PlaylistDeleted(QString deletedPlaylist,
                          MenuPlaylistItemView *defaultPlaylist);
     void PlaylistChoosedSlot(MenuPlaylistItemView *playlist);
+    void GetLogin(QString login);
     void setPlaylistName(QString name) {
         m_playlistName = name;
         emit ThrowPlaylistName(name);
@@ -63,5 +65,6 @@ private:
     void addSongsDir(const QList<QUrl> &droppedData);
     static QStringList m_allFiles;
     QString m_playlistName;
+    QString m_login;
     QList<PlayerlistItem *> m_widgets;
 };
