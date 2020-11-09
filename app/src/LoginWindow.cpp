@@ -1,10 +1,10 @@
 #include "LoginWindow.h"
 
 LoginWindow::LoginWindow(const QString &name, QWidget *parent)
-    : QMainWindow(parent), ui(new Ui::LoginWindow) {
+    : QMainWindow(parent), ui(new Ui::LoginWindow), m_base(SqlDatabase()) {
     ui->setupUi(this);
 
-    main = new MainWindow("uAmp", this);
+    main = new MainWindow("uAmp", m_base, this);
     main->hide();
 
     this->setWindowTitle("uText");
@@ -48,6 +48,7 @@ void LoginWindow::onGoogleLoginClicked() {
 }
 
 void LoginWindow::OpenMainWindow() {
+//    emit SetLogin(m_login);
     main->show();
     hide();
 }
@@ -74,6 +75,7 @@ bool LoginWindow::CheckCredentials() {
     query.first();
 
     if (login == query.value(0).toString() && pass == query.value(1).toString()) {
+        m_login = login;
         return true;
     }
     return false;

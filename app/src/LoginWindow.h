@@ -10,6 +10,7 @@
 #include "ui_loginwindow.h"
 #include "mainwindow.h"
 #include "GoogleAuthWrapper.h"
+#include "SqlDatabase.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class LoginWindow; }
@@ -30,6 +31,7 @@ class LoginWindow : public QMainWindow {
  signals:
         void RegisterSuccess();
         void LoginSuccess();
+        void SetLogin(const QString &login);
     private:
         bool CheckInputData();
         bool CheckCredentials();
@@ -41,4 +43,6 @@ class LoginWindow : public QMainWindow {
         Ui::LoginWindow *ui;
         GoogleAuthWrapper google;
         MainWindow *main {Q_NULLPTR};
+        SqlDatabase m_base;
+        QString m_login;
 };

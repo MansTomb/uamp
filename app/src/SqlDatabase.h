@@ -1,5 +1,7 @@
 #pragma once
 
+#define PATHTOPL ((static_cast<QApplication *>(QCoreApplication::instance()))->applicationDirPath() + "/app/res/playlists/")
+
 #include <QSqlDatabase.h>
 #include <QSql>
 #include <QSqlDatabase>
@@ -10,6 +12,7 @@
 class SqlDatabase {
     public:
     explicit SqlDatabase();
+    ~SqlDatabase();
 
     private:
     QString m_appPath;
