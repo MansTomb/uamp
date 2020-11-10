@@ -1,22 +1,53 @@
-#ifndef EQUALIZER_H
-#define EQUALIZER_H
+#pragma once
 
 #include <QDialog>
+#include <QDebug>
+
+#include "ui_Equalizer.h"
 
 namespace Ui {
 class Equalizer;
 }
 
-class Equalizer : public QDialog
-{
-    Q_OBJECT
+typedef struct s_FXData {
+    float Gain;
+    float Echo;
+    float Distortion;
+    float Compressor;
+    float Chorus;
+} FXData;
 
-public:
+typedef struct s_Preset {
+    QString name;
+    FXData preset;
+} EQPreset;
+
+class Equalizer : public QDialog {
+ Q_OBJECT
+
+ public:
     explicit Equalizer(QWidget *parent = nullptr);
     ~Equalizer();
 
-private:
-    Ui::Equalizer *ui;
-};
+ public slots:
+    void OnApplyClickedSlot() {
+     qDebug() << "poslal";
+        emit OnApplyClicked({static_cast<float>(ui->GainSlider->value()),
+                             static_cast<float>(ui->Echo->value()),
+                             static_cast<float>(ui->Distortion->value()),
+                             static_cast<float>(ui->Compressor->value()),
+                             static_cast<float>(ui->Chorus->value())});
+    };
 
-#endif // EQUALIZER_H
+    void OnSavePresetSlot();
+    void OnPresetChanged(QString presetName);
+
+ signals:
+    void OnApplyClicked(FXData);
+
+ private:
+    Ui::Equalizer *ui;
+    QList<EQPreset> m_presets;
+
+    void LoadAllPresetsFromDB();
+};

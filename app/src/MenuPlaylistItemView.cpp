@@ -70,6 +70,7 @@ void MenuPlaylistItemView::actionRename() {
         auto msg = new QErrorMessage(this);
         msg->showMessage("Default playlist cant be renamed");
         msg->exec();
+        delete msg;
         return;
     }
     bool ok;
@@ -81,6 +82,7 @@ void MenuPlaylistItemView::actionRename() {
         auto msg = new QErrorMessage(this);
         msg->showMessage("Name cant be empty");
         msg->exec();
+        delete msg;
     }
 }
 
@@ -100,5 +102,6 @@ void MenuPlaylistItemView::actionDelete() {
         auto msg = new QErrorMessage(this);
         msg->showMessage("Default playlist cant be deleted");
         msg->exec();
+        delete msg;
     }
 }

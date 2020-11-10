@@ -3,6 +3,7 @@
 
 #include <QWidget>
 
+#include "Equalizer.h"
 #include "ui_SideMenu.h"
 
 namespace Ui {
@@ -30,6 +31,8 @@ public:
     void PlaylistChoosedSlot(MenuPlaylistItemView *playlist) {emit PlaylistChoosed(playlist);};
     void PlaylistsSlot(QStringList playlists) {emit ThrowPlaylists(playlists);};
 
+    void OpenEqualizerSlot();
+
  signals:
     void SongAddedToPlaylist(QString playlistName, FileTags *song);
     void SongRemovedFromPlaylist(QString playlistName, FileTags *song);
@@ -41,8 +44,11 @@ public:
     void PlaylistChoosed(MenuPlaylistItemView *playlist);
     void ThrowPlaylists(QStringList playlists);
 
+    void EqualizerChanged(FXData);
+
 private:
     Ui::SideMenu *ui;
+    Equalizer *m_eq {Q_NULLPTR};
 };
 
 #endif // SIDEMENU_H

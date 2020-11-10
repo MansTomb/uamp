@@ -32,6 +32,7 @@ set(SOURCES main.cpp
     src/ImportPlaylistView.cpp
     src/SongTimeline.cpp
     src/SqlDatabase.cpp
+        src/Equalizer.cpp
     )
 
 set(HEADERS src/mainwindow.h
@@ -51,6 +52,7 @@ set(HEADERS src/mainwindow.h
     src/ImportPlaylistView.h
     src/SongTimeline.h
     src/SqlDatabase.h
+        src/Equalizer.h
     )
 
 set(UI src/mainwindow.ui
@@ -63,6 +65,7 @@ set(UI src/mainwindow.ui
     src/MenuPlaylistItemView.ui
     src/EditFileTagsDialog.ui
     src/ImportPlaylistView.ui
+        src/Equalizer.ui
     )
 
 include_directories(../cmake-build-debug/app/uamp_autogen/include)
@@ -102,9 +105,9 @@ add_subdirectory(src)
 include_directories(./src)
 
 add_custom_command(TARGET ${TARGET}
-    PRE_LINK
-    COMMAND "${CMAKE_SOURCE_DIR}/build.sh"
-    )
+        PRE_LINK
+        COMMAND "${CMAKE_SOURCE_DIR}/build.sh"
+        )
 
 target_link_libraries(${TARGET} tag Qt5::Sql Qt5::Gui Qt5::Core Qt5::Widgets Qt5::Network Qt5::NetworkAuth
         Qt5::Multimedia Qt5::MultimediaWidgets Qt5::Svg bass)

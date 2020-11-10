@@ -5,6 +5,7 @@
 #include <QPixmap>
 
 #include "PlayerController.h"
+#include "Equalizer.h"
 #include "ui_playerview.h"
 
 namespace Ui {
@@ -18,7 +19,6 @@ class PlayerView : public QWidget
 public:
     explicit PlayerView(QWidget *parent = nullptr);
     ~PlayerView();
-
 
 public slots:
     void ChangeVolume(int value);
@@ -34,6 +34,7 @@ public slots:
     void UpdateSlider();
     void SliderClicked();
     void SongEndedSlot() {emit SongEnded();};
+    void EqualizerSettingsApply(FXData data);
 
 signals:
     void BarPositionChanged(float pos);

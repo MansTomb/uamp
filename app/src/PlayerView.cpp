@@ -85,3 +85,7 @@ void PlayerView::UpdateSlider() {
 void PlayerView::SliderClicked() {
     m_player.SetPosition(ui->horizontalSlider->value());
 }
+
+void PlayerView::EqualizerSettingsApply(FXData data) {
+    m_player.ApplySettings(data);
+}

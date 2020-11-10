@@ -4,25 +4,8 @@
 #include <QtMultimediaWidgets>
 
 #include "FileTag.h"
+#include "Equalizer.h"
 #include "bass.h"
-
-//class PlayerController : public QObject {
-//    Q_OBJECT
-// public:
-//    explicit PlayerController();
-//
-//    void SetSong(const FileTags *song) {m_player->setMedia(QUrl::fromLocalFile(song->tags.path));};
-//    void SetVolume(int value) {m_player->setVolume(value);};
-//    void Play() {m_player->play();};
-//    void Pause() {m_player->pause();};
-//    void Next() {};
-//    void Previous() {};
-//    void Backward() {m_player->setPosition(m_player->position() - 10000);};
-//    void Forward() {m_player->setPosition(m_player->position() + 10000);};
-//    void Mute(bool state) {m_player->setMuted(state);};
-// private:
-//    QMediaPlayer *m_player;
-//};
 
 class PlayerController : public QObject {
  Q_OBJECT
@@ -49,6 +32,9 @@ class PlayerController : public QObject {
             m_muted = false;
         }
     };
+
+    void ApplySettings(FXData& data);
+
     double GetCurrentSongTime() {return BASS_ChannelBytes2Seconds(sample, BASS_ChannelGetPosition(sample, BASS_POS_BYTE));}
     double GetSongTime() {return BASS_ChannelBytes2Seconds(sample, BASS_ChannelGetLength(sample, BASS_POS_BYTE));}
  public slots:
@@ -59,6 +45,19 @@ signals:
  private:
     bool m_muted{false};
     float m_lastVolume;
+
+    BASS_DX8_CHORUS m_chorus;
+    BASS_DX8_COMPRESSOR m_compressor ;
+    BASS_DX8_ECHO m_echo;
+    BASS_DX8_DISTORTION m_distrotion;
+    BASS_DX8_PARAMEQ m_parameq;
+
+    int fxChorusHandle;
+    int fxCompressorHandle;
+    int fxEchoHandle;
+    int fxDistortionHandle;
+    int fxParameqHandle;
+
     HCHANNEL channel;
     HSAMPLE sample;
 };

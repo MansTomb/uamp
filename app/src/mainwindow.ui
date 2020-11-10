@@ -268,6 +268,7 @@ QPushButton:pressed {
     <slot>Backward()</slot>
     <slot>SetSong(FileTags*)</slot>
     <slot>SetImage(QPixmap*)</slot>
+    <slot>EqualizerSettingsApply(FXData)</slot>
    </slots>
   </customwidget>
   <customwidget>
@@ -308,6 +309,7 @@ QPushButton:pressed {
     <signal>ThrowPlaylists(QStringList)</signal>
     <signal>PlaylistChoosedName(QString)</signal>
     <signal>PlaylistChoosed(MenuPlaylistItemView*)</signal>
+    <signal>EqualizerChanged(FXData)</signal>
     <slot>AddSongToPlaylist(QString,FileTags*)</slot>
     <slot>RemoveSongFromPlaylist(QString,FileTags*)</slot>
    </slots>
@@ -600,6 +602,22 @@ QPushButton:pressed {
     <hint type="destinationlabel">
      <x>791</x>
      <y>139</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>sideMenu</sender>
+   <signal>EqualizerChanged(FXData)</signal>
+   <receiver>playerView</receiver>
+   <slot>EqualizerSettingsApply(FXData)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>225</x>
+     <y>219</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>525</x>
+     <y>220</y>
     </hint>
    </hints>
   </connection>

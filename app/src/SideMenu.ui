@@ -88,10 +88,20 @@
           </size>
          </property>
          <property name="text">
-          <string>OtherMenu</string>
+          <string>Equalizer</string>
+         </property>
+         <property name="icon">
+          <iconset resource="../res/resources.qrc">
+           <normaloff>:/menuIcons/05-Equalizer.svg</normaloff>:/menuIcons/05-Equalizer.svg</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>20</width>
+           <height>20</height>
+          </size>
          </property>
          <property name="flat">
-          <bool>false</bool>
+          <bool>true</bool>
          </property>
         </widget>
        </item>
@@ -347,6 +357,22 @@ QPushButton:pressed {
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>pushButton_4</sender>
+   <signal>clicked()</signal>
+   <receiver>SideMenu</receiver>
+   <slot>OpenEqualizerSlot()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>12</x>
+     <y>39</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>282</x>
+     <y>44</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <signal>PlaylistCreated(QString)</signal>
@@ -365,5 +391,6 @@ QPushButton:pressed {
   <slot>PlaylistsSlot(QStringList)</slot>
   <slot>PlaylistChoosedNameSlot(QString)</slot>
   <slot>PlaylistChoosedSlot(MenuPlaylistItemView*)</slot>
+  <slot>OpenEqualizerSlot()</slot>
  </slots>
 </ui>
