@@ -208,17 +208,21 @@ QPushButton:pressed {
        <widget class="QPushButton" name="pushButton">
         <property name="maximumSize">
          <size>
-          <width>32</width>
-          <height>32</height>
+          <width>24</width>
+          <height>24</height>
          </size>
         </property>
         <property name="text">
-         <string>Menu</string>
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset resource="../res/resources.qrc">
+          <normaloff>:/menuIcons/00-MenuButton.svg</normaloff>:/menuIcons/00-MenuButton.svg</iconset>
         </property>
         <property name="iconSize">
          <size>
-          <width>32</width>
-          <height>32</height>
+          <width>24</width>
+          <height>24</height>
          </size>
         </property>
         <property name="checkable">
@@ -315,7 +319,9 @@ QPushButton:pressed {
    </slots>
   </customwidget>
  </customwidgets>
- <resources/>
+ <resources>
+  <include location="../res/resources.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>toolBar</sender>

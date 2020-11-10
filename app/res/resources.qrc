@@ -67,5 +67,7 @@
         <file>toolbarIcons/005-note.svg</file>
         <file>menuIcons/01-MainScreen.svg</file>
         <file>menuIcons/05-Equalizer.svg</file>
+        <file>menuIcons/06-Radio.svg</file>
+        <file>menuIcons/00-MenuButton.svg</file>
     </qresource>
 </RCC>

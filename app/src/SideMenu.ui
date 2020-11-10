@@ -30,7 +30,7 @@
     <number>0</number>
    </property>
    <item>
-    <layout class="QVBoxLayout" name="menuWindows" stretch="1,1,0">
+    <layout class="QVBoxLayout" name="menuWindows" stretch="1,1,0,0">
      <property name="spacing">
       <number>0</number>
      </property>
@@ -84,7 +84,7 @@
          <property name="maximumSize">
           <size>
            <width>100</width>
-           <height>25</height>
+           <height>24</height>
           </size>
          </property>
          <property name="text">
@@ -107,6 +107,55 @@
        </item>
        <item>
         <spacer name="horizontalSpacer_3">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_2">
+       <property name="spacing">
+        <number>10</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
+       <item>
+        <widget class="QPushButton" name="pushButton_5">
+         <property name="maximumSize">
+          <size>
+           <width>70</width>
+           <height>24</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>Radio</string>
+         </property>
+         <property name="icon">
+          <iconset resource="../res/resources.qrc">
+           <normaloff>:/menuIcons/06-Radio.svg</normaloff>:/menuIcons/06-Radio.svg</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>20</width>
+           <height>20</height>
+          </size>
+         </property>
+         <property name="flat">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer_4">
          <property name="orientation">
           <enum>Qt::Horizontal</enum>
          </property>
@@ -373,6 +422,22 @@ QPushButton:pressed {
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>pushButton_5</sender>
+   <signal>clicked()</signal>
+   <receiver>SideMenu</receiver>
+   <slot>OpenRadioSlot()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>41</x>
+     <y>75</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>363</x>
+     <y>111</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <signal>PlaylistCreated(QString)</signal>
@@ -392,5 +457,6 @@ QPushButton:pressed {
   <slot>PlaylistChoosedNameSlot(QString)</slot>
   <slot>PlaylistChoosedSlot(MenuPlaylistItemView*)</slot>
   <slot>OpenEqualizerSlot()</slot>
+  <slot>OpenRadioSlot()</slot>
  </slots>
 </ui>
