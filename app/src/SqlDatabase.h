@@ -24,11 +24,9 @@ public:
     void addUserToDataBase(const QString& login, const QString& pass);
     void addInfoAboutSong(FileTags *tag, const QString &name, const QString &path);
     void addSongNameToSongInfo(const QString& name, const QString& path);
+    void addNewPlaylist(const QString& login, const QString& playlistName);
 
     bool CheckCredentials(const QString& login, const QString& pass);
-//    bool CheckInputData(const QString& login, const QString& pass1, const QString& pass2);
-
-//    QSqlQuery &selectFrom(const QString);
 
     QString getLogin(const QString& login) const;
     ~SqlDatabase();

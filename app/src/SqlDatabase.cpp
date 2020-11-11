@@ -163,4 +163,20 @@ void SqlDatabase::addSongNameToSongInfo(const QString &name, const QString &path
     query.exec();
 }
 
+void SqlDatabase::addNewPlaylist(const QString &login, const QString &playlistName) {
+    QSqlQuery query(QSqlDatabase::database(PATHTODB));
+    QString path = qApp->applicationDirPath() + "/app/res/playlists/" + login + "_" + playlistName + ".m3u";
 
+    query.prepare("INSERT INTO playlists(name, countTracks, pathToPlaylist) VALUES(:name, :countTracks, :pathToPlaylist)");
+    query.bindValue(":name", playlistName);
+    query.bindValue(":countTracks", 0);
+    query.bindValue(":pathToPlaylist", path);
+    query.exec();
+
+    query.clear();
+
+    query.prepare("INSERT INTO user_playlists(login, path) VALUES(:login, :path)");
+    query.bindValue(":login", login);
+    query.bindValue(":path", path);
+    query.exec();
+}
