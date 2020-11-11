@@ -33,6 +33,7 @@ set(SOURCES main.cpp
     src/SongTimeline.cpp
     src/SqlDatabase.cpp
         src/Equalizer.cpp
+        src/Radio.cpp
     )
 
 set(HEADERS src/mainwindow.h
@@ -53,6 +54,7 @@ set(HEADERS src/mainwindow.h
     src/SongTimeline.h
     src/SqlDatabase.h
         src/Equalizer.h
+        src/Radio.h
     )
 
 set(UI src/mainwindow.ui
@@ -66,6 +68,7 @@ set(UI src/mainwindow.ui
     src/EditFileTagsDialog.ui
     src/ImportPlaylistView.ui
         src/Equalizer.ui
+        src/Radio.ui
     )
 
 include_directories(../cmake-build-debug/app/uamp_autogen/include)

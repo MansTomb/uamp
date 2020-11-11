@@ -5,6 +5,7 @@
 
 #include "Equalizer.h"
 #include "ui_SideMenu.h"
+#include "Radio.h"
 
 namespace Ui {
 class SideMenu;
@@ -32,6 +33,7 @@ public:
     void PlaylistsSlot(QStringList playlists) {emit ThrowPlaylists(playlists);};
 
     void OpenEqualizerSlot();
+    void OpenRadioSlot();
 
  signals:
     void SongAddedToPlaylist(QString playlistName, FileTags *song);
@@ -49,6 +51,7 @@ public:
 private:
     Ui::SideMenu *ui;
     Equalizer *m_eq {Q_NULLPTR};
+    Radio *m_radio {Q_NULLPTR};
 };
 
 #endif // SIDEMENU_H

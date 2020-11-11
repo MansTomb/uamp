@@ -31,7 +31,6 @@ class Equalizer : public QDialog {
 
  public slots:
     void OnApplyClickedSlot() {
-     qDebug() << "poslal";
         emit OnApplyClicked({static_cast<float>(ui->GainSlider->value()),
                              static_cast<float>(ui->Echo->value()),
                              static_cast<float>(ui->Distortion->value()),

@@ -670,6 +670,9 @@ border-width: 28px;</string>
        <property name="styleSheet">
         <string notr="true"/>
        </property>
+       <property name="value">
+        <number>99</number>
+       </property>
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
        </property>

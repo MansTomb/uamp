@@ -8,7 +8,10 @@ SideMenu::SideMenu(QWidget *parent) :
 }
 
 SideMenu::~SideMenu() {
-    delete m_eq;
+    if (m_eq)
+        delete m_eq;
+    if (m_radio)
+        delete m_radio;
     delete ui;
 }
 
@@ -17,5 +20,12 @@ void SideMenu::OpenEqualizerSlot() {
         m_eq = new Equalizer(this);
         connect(m_eq, &Equalizer::OnApplyClicked, this, &SideMenu::EqualizerChanged);
     }
-    m_eq->exec();
+    m_eq->open();
+}
+
+void SideMenu::OpenRadioSlot() {
+    if (!m_radio) {
+        m_radio = new Radio(this);
+    }
+    m_radio->open();
 }
