@@ -26,6 +26,7 @@ public:
     void repeatSongClicked(bool state) {emit RepeatSong(state);};
     void prevClicked() {emit Previous();};
     void playClicked(bool state) {emit Play(state);};
+    void stopButtonClicked() {emit Stop(); ui->PauseBtn->setChecked(false);};
     void nextClicked() {emit Next();};
     void muteClicked(bool state) {emit Mute(state);};
     void forwardClicked() {emit Forward();};
@@ -35,6 +36,7 @@ public:
     void menuClicked() {emit Menu();};
 
     void menuPlay() {emit Play(true); ui->PauseBtn->setChecked(true);};
+    void menuStop() {emit Stop(); ui->PauseBtn->setChecked(false);};
     void menuPause() {emit Play(false); ui->PauseBtn->setChecked(false);};
     void menuForward() {emit Forward();};
     void menuRewind() {emit Backward();};
@@ -50,6 +52,7 @@ signals:
     void RepeatSong(bool);
     void Repeat(bool);
     void Play(bool);
+    void Stop();
     void Previous();
     void Backward();
     void Forward();

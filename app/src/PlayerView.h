@@ -24,6 +24,7 @@ public slots:
     void ChangeVolume(int value);
     void Play(bool state);
     void Mute(bool state);
+    void Stop();
     void Previous();
     void Next();
     void Backward();

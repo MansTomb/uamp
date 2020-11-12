@@ -8,10 +8,9 @@ SideMenu::SideMenu(QWidget *parent) :
 }
 
 SideMenu::~SideMenu() {
-    if (m_eq)
-        delete m_eq;
-    if (m_radio)
-        delete m_radio;
+    delete m_eq;
+    delete m_radio;
+    delete m_timer;
     delete ui;
 }
 
@@ -28,4 +27,11 @@ void SideMenu::OpenRadioSlot() {
         m_radio = new Radio(this);
     }
     m_radio->open();
+}
+void SideMenu::OpenTimerSlot() {
+    if (!m_timer) {
+        m_timer = new Timer(this);
+        connect(m_timer, &Timer::TimerEnded, this, &SideMenu::Shutdown);
+    }
+    m_timer->open();
 }

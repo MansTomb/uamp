@@ -231,14 +231,8 @@
              </property>
              <property name="icon">
               <iconset resource="../res/resources.qrc">
-               <normaloff>:/toolbarIcons/002-play.svg</normaloff>
-               <normalon>:/toolbarIcons/021-pause.svg</normalon>
-               <disabledoff>:/toolbarIcons/002-play.svg</disabledoff>
-               <disabledon>:/toolbarIcons/021-pause.svg</disabledon>
-               <activeoff>:/toolbarIcons/002-play.svg</activeoff>
-               <activeon>:/toolbarIcons/021-pause.svg</activeon>
-               <selectedoff>:/toolbarIcons/002-play.svg</selectedoff>
-               <selectedon>:/toolbarIcons/021-pause.svg</selectedon>:/toolbarIcons/002-play.svg</iconset>
+               <normaloff>:/toolbarIcons/020-play.svg</normaloff>
+               <activeon>:/toolbarIcons/021-pause.svg</activeon>:/toolbarIcons/020-play.svg</iconset>
              </property>
              <property name="iconSize">
               <size>
@@ -248,6 +242,44 @@
              </property>
              <property name="checkable">
               <bool>true</bool>
+             </property>
+             <property name="flat">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="StopBtn">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>32</width>
+               <height>32</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>32</width>
+               <height>32</height>
+              </size>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+             <property name="icon">
+              <iconset resource="../res/resources.qrc">
+               <normaloff>:/toolbarIcons/003-pause.svg</normaloff>:/toolbarIcons/003-pause.svg</iconset>
+             </property>
+             <property name="iconSize">
+              <size>
+               <width>32</width>
+               <height>32</height>
+              </size>
              </property>
              <property name="flat">
               <bool>true</bool>
@@ -809,7 +841,7 @@ border-width: 28px;</string>
    <slot>backwardClicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>228</x>
+     <x>221</x>
      <y>53</y>
     </hint>
     <hint type="destinationlabel">
@@ -825,7 +857,7 @@ border-width: 28px;</string>
    <slot>playClicked(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>271</x>
+     <x>264</x>
      <y>54</y>
     </hint>
     <hint type="destinationlabel">
@@ -873,7 +905,7 @@ border-width: 28px;</string>
    <slot>repeatClicked(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>512</x>
+     <x>530</x>
      <y>32</y>
     </hint>
     <hint type="destinationlabel">
@@ -889,7 +921,7 @@ border-width: 28px;</string>
    <slot>addClicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>675</x>
+     <x>686</x>
      <y>25</y>
     </hint>
     <hint type="destinationlabel">
@@ -905,7 +937,7 @@ border-width: 28px;</string>
    <slot>delClicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>715</x>
+     <x>726</x>
      <y>39</y>
     </hint>
     <hint type="destinationlabel">
@@ -921,7 +953,7 @@ border-width: 28px;</string>
    <slot>reposClicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>745</x>
+     <x>756</x>
      <y>34</y>
     </hint>
     <hint type="destinationlabel">
@@ -1010,6 +1042,22 @@ border-width: 28px;</string>
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>StopBtn</sender>
+   <signal>clicked()</signal>
+   <receiver>ToolBar</receiver>
+   <slot>stopButtonClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>280</x>
+     <y>39</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>300</x>
+     <y>152</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <signal>Shuffle(bool)</signal>
@@ -1041,5 +1089,6 @@ border-width: 28px;</string>
   <slot>muteClicked(bool)</slot>
   <slot>volumeChanged(int)</slot>
   <slot>repeatSongClicked(bool)</slot>
+  <slot>stopButtonClicked()</slot>
  </slots>
 </ui>

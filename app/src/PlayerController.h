@@ -16,6 +16,7 @@ class PlayerController : public QObject {
     void SetVolume(int value) { if (!m_muted) BASS_ChannelSetAttribute(sample, BASS_ATTRIB_VOL, static_cast<float>(value) / 100);};
     void Play() { BASS_ChannelPlay(sample, FALSE); };
     void Pause() { BASS_ChannelPause(sample); };
+    void Stop() {Pause(); SetPosition(0);};
     void Next() {};
     void Previous() {};
     void Backward() {BASS_ChannelSetPosition(sample,BASS_ChannelGetPosition(sample, BASS_POS_BYTE) - BASS_ChannelSeconds2Bytes(sample, 10),BASS_POS_BYTE);};

@@ -49,12 +49,17 @@ MenuPlaylistItemView::MenuPlaylistItemView(QMediaPlaylist *playlist,
 
 void MenuPlaylistItemView::AddSongsFromPlaylistMedia(const QMediaPlaylist *playlist) {
     for (int i = 0; i < playlist->mediaCount(); ++i) {
+        bool has_in_list = false;
         auto string = playlist->media(i).request().url().toString();
         QString path = playlist->media(i).request().url().toString().remove(0, 7);
         auto filename = playlist->media(i).request().url().toString().remove(0, string.lastIndexOf("/") + 1);
 
         path.remove(path.lastIndexOf("/") + 1, path.size());
-        AddSong(new FileTags(path.toStdString(), filename.toStdString()));
+        for (const auto &song : m_playlist)
+            if (song->tags.path == path + filename)
+                has_in_list = true;
+        if (!has_in_list)
+            AddSong(new FileTags(path.toStdString(), filename.toStdString()));
     }
 }
 

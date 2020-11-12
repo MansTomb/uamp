@@ -252,6 +252,7 @@ QPushButton:pressed {
     </property>
     <addaction name="actionPlay"/>
     <addaction name="actionPause"/>
+    <addaction name="actionStop"/>
     <addaction name="actionForward"/>
     <addaction name="actionRewind"/>
     <addaction name="actionShuffle"/>
@@ -346,6 +347,14 @@ QPushButton:pressed {
     <string>Ctrl+S</string>
    </property>
   </action>
+  <action name="actionStop">
+   <property name="text">
+    <string>Stop</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+W</string>
+   </property>
+  </action>
  </widget>
  <customwidgets>
   <customwidget>
@@ -383,6 +392,7 @@ QPushButton:pressed {
     <slot>SetImage(QPixmap*)</slot>
     <slot>EqualizerSettingsApply(FXData)</slot>
     <slot>SetSongRepeat(bool)</slot>
+    <slot>Stop()</slot>
    </slots>
   </customwidget>
   <customwidget>
@@ -406,6 +416,7 @@ QPushButton:pressed {
     <signal>Menu()</signal>
     <signal>Mute(bool)</signal>
     <signal>RepeatSong(bool)</signal>
+    <signal>Stop()</signal>
     <slot>menuPlay()</slot>
     <slot>menuPause()</slot>
     <slot>menuForward()</slot>
@@ -415,6 +426,7 @@ QPushButton:pressed {
     <slot>menuLoopPlaylist(bool)</slot>
     <slot>menuVolumeUp()</slot>
     <slot>menuVolumeDown()</slot>
+    <slot>menuStop()</slot>
    </slots>
   </customwidget>
   <customwidget>
@@ -434,6 +446,7 @@ QPushButton:pressed {
     <signal>PlaylistChoosedName(QString)</signal>
     <signal>PlaylistChoosed(MenuPlaylistItemView*)</signal>
     <signal>EqualizerChanged(FXData)</signal>
+    <signal>Shutdown()</signal>
     <slot>AddSongToPlaylist(QString,FileTags*)</slot>
     <slot>RemoveSongFromPlaylist(QString,FileTags*)</slot>
    </slots>
@@ -770,8 +783,8 @@ QPushButton:pressed {
    <slot>menuPlay()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>495</x>
-     <y>10</y>
+     <x>-1</x>
+     <y>-1</y>
     </hint>
     <hint type="destinationlabel">
      <x>661</x>
@@ -896,6 +909,54 @@ QPushButton:pressed {
    <signal>triggered()</signal>
    <receiver>toolBar</receiver>
    <slot>menuVolumeDown()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>661</x>
+     <y>621</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>sideMenu</sender>
+   <signal>Shutdown()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>94</x>
+     <y>109</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>-12</x>
+     <y>132</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>toolBar</sender>
+   <signal>Stop()</signal>
+   <receiver>playerView</receiver>
+   <slot>Stop()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>491</x>
+     <y>614</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>485</x>
+     <y>482</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionStop</sender>
+   <signal>triggered()</signal>
+   <receiver>toolBar</receiver>
+   <slot>menuStop()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>-1</x>

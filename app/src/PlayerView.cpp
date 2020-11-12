@@ -92,3 +92,8 @@ void PlayerView::SliderClicked() {
 void PlayerView::EqualizerSettingsApply(FXData data) {
     m_player.ApplySettings(data);
 }
+
+void PlayerView::Stop() {
+    ui->horizontalSlider->setValue(0);
+    m_player.Stop();
+}

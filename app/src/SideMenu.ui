@@ -484,6 +484,22 @@ QPushButton:pressed {
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>pushButton_6</sender>
+   <signal>clicked()</signal>
+   <receiver>SideMenu</receiver>
+   <slot>OpenTimerSlot()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>78</x>
+     <y>98</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>349</x>
+     <y>107</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <signal>PlaylistCreated(QString)</signal>
@@ -504,5 +520,6 @@ QPushButton:pressed {
   <slot>PlaylistChoosedSlot(MenuPlaylistItemView*)</slot>
   <slot>OpenEqualizerSlot()</slot>
   <slot>OpenRadioSlot()</slot>
+  <slot>OpenTimerSlot()</slot>
  </slots>
 </ui>

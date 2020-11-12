@@ -6,6 +6,7 @@
 #include "Equalizer.h"
 #include "ui_SideMenu.h"
 #include "Radio.h"
+#include "Timer.h"
 
 namespace Ui {
 class SideMenu;
@@ -34,6 +35,7 @@ public:
 
     void OpenEqualizerSlot();
     void OpenRadioSlot();
+    void OpenTimerSlot();
 
  signals:
     void SongAddedToPlaylist(QString playlistName, FileTags *song);
@@ -47,9 +49,11 @@ public:
     void ThrowPlaylists(QStringList playlists);
 
     void EqualizerChanged(FXData);
+    void Shutdown();
 
 private:
     Ui::SideMenu *ui;
+    Timer *m_timer {Q_NULLPTR};
     Equalizer *m_eq {Q_NULLPTR};
     Radio *m_radio {Q_NULLPTR};
 };

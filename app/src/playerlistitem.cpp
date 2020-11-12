@@ -85,16 +85,20 @@ void PlayerlistItem::removeFromPlaylist() {
 }
 
 void PlayerlistItem::addToPlaylist() {
+    QInputDialog *dialog = new QInputDialog(this);
     qDebug() << "add to playlist";
-    QString playlist = QInputDialog::getItem(this, tr("Add track to..."), tr("Choose playlist:"), m_playlists);
+    dialog->setComboBoxEditable(false);
+    dialog->setComboBoxItems(m_playlists);
+    dialog->exec();
+    QString playlist = dialog->textValue();
     qDebug() << playlist;
     emit AddTracktoPlaylist(playlist, m_fileInfo);
+    delete dialog;
 }
 void PlayerlistItem::updateListPlaylist(QStringList playlists) {
     m_playlists.clear();
     for (const auto &item : playlists) {
         m_playlists << item;
-//        qDebug() << item;
     }
 }
 
