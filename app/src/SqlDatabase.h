@@ -33,10 +33,14 @@ public:
     void addSongNameToSongInfo(const QString& name, const QString& path);
     void addNewPlaylist(const QString& playlistName);
     void addNewUsersGoogle(const QString& userName);
+    void deletePlaylist(const QString &playlistName);
+    void renamePlaylist(const QString &oldName, const QString &newName);
 
     bool CheckCredentials(const QString& login, const QString& pass);
 
     [[nodiscard]] QString getLogin(const QString& login) const;
+
+    QStringList getAllPlaylist() const;
     ~SqlDatabase();
 private:
     SqlDatabase() {};

@@ -6,8 +6,7 @@ LoginWindow::LoginWindow(const QString &name, QWidget *parent)
 
     SqlDatabase::instance().connectDataBase();
 
-    main = new MainWindow("uAmp", this);
-    main->hide();
+
 
     this->setWindowTitle("uText");
     setObjectName(name);
@@ -50,6 +49,7 @@ void LoginWindow::onGoogleLoginClicked() {
 }
 
 void LoginWindow::OpenMainWindow() {
+    main = new MainWindow("uAmp", this);
     main->show();
     hide();
 }

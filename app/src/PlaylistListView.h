@@ -10,6 +10,7 @@
 #include "ui_playlistlistview.h"
 #include "FileTag.h"
 #include "MenuPlaylistItemView.h"
+#include "SqlDatabase.h"
 
 namespace Ui {
 class PlaylistsView;

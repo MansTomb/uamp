@@ -118,3 +118,11 @@ void MenuPlaylistItemView::actionChangeImage() {
     if (icon.isNull() == false)
         ui->icon->setPixmap(icon);
 }
+
+void MenuPlaylistItemView::Rename(QString newName) {
+    emit PlaylistRenamed(m_name, newName);
+    SqlDatabase::instance().renamePlaylist(m_name, newName);
+    m_name = newName;
+    ui->playListname->setText(m_name);
+    setObjectName(m_name);
+}

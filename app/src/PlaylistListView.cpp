@@ -27,7 +27,6 @@ void PlaylistListView::CreateNewPlaylist(QString playlistName) {
 
     auto *item = new QListWidgetItem;
     auto playlist = new MenuPlaylistItemView(playlistName, item, this);
-
     SetupPlaylist(playlistName, item, playlist);
 }
 
@@ -73,7 +72,9 @@ void PlaylistListView::SetupPlaylist(const QString &playlistName,
 }
 
 void PlaylistListView::LoadDefaultPlaylist() {
-    CreateNewPlaylist(QString("Default"));
+    for (const auto &playlist : SqlDatabase::instance().getAllPlaylist()) {
+        CreateNewPlaylist(playlist);
+    }
 }
 
 void PlaylistListView::AddSongToPlaylist(const QString &playlistName, FileTags *song) {
@@ -97,10 +98,10 @@ void PlaylistListView::RemoveSongFromPlaylist(const QString &playlistName, FileT
 }
 
 void PlaylistListView::RenamePlaylist(const QString& old, QString newName) {
-    if (ui->list->findChild<MenuPlaylistItemView *>(newName) == Q_NULLPTR)
+    if (ui->list->findChild<MenuPlaylistItemView *>(newName) == Q_NULLPTR) {
         ui->list->findChild<MenuPlaylistItemView *>(old)->Rename(std::move(newName));
-    else {
-        QErrorMessage *msg = new QErrorMessage(this);
+    } else {
+        auto *msg = new QErrorMessage(this);
         msg->showMessage("Playlist with that name already exists!");
         msg->exec();
         delete msg;
@@ -109,6 +110,7 @@ void PlaylistListView::RenamePlaylist(const QString& old, QString newName) {
 
 void PlaylistListView::DeletePlaylist(const QString& playlistName) {
     delete ui->list->findChild<MenuPlaylistItemView *>(playlistName)->ParentItemForDelete();
+    SqlDatabase::instance().deletePlaylist(playlistName);
     ThrowPlaylists();
     emit PlaylistDeleted(playlistName, ui->list->findChild<MenuPlaylistItemView *>("Default"));
 }
@@ -117,9 +119,10 @@ void PlaylistListView::CreatePlaylistView() {
     bool ok;
     QString text = QInputDialog::getText(this, tr("Create New Playlist"),
                                          tr("Playlist Name:"), QLineEdit::Normal, QString(), &ok);
-    if (ok && !text.isEmpty())
+    if (ok && !text.isEmpty()) {
         CreateNewPlaylist(text);
-    else {
+        SqlDatabase::instance().addNewPlaylist(text);
+    } else {
         auto msg = new QErrorMessage(this);
         msg->showMessage("Playlist must have a name!");
         msg->exec();
