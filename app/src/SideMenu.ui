@@ -276,7 +276,7 @@ QPushButton:pressed {
      <item>
       <widget class="QPushButton" name="pushButton_2">
        <property name="text">
-        <string>Settings</string>
+        <string>Change Theme</string>
        </property>
        <property name="icon">
         <iconset resource="../res/resources.qrc">
@@ -287,6 +287,9 @@ QPushButton:pressed {
          <width>24</width>
          <height>24</height>
         </size>
+       </property>
+       <property name="checkable">
+        <bool>true</bool>
        </property>
        <property name="flat">
         <bool>true</bool>
@@ -500,6 +503,22 @@ QPushButton:pressed {
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>pushButton_2</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>SideMenu</receiver>
+   <slot>ChangeTheme(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>196</x>
+     <y>617</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>301</x>
+     <y>623</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <signal>PlaylistCreated(QString)</signal>
@@ -521,5 +540,6 @@ QPushButton:pressed {
   <slot>OpenEqualizerSlot()</slot>
   <slot>OpenRadioSlot()</slot>
   <slot>OpenTimerSlot()</slot>
+  <slot>ChangeTheme(bool)</slot>
  </slots>
 </ui>

@@ -181,12 +181,12 @@ QSlider {
 }
 
 QSlider::groove:horizontal {
-    height: 8px;
-    background-color: rgb(255, 255, 255);
+	height: 8px;
+	background-color: rgb(255, 255, 255);
 }
 
 QSlider::add-page:vertical {
-    background: white;
+	background: white;
 }
 
 QPushButton {

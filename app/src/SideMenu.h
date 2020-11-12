@@ -37,6 +37,8 @@ public:
     void OpenRadioSlot();
     void OpenTimerSlot();
 
+    void ChangeTheme(bool state);
+
  signals:
     void SongAddedToPlaylist(QString playlistName, FileTags *song);
     void SongRemovedFromPlaylist(QString playlistName, FileTags *song);
