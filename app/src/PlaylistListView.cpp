@@ -4,7 +4,7 @@
 
 PlaylistListView::PlaylistListView(QWidget *parent) : QWidget(parent), ui(new Ui::PlaylistsView) {
     ui->setupUi(this);
-    LoadDefaultPlaylist();
+//    LoadDefaultPlaylist();
 
     QMenu *addmenu = new QMenu();
 

@@ -35,3 +35,24 @@ void SideMenu::OpenTimerSlot() {
     }
     m_timer->open();
 }
+
+void SideMenu::ChangeTheme(bool state) {
+    if (state) {
+        QFile File(":/qss/" + QString("Obit") + ".qss");
+        File.open(QFile::ReadOnly);
+        QString StyleSheet;
+
+        StyleSheet = QLatin1String(File.readAll());
+        qApp->setStyleSheet(StyleSheet);
+        qDebug() << "Obit";
+    }
+    else {
+        QFile File(":/qss/" + QString("Default") + ".qss");
+        File.open(QFile::ReadOnly);
+        QString StyleSheet;
+
+        StyleSheet = QLatin1String(File.readAll());
+        qApp->setStyleSheet(StyleSheet);
+        qDebug() << "default";
+    }
+}
