@@ -20,7 +20,3 @@ MainWindow::~MainWindow() {
     delete ui;
 }
 
-void MainWindow::setLogin(const QString &login) {
-    m_login = login;
-    emit ThrowLogin(m_login);
-}

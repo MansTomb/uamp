@@ -25,10 +25,6 @@ Q_OBJECT
 public:
     MainWindow(const QString &name, QWidget *parent = nullptr);
     ~MainWindow();
-    void setLogin(const QString &login);
-
-signals:
-    void ThrowLogin(QString login);
 private:
     Ui::MainWindow *ui;
     QString m_login;

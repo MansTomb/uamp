@@ -29,7 +29,6 @@ class LoginWindow : public QMainWindow {
  signals:
         void RegisterSuccess();
         void LoginSuccess();
-        void SetLogin(const QString &login);
     private:
         bool CheckInputData();
         bool CheckCredentials();

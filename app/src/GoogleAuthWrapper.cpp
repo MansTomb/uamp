@@ -1,4 +1,5 @@
 #include "GoogleAuthWrapper.h"
+#include "SqlDatabase.h"
 
 GoogleAuthWrapper::GoogleAuthWrapper() {
     google = new QOAuth2AuthorizationCodeFlow;
@@ -58,6 +59,7 @@ void GoogleAuthWrapper::ParseProfile(const QByteArray& array) {
     auto object = mainObject["names"].toArray();
 
     qDebug() << object[0].toObject()["displayName"].toString();
+    SqlDatabase::instance().addNewUsersGoogle(object[0].toObject()["displayName"].toString());
     emit AuthComplete(object[0].toObject()["displayName"].toString());
 }
 

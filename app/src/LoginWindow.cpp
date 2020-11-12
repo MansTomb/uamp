@@ -50,7 +50,6 @@ void LoginWindow::onGoogleLoginClicked() {
 }
 
 void LoginWindow::OpenMainWindow() {
-    main->setLogin(m_login);
     main->show();
     hide();
 }

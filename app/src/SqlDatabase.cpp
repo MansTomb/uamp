@@ -2,6 +2,14 @@
 #include <QSqlQuery>
 #include "SqlDatabase.h"
 
+UINT64 SqlDatabase::getRandom(const UINT64 &begin, const UINT64 &end) {
+    std::random_device rd;
+    std::mt19937_64 eng(rd());
+    std::uniform_int_distribution<unsigned long long> distr;
+
+    return distr(eng);
+};
+
 void SqlDatabase::createTables() {
     QSqlQuery query(QSqlDatabase::database(m_toDbPath));
 
@@ -10,9 +18,6 @@ void SqlDatabase::createTables() {
         query.exec("create table if not exists users (id INTEGER PRIMARY KEY AUTOINCREMENT,"
                    "login VARCHAR(255) NOT NULL UNIQUE,"
                    "password VARCHAR(255));");
-        query.exec(R"(INSERT INTO users(login, password) VALUES ("mmasniy", ""))");
-        query.exec(R"(INSERT INTO users(login, password) VALUES ("abalabin", ""))");
-        query.exec(R"(INSERT INTO users(login, password) VALUES ("", ""))");
 
         //create playlists table
 
@@ -125,6 +130,8 @@ void SqlDatabase::addUserToDataBase(const QString& login, const QString& pass) {
     std::sprintf(command, R"(INSERT INTO users(login, password) VALUES("%s", "%s"))",
                  login.toStdString().c_str(), pass.toStdString().c_str());
     query.exec(command);
+    SqlDatabase::instance().setLogin(login);
+    addNewPlaylist("Default");
 }
 
 void SqlDatabase::addInfoAboutSong(FileTags *tag, const QString &name, const QString &path) {
@@ -163,9 +170,10 @@ void SqlDatabase::addSongNameToSongInfo(const QString &name, const QString &path
     query.exec();
 }
 
-void SqlDatabase::addNewPlaylist(const QString &login, const QString &playlistName) {
+void SqlDatabase::addNewPlaylist(const QString &playlistName) {
+    qDebug() << "add new playlist: " + playlistName;
     QSqlQuery query(QSqlDatabase::database(PATHTODB));
-    QString path = qApp->applicationDirPath() + "/app/res/playlists/" + login + "_" + playlistName + ".m3u";
+    QString path = qApp->applicationDirPath() + "/app/res/playlists/" + m_login + "_" + playlistName + ".m3u";
 
     query.prepare("INSERT INTO playlists(name, countTracks, pathToPlaylist) VALUES(:name, :countTracks, :pathToPlaylist)");
     query.bindValue(":name", playlistName);
@@ -176,7 +184,28 @@ void SqlDatabase::addNewPlaylist(const QString &login, const QString &playlistNa
     query.clear();
 
     query.prepare("INSERT INTO user_playlists(login, path) VALUES(:login, :path)");
-    query.bindValue(":login", login);
+    query.bindValue(":login", m_login);
     query.bindValue(":path", path);
     query.exec();
 }
+
+void SqlDatabase::setLogin(const QString &login) {
+    m_login = login;
+}
+
+void SqlDatabase::addNewUsersGoogle(const QString &userName) {
+    qDebug() << "add user from google";
+    QSqlQuery query(QSqlDatabase::database(PATHTODB));
+    char command[1024];
+    qDebug() << "Google: " + getLogin(userName);
+    if (userName != getLogin(userName)) {
+        std::sprintf(command,
+                     R"(INSERT INTO users(login, password) VALUES("%s", "%llu"))",
+                     userName.toStdString().c_str(),
+                     getRandom(1000000, 10000000));
+        query.exec(command);
+    }
+    SqlDatabase::instance().setLogin(userName);
+    addNewPlaylist("Default");
+}
+
