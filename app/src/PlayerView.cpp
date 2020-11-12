@@ -74,7 +74,10 @@ void PlayerView::SetImage(QPixmap *img) {
 }
 
 void PlayerView::UpdateSlider() {
-    if (static_cast<int>(m_player.GetCurrentSongTime()) == ui->horizontalSlider->maximum()) {
+    if (static_cast<int>(m_player.GetCurrentSongTime()) == ui->horizontalSlider->maximum() && m_repeat) {
+        m_player.SetPosition(0);
+    }
+    else if (static_cast<int>(m_player.GetCurrentSongTime()) == ui->horizontalSlider->maximum()) {
         emit SongEnded();
         m_timer->stop();
         return;

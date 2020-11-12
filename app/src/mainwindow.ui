@@ -135,8 +135,8 @@ QPushButton:pressed {
 	background-color: rgb(103, 0, 0);
 }</string>
               </property>
-              <property name="selectionBehavior">
-               <enum>QAbstractItemView::SelectItems</enum>
+              <property name="dragDropMode">
+               <enum>QAbstractItemView::DropOnly</enum>
               </property>
               <property name="resizeMode">
                <enum>QListView::Fixed</enum>
@@ -237,6 +237,115 @@ QPushButton:pressed {
     </item>
    </layout>
   </widget>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>992</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuToolBar">
+    <property name="title">
+     <string>ToolBar</string>
+    </property>
+    <addaction name="actionPlay"/>
+    <addaction name="actionPause"/>
+    <addaction name="actionForward"/>
+    <addaction name="actionRewind"/>
+    <addaction name="actionShuffle"/>
+    <addaction name="actionLoop_Song"/>
+    <addaction name="actionLoop_Playlist"/>
+    <addaction name="actionVolume_up"/>
+    <addaction name="actionVolume_down"/>
+   </widget>
+   <addaction name="menuToolBar"/>
+  </widget>
+  <action name="actionPlay">
+   <property name="text">
+    <string>Play</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+P</string>
+   </property>
+   <property name="shortcutVisibleInContextMenu">
+    <bool>true</bool>
+   </property>
+  </action>
+  <action name="actionForward">
+   <property name="text">
+    <string>Forward</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+F</string>
+   </property>
+  </action>
+  <action name="actionRewind">
+   <property name="text">
+    <string>Rewind</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+R</string>
+   </property>
+  </action>
+  <action name="actionShuffle">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Shuffle</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Z</string>
+   </property>
+  </action>
+  <action name="actionLoop_Song">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Loop Song</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+X</string>
+   </property>
+  </action>
+  <action name="actionLoop_Playlist">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Loop Playlist</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+C</string>
+   </property>
+  </action>
+  <action name="actionVolume_up">
+   <property name="text">
+    <string>Volume up</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl++</string>
+   </property>
+  </action>
+  <action name="actionVolume_down">
+   <property name="text">
+    <string>Volume down</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+-</string>
+   </property>
+  </action>
+  <action name="actionPause">
+   <property name="text">
+    <string>Pause</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+S</string>
+   </property>
+  </action>
  </widget>
  <customwidgets>
   <customwidget>
@@ -273,6 +382,7 @@ QPushButton:pressed {
     <slot>SetSong(FileTags*)</slot>
     <slot>SetImage(QPixmap*)</slot>
     <slot>EqualizerSettingsApply(FXData)</slot>
+    <slot>SetSongRepeat(bool)</slot>
    </slots>
   </customwidget>
   <customwidget>
@@ -295,6 +405,16 @@ QPushButton:pressed {
     <signal>Search()</signal>
     <signal>Menu()</signal>
     <signal>Mute(bool)</signal>
+    <signal>RepeatSong(bool)</signal>
+    <slot>menuPlay()</slot>
+    <slot>menuPause()</slot>
+    <slot>menuForward()</slot>
+    <slot>menuRewind()</slot>
+    <slot>menuShuffle(bool)</slot>
+    <slot>menuLoopSong(bool)</slot>
+    <slot>menuLoopPlaylist(bool)</slot>
+    <slot>menuVolumeUp()</slot>
+    <slot>menuVolumeDown()</slot>
    </slots>
   </customwidget>
   <customwidget>
@@ -442,8 +562,8 @@ QPushButton:pressed {
    <slot>setHidden(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>363</x>
-     <y>32</y>
+     <x>355</x>
+     <y>24</y>
     </hint>
     <hint type="destinationlabel">
      <x>214</x>
@@ -543,7 +663,7 @@ QPushButton:pressed {
     </hint>
     <hint type="destinationlabel">
      <x>907</x>
-     <y>49</y>
+     <y>71</y>
     </hint>
    </hints>
   </connection>
@@ -624,6 +744,166 @@ QPushButton:pressed {
     <hint type="destinationlabel">
      <x>525</x>
      <y>220</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>toolBar</sender>
+   <signal>RepeatSong(bool)</signal>
+   <receiver>playerView</receiver>
+   <slot>SetSongRepeat(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>513</x>
+     <y>616</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>523</x>
+     <y>494</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionPlay</sender>
+   <signal>triggered()</signal>
+   <receiver>toolBar</receiver>
+   <slot>menuPlay()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>495</x>
+     <y>10</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>661</x>
+     <y>621</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionPause</sender>
+   <signal>triggered()</signal>
+   <receiver>toolBar</receiver>
+   <slot>menuPause()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>661</x>
+     <y>621</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionForward</sender>
+   <signal>triggered()</signal>
+   <receiver>toolBar</receiver>
+   <slot>menuForward()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>661</x>
+     <y>621</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionRewind</sender>
+   <signal>triggered()</signal>
+   <receiver>toolBar</receiver>
+   <slot>menuRewind()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>661</x>
+     <y>621</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionShuffle</sender>
+   <signal>triggered(bool)</signal>
+   <receiver>toolBar</receiver>
+   <slot>menuShuffle(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>661</x>
+     <y>621</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionLoop_Song</sender>
+   <signal>triggered(bool)</signal>
+   <receiver>toolBar</receiver>
+   <slot>menuLoopSong(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>661</x>
+     <y>621</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionLoop_Playlist</sender>
+   <signal>triggered(bool)</signal>
+   <receiver>toolBar</receiver>
+   <slot>menuLoopPlaylist(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>661</x>
+     <y>621</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionVolume_up</sender>
+   <signal>triggered()</signal>
+   <receiver>toolBar</receiver>
+   <slot>menuVolumeUp()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>661</x>
+     <y>621</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionVolume_down</sender>
+   <signal>triggered()</signal>
+   <receiver>toolBar</receiver>
+   <slot>menuVolumeDown()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>661</x>
+     <y>621</y>
     </hint>
    </hints>
   </connection>

@@ -23,6 +23,7 @@ public:
     void searchClicked() {emit Search();};
     void reposClicked() {emit Reposition();};
     void repeatClicked(bool state) {emit Repeat(state);};
+    void repeatSongClicked(bool state) {emit RepeatSong(state);};
     void prevClicked() {emit Previous();};
     void playClicked(bool state) {emit Play(state);};
     void nextClicked() {emit Next();};
@@ -33,9 +34,20 @@ public:
     void addClicked() {emit AddSong();};
     void menuClicked() {emit Menu();};
 
+    void menuPlay() {emit Play(true); ui->PauseBtn->setChecked(true);};
+    void menuPause() {emit Play(false); ui->PauseBtn->setChecked(false);};
+    void menuForward() {emit Forward();};
+    void menuRewind() {emit Backward();};
+    void menuShuffle(bool state) {emit Shuffle(state); ui->ShuffleBtn->setChecked(state);};
+    void menuLoopSong(bool state) {emit RepeatSong(state); ui->RepeatSongBtn->setChecked(state);};
+    void menuLoopPlaylist(bool state) {emit Repeat(state); ui->RepeatBtn->setChecked(state);};
+    void menuVolumeUp() {emit VolumeValue(ui->VolumeSlider->value() + 10); ui->VolumeSlider->setValue(ui->VolumeSlider->value() + 10);};
+    void menuVolumeDown() {emit VolumeValue(ui->VolumeSlider->value() - 10); ui->VolumeSlider->setValue(ui->VolumeSlider->value() - 10);};
+
 signals:
     void VolumeValue(int);
     void Shuffle(bool);
+    void RepeatSong(bool);
     void Repeat(bool);
     void Play(bool);
     void Previous();

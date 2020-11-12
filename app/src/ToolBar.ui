@@ -41,7 +41,7 @@
       <number>10</number>
      </property>
      <item>
-      <layout class="QHBoxLayout" name="horizontalLayout_4" stretch="0,2,0,0,0,0,0,2,0,2,0,0,0,2,0,1,0">
+      <layout class="QHBoxLayout" name="horizontalLayout_4" stretch="0,2,0,0,0,0,0,2,0,0,2,0,0,0,2,0,1,0">
        <property name="spacing">
         <number>0</number>
        </property>
@@ -349,6 +349,52 @@
           </size>
          </property>
         </spacer>
+       </item>
+       <item>
+        <widget class="QPushButton" name="RepeatSongBtn">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>32</width>
+           <height>32</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>32</width>
+           <height>32</height>
+          </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton#RepeatSongBtn:checked {
+	background-color: rgba(84, 83, 85, 179);
+}</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="../res/resources.qrc">
+           <normaloff>:/toolbarIcons/055-RepeatSong.svg</normaloff>:/toolbarIcons/055-RepeatSong.svg</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>32</width>
+           <height>32</height>
+          </size>
+         </property>
+         <property name="checkable">
+          <bool>true</bool>
+         </property>
+         <property name="flat">
+          <bool>true</bool>
+         </property>
+        </widget>
        </item>
        <item>
         <widget class="QPushButton" name="RepeatBtn">
@@ -763,8 +809,8 @@ border-width: 28px;</string>
    <slot>backwardClicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>229</x>
-     <y>30</y>
+     <x>228</x>
+     <y>53</y>
     </hint>
     <hint type="destinationlabel">
      <x>225</x>
@@ -779,8 +825,8 @@ border-width: 28px;</string>
    <slot>playClicked(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>272</x>
-     <y>31</y>
+     <x>271</x>
+     <y>54</y>
     </hint>
     <hint type="destinationlabel">
      <x>266</x>
@@ -795,8 +841,8 @@ border-width: 28px;</string>
    <slot>forwardClicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>320</x>
-     <y>38</y>
+     <x>314</x>
+     <y>54</y>
     </hint>
     <hint type="destinationlabel">
      <x>322</x>
@@ -948,6 +994,22 @@ border-width: 28px;</string>
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>RepeatSongBtn</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>ToolBar</receiver>
+   <slot>repeatSongClicked(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>501</x>
+     <y>36</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>502</x>
+     <y>172</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <signal>Shuffle(bool)</signal>
@@ -978,5 +1040,6 @@ border-width: 28px;</string>
   <slot>menuClicked()</slot>
   <slot>muteClicked(bool)</slot>
   <slot>volumeChanged(int)</slot>
+  <slot>repeatSongClicked(bool)</slot>
  </slots>
 </ui>

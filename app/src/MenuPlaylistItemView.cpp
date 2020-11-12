@@ -34,13 +34,15 @@ MenuPlaylistItemView::MenuPlaylistItemView(QMediaPlaylist *playlist,
     auto menu = new QMenu();
     menu->addAction("Load");
     menu->addAction("Rename");
+    menu->addAction("Change image");
     menu->addAction("Export");
     menu->addAction("Delete");
     auto actionsList = menu->actions();
     connect(actionsList.at(0), &QAction::triggered, this, &MenuPlaylistItemView::actionLoad);
     connect(actionsList.at(1), &QAction::triggered, this, &MenuPlaylistItemView::actionRename);
-    connect(actionsList.at(2), &QAction::triggered, this, &MenuPlaylistItemView::actionExport);
-    connect(actionsList.at(3), &QAction::triggered, this, &MenuPlaylistItemView::actionDelete);
+    connect(actionsList.at(2), &QAction::triggered, this, &MenuPlaylistItemView::actionChangeImage);
+    connect(actionsList.at(3), &QAction::triggered, this, &MenuPlaylistItemView::actionExport);
+    connect(actionsList.at(4), &QAction::triggered, this, &MenuPlaylistItemView::actionDelete);
     ui->menu->setMenu(menu);
     delete playlist;
 }
@@ -89,7 +91,7 @@ void MenuPlaylistItemView::actionRename() {
 void MenuPlaylistItemView::actionExport() {
     QMediaPlaylist playlist;
     QString filename = QFileDialog::getSaveFileName(this, "Save Playlist", "/", "Playlist (*.m3u)" );
-    qDebug() << "name is : " << filename;
+
     for (const auto &song : m_playlist)
         playlist.addMedia(QUrl::fromLocalFile(song->tags.path));
     playlist.save(QUrl::fromLocalFile(filename), "m3u");
@@ -104,4 +106,10 @@ void MenuPlaylistItemView::actionDelete() {
         msg->exec();
         delete msg;
     }
+}
+
+void MenuPlaylistItemView::actionChangeImage() {
+    QPixmap icon = QPixmap(QFileDialog::getOpenFileName(this,tr("Image"), "/", tr("Image (*.png *.jpg *.jpeg)")));
+    if (icon.isNull() == false)
+        ui->icon->setPixmap(icon);
 }

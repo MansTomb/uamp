@@ -50,6 +50,7 @@ public:
     void actionRename();
     void actionExport();
     void actionDelete();
+    void actionChangeImage();
 
 private:
     QListWidgetItem *m_parent {Q_NULLPTR};
