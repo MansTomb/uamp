@@ -35,6 +35,7 @@ public:
     void addNewUsersGoogle(const QString& userName);
     void deletePlaylist(const QString &playlistName);
     void renamePlaylist(const QString &oldName, const QString &newName);
+    void deleteTrackFromPlaylist(const QString &songName, const QString &playlistName);
 
     bool CheckCredentials(const QString& login, const QString& pass);
 

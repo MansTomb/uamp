@@ -137,7 +137,7 @@ void SqlDatabase::addInfoAboutSong(FileTags *tag, const QString &name, const QSt
                   "trackNumber, bitrate, sampleRate, channels, length, lyrics, picture) "
                   "VALUES(:songsName, :filename, :pathToFile, :title, :artist, :album, :genre, :year,"
                   ":trackNumber, :bitrate, :sampleRate, :channels, :length, :lyrics, :picture)");
-    query.bindValue(":songsName", tag->tags.artist + tag->tags.title);
+    query.bindValue(":songsName", tag->tags.artist + " - " + tag->tags.title);
     query.bindValue(":filename", tag->tags.filename);
     query.bindValue(":pathToFile", tag->tags.path);
     query.bindValue(":title", tag->tags.title);
@@ -154,7 +154,7 @@ void SqlDatabase::addInfoAboutSong(FileTags *tag, const QString &name, const QSt
     query.bindValue(":picture", 0);
     query.exec();
 
-    addSongNameToSongInfo(tag->tags.artist + tag->tags.title, qApp->applicationDirPath()
+    addSongNameToSongInfo(tag->tags.artist + " - " + tag->tags.title, qApp->applicationDirPath()
                             + "/app/res/playlist/" + m_login + "_" + path + ".m3u");
 }
 
@@ -205,6 +205,7 @@ void SqlDatabase::deletePlaylist(const QString &playlistName) {
 }
 
 QStringList SqlDatabase::getAllPlaylist() const {
+    qDebug() << "get ALL Playlist!";
     QSqlQuery query(QSqlDatabase::database(PATHTODB));
     QStringList values;
 
@@ -227,5 +228,14 @@ void SqlDatabase::renamePlaylist(const QString &oldName, const QString &newName)
     query.prepare("UPDATE playlists SET name=:new WHERE name=:old");
     query.bindValue(":new", newName);
     query.bindValue(":old", oldName);
+    query.exec();
+}
+
+void SqlDatabase::deleteTrackFromPlaylist(const QString &songName, const QString &playlistName) {
+    qDebug() << "delete song: " + songName + " from playlist:" + playlistName;
+    QSqlQuery query(QSqlDatabase::database(PATHTODB));
+    query.prepare("DELETE FROM song_info WHERE song_info.songsName=(:song) AND song_info.playlistName=(:playlist)");
+    query.bindValue(":song", songName);
+    query.bindValue(":playlist", playlistName);
     query.exec();
 }

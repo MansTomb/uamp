@@ -4,7 +4,7 @@
 
 PlaylistListView::PlaylistListView(QWidget *parent) : QWidget(parent), ui(new Ui::PlaylistsView) {
     ui->setupUi(this);
-//    LoadDefaultPlaylist();
+    LoadDefaultPlaylist();
 
     QMenu *addmenu = new QMenu();
 
@@ -72,7 +72,9 @@ void PlaylistListView::SetupPlaylist(const QString &playlistName,
 }
 
 void PlaylistListView::LoadDefaultPlaylist() {
+    qDebug() << "Load playlists from db!";
     for (const auto &playlist : SqlDatabase::instance().getAllPlaylist()) {
+        qDebug() << "Playlist: " + playlist;
         CreateNewPlaylist(playlist);
     }
 }

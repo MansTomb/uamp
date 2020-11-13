@@ -91,6 +91,7 @@ void PlaylistView::addLotOfSongs(const QList<QUrl> &droppedData) {
 
 void PlaylistView::RemoveTrackFromPlaylistSlot(FileTags *file, const QString &objectName) {
     qDebug() << "\n\n"  << objectName << " deleted";
+    SqlDatabase::instance().deleteTrackFromPlaylist(file->tags.artist + " - " + file->tags.title, m_playlistName);
     emit RemoveTrackFromPlaylist(m_playlistName, file);
     auto item = findChild<PlayerlistItem *>(objectName);
     auto parentItem = item->getParentToDelete();
@@ -104,7 +105,7 @@ void PlaylistView::PlaylistDeleted(QString deletedPlaylist,
     qDebug() << "\n\n"  << deletedPlaylist << " deleted";
     if (deletedPlaylist == m_playlistName) {
         //clear()
-        qDebug() << "chooed";
+        qDebug() << "chooooooooosed";
         PlaylistChoosedSlot(defaultPlaylist);
         emit ThrowPlaylistName(m_playlistName);
     }
@@ -130,7 +131,7 @@ void PlaylistView::clearingListWidget() {
 }
 
 void PlaylistView::addWidget(FileTags *song) {
-    QListWidgetItem *item = new QListWidgetItem;
+    auto *item = new QListWidgetItem;
     addItem(item);
     item->setSizeHint(QSize(50,75));
     auto *widget = new PlayerlistItem(item, song);
