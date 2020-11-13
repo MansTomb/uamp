@@ -33,7 +33,7 @@ void SqlDatabase::createTables() {
         query.exec("create table if not exists songs (id INTEGER PRIMARY KEY AUTOINCREMENT,"
                    "songsName VARCHAR(255) NOT NULL," //artist + title
                    "filename VARCHAR(255) NOT NULL,"
-                   "pathToFile VARCHAR(255) NOT NULL,"
+                   "pathToFile VARCHAR(255) NOT NULL UNIQUE,"
                    "title VARCHAR(255) NOT NULL,"
                    "artist VARCHAR(255) NOT NULL,"
                    "album VARCHAR(255) NOT NULL,"
@@ -96,6 +96,7 @@ bool SqlDatabase::CheckCredentials(const QString& login, const QString& pass) {
     query.first();
 
     if (login == query.value(0).toString() && pass == query.value(1).toString()) {
+        m_login = login;
         return true;
     }
     qDebug() << "login: " + query.value(0).toString() + " | pass: " + query.value(1).toString();
@@ -132,30 +133,38 @@ void SqlDatabase::addUserToDataBase(const QString& login, const QString& pass) {
 
 void SqlDatabase::addInfoAboutSong(FileTags *tag, const QString &name, const QString &path) {
     qDebug() << "add new song to db";
-    QSqlQuery query(QSqlDatabase::database(PATHTODB));
-    query.prepare("INSERT INTO songs(songsName, filename, pathToFile, title, artist, album, genre, year,"
-                  "trackNumber, bitrate, sampleRate, channels, length, lyrics, picture) "
-                  "VALUES(:songsName, :filename, :pathToFile, :title, :artist, :album, :genre, :year,"
-                  ":trackNumber, :bitrate, :sampleRate, :channels, :length, :lyrics, :picture)");
-    query.bindValue(":songsName", tag->tags.artist + " - " + tag->tags.title);
-    query.bindValue(":filename", tag->tags.filename);
-    query.bindValue(":pathToFile", tag->tags.path);
-    query.bindValue(":title", tag->tags.title);
-    query.bindValue(":artist", tag->tags.artist);
-    query.bindValue(":album", tag->tags.album);
-    query.bindValue(":genre", tag->tags.genre);
-    query.bindValue(":year", tag->tags.year);
-    query.bindValue(":trackNumber", tag->tags.trackNumber);
-    query.bindValue(":bitrate", tag->tags.bitrate);
-    query.bindValue(":sampleRate", tag->tags.sampleRate);
-    query.bindValue(":channels", tag->tags.channels);
-    query.bindValue(":length", tag->tags.length);
-    query.bindValue(":lyrics", tag->tags.lyrics);
-    query.bindValue(":picture", 0);
-    query.exec();
+    if (tag) {
+        QSqlQuery query(QSqlDatabase::database(PATHTODB));
+        query.prepare(
+            "INSERT INTO songs(songsName, filename, pathToFile, title, artist, album, genre, year,"
+            "trackNumber, bitrate, sampleRate, channels, length, lyrics, picture) "
+            "VALUES(:songsName, :filename, :pathToFile, :title, :artist, :album, :genre, :year,"
+            ":trackNumber, :bitrate, :sampleRate, :channels, :length, :lyrics, :picture)");
+        query.bindValue(":songsName",
+                        tag->tags.artist + " - " + tag->tags.title);
+        query.bindValue(":filename", tag->tags.filename);
+        query.bindValue(":pathToFile", tag->tags.path);
+        query.bindValue(":title", tag->tags.title);
+        query.bindValue(":artist", tag->tags.artist);
+        query.bindValue(":album", tag->tags.album);
+        query.bindValue(":genre", tag->tags.genre);
+        query.bindValue(":year", tag->tags.year);
+        query.bindValue(":trackNumber", tag->tags.trackNumber);
+        query.bindValue(":bitrate", tag->tags.bitrate);
+        query.bindValue(":sampleRate", tag->tags.sampleRate);
+        query.bindValue(":channels", tag->tags.channels);
+        query.bindValue(":length", tag->tags.length);
+        query.bindValue(":lyrics", tag->tags.lyrics);
+        query.bindValue(":picture", 0);
+        query.exec();
 
-    addSongNameToSongInfo(tag->tags.artist + " - " + tag->tags.title, qApp->applicationDirPath()
-                            + "/app/res/playlist/" + m_login + "_" + path + ".m3u");
+        addSongNameToSongInfo(tag->tags.artist + " - " + tag->tags.title,
+                              qApp->applicationDirPath()
+                                  + "/app/res/playlists/" + m_login + "_" + path
+                                  + ".m3u");
+    } else {
+        QMessageBox::warning(this,"s","file ")
+    }
 }
 
 void SqlDatabase::addSongNameToSongInfo(const QString &name, const QString &path) {
@@ -210,6 +219,7 @@ QStringList SqlDatabase::getAllPlaylist() const {
     QStringList values;
 
     query.prepare("SELECT name FROM playlists WHERE playlists.userName=(:login)");
+    qDebug() << m_login;
     query.bindValue(":login", m_login);
     query.exec();
 
@@ -234,8 +244,23 @@ void SqlDatabase::renamePlaylist(const QString &oldName, const QString &newName)
 void SqlDatabase::deleteTrackFromPlaylist(const QString &songName, const QString &playlistName) {
     qDebug() << "delete song: " + songName + " from playlist:" + playlistName;
     QSqlQuery query(QSqlDatabase::database(PATHTODB));
-    query.prepare("DELETE FROM song_info WHERE song_info.songsName=(:song) AND song_info.playlistName=(:playlist)");
+    QString path = qApp->applicationDirPath() + "/app/res/playlists/" + m_login + "_" + playlistName + ".m3u";
+
+
+//    query.prepare("DELETE FROM playlists WHERE playlists.name=(:playlistName) AND playlists.pathToPlaylist=(:path)");
+//    query.bindValue(":playlistName", playlistName);
+//    query.bindValue(":path", path);
+//    query.exec();
+
+    query.prepare("DELETE FROM songs_info WHERE songs_info.songsName=(:song) AND songs_info.playlist=(:path)");
     query.bindValue(":song", songName);
-    query.bindValue(":playlist", playlistName);
+    query.bindValue(":path", path);
     query.exec();
+
+//    qDebug() << songName;
+//    qDebug() << path;
+//    qDebug() << "query = " <<query.executedQuery();
+//    if (!query.exec()) {
+//        qDebug() << query.lastError();
+//    }
 }

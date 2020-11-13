@@ -13,6 +13,7 @@
 #include <QSqlQuery>
 #include <QDebug>
 #include <QApplication>
+#include <QMessageBox>
 
 
 #include "FileTag.h"
