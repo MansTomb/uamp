@@ -15,6 +15,7 @@
 #include <QString>
 #include <QDebug>
 #include <QPixmap>
+#include <QSqlQuery>
 
 #include "ImageFile.h"
 
@@ -35,9 +36,11 @@ class FileTags {
         QString channels;
         QString length;
         QString lyrics;
+        QString picture;
     } tags;
 
     FileTags(const std::string &path, const std::string &fileName);
+    explicit FileTags(const QSqlQuery& query);
     void upgradeFileTags(const std::string &new_tags);
     friend std::ostream& operator<<(std::ostream& out, const FileTags& file);
     void setLyrics();

@@ -129,3 +129,19 @@ void FileTags::setLyrics() {
     }
 }
 
+FileTags::FileTags(const QSqlQuery &query) {
+    tags.filename = query.value(2).toString();
+    tags.path = query.value(3).toString();
+    tags.title = query.value(4).toString();
+    tags.artist = query.value(5).toString();
+    tags.album = query.value(6).toString();
+    tags.genre = query.value(7).toString();
+    tags.year = query.value(8).toString();
+    tags.trackNumber = query.value(9).toString();
+    tags.bitrate = query.value(10).toString();
+    tags.sampleRate = query.value(11).toString();
+    tags.channels = query.value(12).toString();
+    tags.length = query.value(13).toString();
+    tags.lyrics = query.value(14).toString();
+    tags.picture = query.value(15).toString();
+}

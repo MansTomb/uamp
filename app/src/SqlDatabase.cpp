@@ -248,36 +248,20 @@ void SqlDatabase::deleteTrackFromPlaylist(const QString &songName, const QString
     query.bindValue(":path", path);
     query.exec();
 }
-void SqlDatabase::getAllTracksFromPlaylist(const QString &playlistName) {
+
+QList<FileTags *>& SqlDatabase::getAllTracksFromPlaylist(const QString &playlistName) {
     qDebug() << "\ngetAllTracksFromPlaylist!!!\n================================\n";
+
     QSqlQuery query(QSqlDatabase::database(PATHTODB));
     QString path = qApp->applicationDirPath() + "/app/res/playlists/" + m_login + "_" + playlistName + ".m3u";
+    QList<FileTags *> tracks;
 
-    query.prepare("SELECT * FROM songs WHERE songs.songsName=songs_info.songsName AND songs_info.playlist=(:path)");
-    qDebug() << m_login;
+    query.prepare("SELECT * FROM songs INNER JOIN songs_info ON "
+                  "songs_info.songsName=songs.songsName AND songs_info.playlist=(:path)");
     query.bindValue(":path", path);
     query.exec();
-
     for (;query.next();) {
-        qDebug() << query.value(0).toInt();
-        qDebug() << query.value(1).toString();
-        qDebug() << query.value(2).toString();
-        qDebug() << query.value(3).toString();
-        qDebug() << query.value(4).toString();
-        qDebug() << query.value(5).toString();
-        qDebug() << query.value(6).toString();
-        qDebug() << query.value(7).toString();
-        qDebug() << query.value(8).toInt();
-        qDebug() << query.value(9).toInt();
-        qDebug() << query.value(10).toInt();
-        qDebug() << query.value(11).toInt();
-        qDebug() << query.value(12).toInt();
-        qDebug() << query.value(13).toString();
-        qDebug() << query.value(14).toString();
-        qDebug() << query.value(15).toString();
+        tracks.push_back(new FileTags(query));
     }
-//    qDebug() << values;
-
+    return tracks;
 }
-
-

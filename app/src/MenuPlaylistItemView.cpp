@@ -71,7 +71,7 @@ void MenuPlaylistItemView::mouseDoubleClickEvent(QMouseEvent *event) {
     QWidget::mouseDoubleClickEvent(event);
 
     //сформировать для плейлиста необходимый QList<FileTags *>
-    SqlDatabase::instance().getAllTracksFromPlaylist(m_name);
+//    m_playlist = SqlDatabase::instance().getAllTracksFromPlaylist(m_name);
     emit PlaylistChoosed(this);
 }
 

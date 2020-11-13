@@ -39,13 +39,14 @@ public:
     void deletePlaylist(const QString &playlistName);
     void renamePlaylist(const QString &oldName, const QString &newName);
     void deleteTrackFromPlaylist(const QString &songName, const QString &playlistName);
-    void getAllTracksFromPlaylist(const QString &playlistName);
+
 
     bool CheckCredentials(const QString& login, const QString& pass);
 
     [[nodiscard]] QString getLogin(const QString& login) const;
 
     QStringList getAllPlaylist() const;
+    QList<FileTags *>& getAllTracksFromPlaylist(const QString &playlistName);
     ~SqlDatabase();
 private:
     SqlDatabase() {};
