@@ -73,10 +73,12 @@ void PlaylistListView::SetupPlaylist(const QString &playlistName,
 
 void PlaylistListView::LoadDefaultPlaylist() {
     qDebug() << "Load playlists from db!";
-    for (const auto &playlist : SqlDatabase::instance().getAllPlaylist()) {
+    auto slist = SqlDatabase::instance().getAllPlaylist();
+    for (const auto &playlist : slist) {
         qDebug() << "Playlist: " + playlist;
         CreateNewPlaylist(playlist);
     }
+    emit Playlists(slist);
 }
 
 void PlaylistListView::AddSongToPlaylist(const QString &playlistName, FileTags *song) {

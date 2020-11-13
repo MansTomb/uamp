@@ -1,6 +1,3 @@
-#include <QDir>
-#include <QSqlQuery>
-#include <QSqlError>
 #include "SqlDatabase.h"
 
 UINT64 SqlDatabase::getRandom(const UINT64 &begin, const UINT64 &end) {
@@ -163,7 +160,7 @@ void SqlDatabase::addInfoAboutSong(FileTags *tag, const QString &name, const QSt
                                   + "/app/res/playlists/" + m_login + "_" + path
                                   + ".m3u");
     } else {
-        QMessageBox::warning(this,"s","file ")
+        qDebug() << "File does not open!!";
     }
 }
 
@@ -246,21 +243,41 @@ void SqlDatabase::deleteTrackFromPlaylist(const QString &songName, const QString
     QSqlQuery query(QSqlDatabase::database(PATHTODB));
     QString path = qApp->applicationDirPath() + "/app/res/playlists/" + m_login + "_" + playlistName + ".m3u";
 
-
-//    query.prepare("DELETE FROM playlists WHERE playlists.name=(:playlistName) AND playlists.pathToPlaylist=(:path)");
-//    query.bindValue(":playlistName", playlistName);
-//    query.bindValue(":path", path);
-//    query.exec();
-
     query.prepare("DELETE FROM songs_info WHERE songs_info.songsName=(:song) AND songs_info.playlist=(:path)");
     query.bindValue(":song", songName);
     query.bindValue(":path", path);
     query.exec();
-
-//    qDebug() << songName;
-//    qDebug() << path;
-//    qDebug() << "query = " <<query.executedQuery();
-//    if (!query.exec()) {
-//        qDebug() << query.lastError();
-//    }
 }
+void SqlDatabase::getAllTracksFromPlaylist(const QString &playlistName) {
+    qDebug() << "\ngetAllTracksFromPlaylist!!!\n================================\n";
+    QSqlQuery query(QSqlDatabase::database(PATHTODB));
+    QString path = qApp->applicationDirPath() + "/app/res/playlists/" + m_login + "_" + playlistName + ".m3u";
+
+    query.prepare("SELECT * FROM songs WHERE songs.songsName=songs_info.songsName AND songs_info.playlist=(:path)");
+    qDebug() << m_login;
+    query.bindValue(":path", path);
+    query.exec();
+
+    for (;query.next();) {
+        qDebug() << query.value(0).toInt();
+        qDebug() << query.value(1).toString();
+        qDebug() << query.value(2).toString();
+        qDebug() << query.value(3).toString();
+        qDebug() << query.value(4).toString();
+        qDebug() << query.value(5).toString();
+        qDebug() << query.value(6).toString();
+        qDebug() << query.value(7).toString();
+        qDebug() << query.value(8).toInt();
+        qDebug() << query.value(9).toInt();
+        qDebug() << query.value(10).toInt();
+        qDebug() << query.value(11).toInt();
+        qDebug() << query.value(12).toInt();
+        qDebug() << query.value(13).toString();
+        qDebug() << query.value(14).toString();
+        qDebug() << query.value(15).toString();
+    }
+//    qDebug() << values;
+
+}
+
+

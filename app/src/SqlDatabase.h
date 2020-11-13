@@ -14,7 +14,9 @@
 #include <QDebug>
 #include <QApplication>
 #include <QMessageBox>
-
+#include <QDir>
+#include <QSqlQuery>
+#include <QSqlError>
 
 #include "FileTag.h"
 
@@ -37,6 +39,7 @@ public:
     void deletePlaylist(const QString &playlistName);
     void renamePlaylist(const QString &oldName, const QString &newName);
     void deleteTrackFromPlaylist(const QString &songName, const QString &playlistName);
+    void getAllTracksFromPlaylist(const QString &playlistName);
 
     bool CheckCredentials(const QString& login, const QString& pass);
 
