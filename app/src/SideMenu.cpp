@@ -1,10 +1,12 @@
 #include "SideMenu.h"
+#include <QSettings>
 
 SideMenu::SideMenu(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::SideMenu) {
     ui->setupUi(this);
     setAttribute(Qt::WA_StyledBackground, true);
+    setHidden(true);
 }
 
 SideMenu::~SideMenu() {
@@ -37,6 +39,7 @@ void SideMenu::OpenTimerSlot() {
 }
 
 void SideMenu::ChangeTheme(bool state) {
+    QSettings set;
     if (state) {
         QFile File(":/qss/" + QString("Obit") + ".qss");
         File.open(QFile::ReadOnly);
@@ -45,6 +48,7 @@ void SideMenu::ChangeTheme(bool state) {
         StyleSheet = QLatin1String(File.readAll());
         qApp->setStyleSheet(StyleSheet);
         qDebug() << "Obit";
+        set.setValue("theme", "Obit");
     }
     else {
         QFile File(":/qss/" + QString("Default") + ".qss");
@@ -54,5 +58,6 @@ void SideMenu::ChangeTheme(bool state) {
         StyleSheet = QLatin1String(File.readAll());
         qApp->setStyleSheet(StyleSheet);
         qDebug() << "default";
+        set.setValue("theme", "Default");
     }
 }

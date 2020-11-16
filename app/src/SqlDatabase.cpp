@@ -51,9 +51,55 @@ void SqlDatabase::createTables() {
                    "FOREIGN KEY (songsName) REFERENCES songs(songsName),"
                    "FOREIGN KEY (playlist) REFERENCES playlists(pathToPlaylist));");
 
+        query.exec("create table if not exists equalizer (id INTEGER PRIMARY KEY AUTOINCREMENT,"
+                   "login VARCHAR(255) NOT NULL,"
+                   "namePreset VARCHAR(255),"
+                   "gain INTEGER,"
+                   "echo INTEGER,"
+                   "distortion INTEGER,"
+                   "compressor INTEGER,"
+                   "chorus INTEGER,"
+                   "FOREIGN KEY (login) REFERENCES users(login));");
     } else {
         qDebug() << "Opening existing Db";
     }
+}
+void SqlDatabase::createDefaultPreset() {
+    addPreset("Default", {
+        {"gain", 0},
+        {"echo", 50},
+        {"distortion", 15},
+        {"compressor", 10},
+        {"chorus", 10}
+    });
+    addPreset("Bleed", {
+        {"gain", 5},
+        {"echo", 75},
+        {"distortion", 50},
+        {"compressor", 30},
+        {"chorus", 20}
+    });
+    addPreset("Death", {
+        {"gain", 15},
+        {"echo", 100},
+        {"distortion", 100},
+        {"compressor", 500},
+        {"chorus", 99}
+    });
+    addPreset("Living", {
+        {"gain", -15},
+        {"echo", 0},
+        {"distortion", 0},
+        {"compressor", 0},
+        {"chorus", 0}
+    });
+    addPreset("???", {
+        {"gain", 15},
+        {"echo", 0},
+        {"distortion", 100},
+        {"compressor", 0},
+        {"chorus", 0}
+    });
 }
 
 SqlDatabase &SqlDatabase::instance() {
@@ -175,7 +221,6 @@ void SqlDatabase::addSongNameToSongInfo(const QString &name, const QString &path
 void SqlDatabase::addNewPlaylist(const QString &playlistName) {
     qDebug() << "add new playlist: " + playlistName;
     QSqlQuery query(QSqlDatabase::database(PATHTODB));
-    qDebug() << m_login << "addsdasdsadsad";
     QString path = qApp->applicationDirPath() + "/app/res/playlists/" + m_login + "_" + playlistName + ".m3u";
 
     query.prepare("INSERT INTO playlists(name, userName, countTracks, pathToPlaylist) VALUES(:name, :userName, :countTracks, :pathToPlaylist)");
@@ -249,7 +294,7 @@ void SqlDatabase::deleteTrackFromPlaylist(const QString &songName, const QString
     query.exec();
 }
 
-QList<FileTags *>& SqlDatabase::getAllTracksFromPlaylist(const QString &playlistName) {
+QList<FileTags *> SqlDatabase::getAllTracksFromPlaylist(const QString &playlistName) {
     qDebug() << "\ngetAllTracksFromPlaylist!!!\n================================\n";
 
     QSqlQuery query(QSqlDatabase::database(PATHTODB));
@@ -264,4 +309,39 @@ QList<FileTags *>& SqlDatabase::getAllTracksFromPlaylist(const QString &playlist
         tracks.push_back(new FileTags(query));
     }
     return tracks;
+}
+
+void SqlDatabase::addPreset(const QString &preset, const QMap<QString, int> &presets) {
+    qDebug() << "\naddPreset\n";
+    QSqlQuery query(QSqlDatabase::database(PATHTODB));
+    query.prepare("INSERT INTO equalizer(login, namePreset, gain, echo, distortion, compressor, chorus)"
+                  "VALUES(:login, :namePreset, :gain, :echo, :distortion, :compressor, :chorus)");
+    query.bindValue(":login", m_login);
+    query.bindValue(":namePreset", preset);
+    query.bindValue(":gain", presets["gain"]);
+    query.bindValue(":echo", presets["echo"]);
+    query.bindValue(":distortion", presets["distortion"]);
+    query.bindValue(":compressor", presets["compressor"]);
+    query.bindValue(":chorus", presets["chorus"]);
+    query.exec();
+}
+QMap<QString, QMap<QString, int>> SqlDatabase::getPreset() {
+    QMap<QString, QMap<QString, int>> presets;
+    QSqlQuery query(QSqlDatabase::database(PATHTODB));
+
+    query.prepare("SELECT * FROM equalizer WHERE equalizer.login=(:login)");
+    query.bindValue(":login", m_login);
+    query.exec();
+
+    for (;query.next();) {
+        presets[query.value(2).toString()] = {
+            {"gain", query.value(3).toInt()},
+            {"echo", query.value(4).toInt()},
+            {"distortion", query.value(5).toInt()},
+            {"compressor", query.value(6).toInt()},
+            {"chorus", query.value(7).toInt()}
+        };
+    }
+
+    return presets;
 }

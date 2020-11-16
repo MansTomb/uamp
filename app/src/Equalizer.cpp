@@ -1,3 +1,5 @@
+#include <QInputDialog>
+#include <QErrorMessage>
 #include "Equalizer.h"
 
 Equalizer::Equalizer(QWidget *parent) :
@@ -5,6 +7,13 @@ Equalizer::Equalizer(QWidget *parent) :
     ui(new Ui::Equalizer)
 {
     ui->setupUi(this);
+    SqlDatabase::instance().createDefaultPreset();
+
+    m_presetsMap = SqlDatabase::instance().getPreset();
+    m_presetsNames = m_presetsMap.keys();
+
+    ui->comboBox->addItems(m_presetsNames);
+    OnDefault();
 }
 
 Equalizer::~Equalizer()
@@ -13,29 +22,39 @@ Equalizer::~Equalizer()
 }
 
 void Equalizer::LoadAllPresetsFromDB() {
-//    m_presets = Database::instance::GetAllPresetsForThisUser;
-//    int index = 0;
-//    for (const auto &preset : presets) {
-//        if (preset.LastPresetWhichUserApplied)
-//            index++;
-//        ui->comboBox->insertItem(index, preset.name);
-//    }
-//    ui->comboBox->setCurrentIndex(0);
 }
 
 void Equalizer::OnSavePresetSlot() {
-    // Insert this this preset to DB
+    QMap<QString, int> preset;
+    bool ok = false;
+    QString text = QInputDialog::getText(this, tr("New preset"),
+                                         tr("Preset name:"), QLineEdit::Normal, QString(), &ok);
+    if (ok && !text.isEmpty()) {
+        if (m_presetsNames.contains(text)) {
+            auto msg = new QErrorMessage(this);
+            msg->showMessage("Preset already exists");
+            msg->exec();
+            delete msg;
+            return;
+        }
+    }
+    preset["gain"] = ui->GainSlider->value();
+    preset["echo"] = ui->Echo->value();
+    preset["distortion"] = ui->Distortion->value();
+    preset["compressor"] = ui->Compressor->value();
+    preset["chorus"] = ui->Chorus->value();
+    SqlDatabase::instance().addPreset(text, preset);
+    m_presetsNames << text;
+    ui->comboBox->insertItem(0, text);
 }
 
 void Equalizer::OnPresetChanged(QString presetName) {
-//    auto it = std::find(m_presets.begin(), m_presets.end(), [presetName](EQPreset& preset){ return preset.name == presetName;});
-//
-//    ui->GainSlider->setValue(it->preset.Gain);
-//    ui->Echo->setValue(it->preset.Echo);
-//    ui->Distortion->setValue(it->preset.Distortion);
-//    ui->Compressor->setValue(it->preset.Compressor);
-//    ui->Chorus->setValue(it->preset.Chorus);
+    ui->GainSlider->setValue(m_presetsMap[presetName]["gain"]);
+    ui->Echo->setValue(m_presetsMap[presetName]["echo"]);
+    ui->Distortion->setValue(m_presetsMap[presetName]["distortion"]);
+    ui->Compressor->setValue(m_presetsMap[presetName]["compressor"]);
+    ui->Chorus->setValue(m_presetsMap[presetName]["chorus"]);
 }
 void Equalizer::OnDefault() {
-    ui->comboBox->setCurrentIndex(0);
+    ui->comboBox->setCurrentText("Default");
 }

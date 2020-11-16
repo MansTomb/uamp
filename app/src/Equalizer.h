@@ -3,6 +3,7 @@
 #include <QDialog>
 #include <QDebug>
 
+#include "SqlDatabase.h"
 #include "ui_Equalizer.h"
 
 namespace Ui {
@@ -49,5 +50,7 @@ class Equalizer : public QDialog {
     Ui::Equalizer *ui;
     QList<EQPreset> m_presets;
 
+    QStringList m_presetsNames;
+    QMap<QString, QMap<QString, int>> m_presetsMap;
     void LoadAllPresetsFromDB();
 };

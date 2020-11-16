@@ -11,7 +11,7 @@ MenuPlaylistItemView::~MenuPlaylistItemView() {
 }
 
 QList<FileTags *> MenuPlaylistItemView::loadPlaylist() {
-    return QList<FileTags *>();
+    return SqlDatabase::instance().getAllTracksFromPlaylist(m_name);
 }
 
 MenuPlaylistItemView::MenuPlaylistItemView(QMediaPlaylist *playlist,
@@ -70,8 +70,6 @@ void MenuPlaylistItemView::actionLoad() {
 void MenuPlaylistItemView::mouseDoubleClickEvent(QMouseEvent *event) {
     QWidget::mouseDoubleClickEvent(event);
 
-    //сформировать для плейлиста необходимый QList<FileTags *>
-//    m_playlist = SqlDatabase::instance().getAllTracksFromPlaylist(m_name);
     emit PlaylistChoosed(this);
 }
 

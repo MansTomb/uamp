@@ -27,7 +27,8 @@ void PlaylistView::dropEvent(QDropEvent *event) {
     if (droppedData.count() == 1) {
         QFileInfo fileInfo(droppedData.at(0).toString().remove(0, 7));
         for (const auto &item : m_widgets)
-            if (item->song()->tags.path == fileInfo.filePath())
+            if (item->song()->tags.path
+            == fileInfo.filePath())
                 return;
         if (fileInfo.isDir()) {
             addSongsDir(droppedData);

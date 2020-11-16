@@ -30,6 +30,7 @@ public:
     static SqlDatabase &instance();
 
     void connectDataBase();
+    void createDefaultPreset();
     void setLogin(const QString &login);
     void addUserToDataBase(const QString& login, const QString& pass);
     void addInfoAboutSong(FileTags *tag, const QString &name, const QString &path);
@@ -39,14 +40,16 @@ public:
     void deletePlaylist(const QString &playlistName);
     void renamePlaylist(const QString &oldName, const QString &newName);
     void deleteTrackFromPlaylist(const QString &songName, const QString &playlistName);
+    void addPreset(const QString &preset, const QMap<QString, int> &presets);
 
+    QMap<QString, QMap<QString, int>> getPreset();
 
     bool CheckCredentials(const QString& login, const QString& pass);
 
     [[nodiscard]] QString getLogin(const QString& login) const;
 
     QStringList getAllPlaylist() const;
-    QList<FileTags *>& getAllTracksFromPlaylist(const QString &playlistName);
+    QList<FileTags *> getAllTracksFromPlaylist(const QString &playlistName);
     ~SqlDatabase();
 private:
     SqlDatabase() {};
@@ -58,4 +61,5 @@ private:
 
     void createTables();
     UINT64 getRandom(const UINT64 &begin = 1000000, const UINT64 &end = 10000000000);
+
 };
