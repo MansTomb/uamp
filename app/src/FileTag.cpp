@@ -29,6 +29,7 @@ FileTags::FileTags(const std::string &path, const std::string &fileName) {
         tags.channels = QString::number(properties->channels());
         tags.length = QString::number(minutes) + ":" + (seconds != 0 ? QString::number(seconds) : "00");
     }
+
 }
 
 std::ostream &operator<<(std::ostream &out, const FileTags &file) {
