@@ -4,8 +4,6 @@
 
 PlaylistListView::PlaylistListView(QWidget *parent) : QWidget(parent), ui(new Ui::PlaylistsView) {
     ui->setupUi(this);
-    LoadDefaultPlaylist();
-
     QMenu *addmenu = new QMenu();
 
     addmenu->addAction("Create");
@@ -14,6 +12,7 @@ PlaylistListView::PlaylistListView(QWidget *parent) : QWidget(parent), ui(new Ui
     connect(addmenu->actions().at(1), &QAction::triggered, this, &PlaylistListView::CreateImportPlaylistView);
 
     ui->add->setMenu(addmenu);
+    LoadPlaylists();
 }
 
 void PlaylistListView::CreateNewPlaylist(QString playlistName) {
@@ -71,7 +70,7 @@ void PlaylistListView::SetupPlaylist(const QString &playlistName,
     emit PlaylistCreated(playlistName);
 }
 
-void PlaylistListView::LoadDefaultPlaylist() {
+void PlaylistListView::LoadPlaylists() {
     qDebug() << "Load playlists from db!";
     auto slist = SqlDatabase::instance().getAllPlaylist();
     for (const auto &playlist : slist) {
@@ -124,6 +123,13 @@ void PlaylistListView::CreatePlaylistView() {
     QString text = QInputDialog::getText(this, tr("Create New Playlist"),
                                          tr("Playlist Name:"), QLineEdit::Normal, QString(), &ok);
     if (ok && !text.isEmpty()) {
+        if (ui->list->findChild<MenuPlaylistItemView *>(text) != Q_NULLPTR) {
+            auto msg = new QErrorMessage(this);
+            msg->showMessage("Playlist already exists");
+            msg->exec();
+            delete msg;
+            return;
+        }
         CreateNewPlaylist(text);
         SqlDatabase::instance().addNewPlaylist(text);
     } else {

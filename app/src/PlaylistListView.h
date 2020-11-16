@@ -43,7 +43,7 @@ class PlaylistListView : public QWidget
  private:
     Ui::PlaylistsView *ui;
 
-    void LoadDefaultPlaylist();
+    void LoadPlaylists();
     void CreatePlaylistView();
     void CreateImportPlaylistView();
     void SetupPlaylist(const QString &playlistName, QListWidgetItem *item, MenuPlaylistItemView *playlist);

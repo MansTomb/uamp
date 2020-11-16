@@ -717,7 +717,7 @@ border-width: 28px;</string>
     </layout>
    </item>
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="1,10,0">
+    <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="1,0,10,0,0">
      <property name="spacing">
       <number>0</number>
      </property>
@@ -741,6 +741,19 @@ border-width: 28px;</string>
       </widget>
      </item>
      <item>
+      <spacer name="horizontalSpacer_6">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>10</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
       <widget class="QSlider" name="VolumeSlider">
        <property name="autoFillBackground">
         <bool>false</bool>
@@ -755,6 +768,19 @@ border-width: 28px;</string>
         <enum>Qt::Horizontal</enum>
        </property>
       </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer_7">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>10</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
      </item>
      <item>
       <widget class="QPushButton" name="MuteBtn">

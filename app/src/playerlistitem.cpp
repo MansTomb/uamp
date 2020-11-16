@@ -97,9 +97,8 @@ void PlayerlistItem::addToPlaylist() {
 }
 void PlayerlistItem::updateListPlaylist(QStringList playlists) {
     m_playlists.clear();
-    for (const auto &item : playlists) {
+    for (const auto &item : playlists)
         m_playlists << item;
-    }
 }
 
 

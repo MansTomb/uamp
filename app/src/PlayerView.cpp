@@ -21,7 +21,7 @@ void PlayerView::ChangeVolume(int value) {
 void PlayerView::Play(bool state) {
     if (state) {
         m_player.Play();
-        m_timer->start(333); //time specified in ms
+        m_timer->start(333);
     }
     else {
         m_player.Pause();
@@ -58,6 +58,7 @@ void PlayerView::SetSong(FileTags *song) {
         ui->playerAlbumImage->setPixmap(*song->getImage());
     else
         setDefaultImage();
+    Play(true);
 }
 
 void PlayerView::setDefaultImage() {
@@ -79,7 +80,6 @@ void PlayerView::UpdateSlider() {
     }
     else if (static_cast<int>(m_player.GetCurrentSongTime()) == ui->horizontalSlider->maximum()) {
         emit SongEnded();
-        m_timer->stop();
         return;
     }
     ui->horizontalSlider->setValue(m_player.GetCurrentSongTime());
@@ -96,4 +96,5 @@ void PlayerView::EqualizerSettingsApply(FXData data) {
 void PlayerView::Stop() {
     ui->horizontalSlider->setValue(0);
     m_player.Stop();
+    m_timer->stop();
 }

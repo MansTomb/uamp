@@ -55,6 +55,7 @@ public:
 
 private:
     Ui::SideMenu *ui;
+
     Timer *m_timer {Q_NULLPTR};
     Equalizer *m_eq {Q_NULLPTR};
     Radio *m_radio {Q_NULLPTR};

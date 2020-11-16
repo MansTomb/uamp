@@ -5,6 +5,7 @@
 #include "bass.h"
 
 PlaylistView::PlaylistView(QWidget *parent) : QListWidget(parent), m_playlistName("Default") {
+    m_playlistNames = SqlDatabase::instance().getAllPlaylist();
 }
 
 void PlaylistView::dragMoveEvent(QDragMoveEvent *event) {
@@ -52,6 +53,7 @@ void PlaylistView::addWidget(const QString &pathTrack, const QString &trackName)
     connect(widget, &PlayerlistItem::AddTracktoPlaylist, this, &PlaylistView::AddTracktoPlaylistSlot);
     connect(this, &PlaylistView::SetPlaylists, widget, &PlayerlistItem::updateListPlaylist);
     connect(this, &PlaylistView::ThrowPlaylistName, widget, &PlayerlistItem::setPlaylistName);
+    emit SetPlaylists(m_playlistNames);
     emit FileAdded(m_playlistName, widget->song());
 }
 
@@ -85,6 +87,9 @@ void PlaylistView::addLotOfSongs(const QList<QUrl> &droppedData) {
     for (const auto &item : droppedData) {
         QFileInfo fileInfo(item.toString().remove(0, 7));
         if (fileInfo.isFile())
+            for (const auto &widget : m_widgets)
+                if (widget->song()->tags.path == fileInfo.filePath())
+                    return;
             addSong(fileInfo);
     }
 }
@@ -92,11 +97,18 @@ void PlaylistView::addLotOfSongs(const QList<QUrl> &droppedData) {
 void PlaylistView::RemoveTrackFromPlaylistSlot(FileTags *file, const QString &objectName) {
     qDebug() << "\n\n"  << objectName << " deleted";
     SqlDatabase::instance().deleteTrackFromPlaylist(file->tags.artist + " - " + file->tags.title, m_playlistName);
-    emit RemoveTrackFromPlaylist(m_playlistName, file);
+
+    for (const auto &widget : m_widgets) {
+        if (widget->song()->tags.path == file->tags.path) {
+            m_widgets.removeOne(widget);
+            break;
+        }
+    }
     auto item = findChild<PlayerlistItem *>(objectName);
     auto parentItem = item->getParentToDelete();
     delete item;
     delete parentItem;
+    emit RemoveTrackFromPlaylist(m_playlistName, file);
     qDebug() << "==============================\n\n";
 }
 
@@ -144,8 +156,54 @@ void PlaylistView::addWidget(FileTags *song) {
     connect(widget, &PlayerlistItem::AddTracktoPlaylist, this, &PlaylistView::AddTracktoPlaylistSlot);
     connect(this, &PlaylistView::SetPlaylists, widget, &PlayerlistItem::updateListPlaylist);
     connect(this, &PlaylistView::ThrowPlaylistName, widget, &PlayerlistItem::setPlaylistName);
+    emit SetPlaylists(m_playlistNames);
 }
 
 void PlaylistView::GetLogin(QString login) {
     m_login = login;
+}
+
+void PlaylistView::NextSong() {
+    m_playedSongs.push_front(currentIndex().row());
+    if (m_playedSongs.count() <= m_widgets.count()) {
+        if (currentRow() + 1 < count()) {
+            if (!m_shuffle) {
+                setCurrentRow(currentRow() + 1);
+                emit CurrentSongChanged(GetWidgetByItem(currentItem())->song());
+            }
+            else {
+                int rand = getRandom(0, count() - 1);
+                for (int i = 0; m_playedSongs.contains(rand) && i < 50; i++)
+                    rand = getRandom(0, count() - 1);
+                qDebug() << rand;
+                setCurrentRow(rand);
+                emit CurrentSongChanged(GetWidgetByItem(item(rand))->song());
+            }
+        }
+        else if (m_repeat) {
+            setCurrentRow(0);
+            m_playedSongs.clear();
+            emit CurrentSongChanged(GetWidgetByItem(item(0))->song());
+        }
+    }
+    else if (m_repeat) {
+        setCurrentRow(0);
+        m_playedSongs.clear();
+        emit CurrentSongChanged(GetWidgetByItem(item(0))->song());
+    }
+}
+
+void PlaylistView::PreviousSong() {
+    m_playedSongs.push_front(currentIndex().row());
+    if (currentRow() -1 >= 0) {
+        setCurrentRow(currentRow() - 1);
+        emit CurrentSongChanged(GetWidgetByItem(currentItem())->song());
+    }
+}
+
+int PlaylistView::getRandom(int from, int to) {
+        std::random_device rd;
+        std::mt19937_64 eng(rd());
+        std::uniform_int_distribution<int> distr(from, to);
+        return distr(eng);
 }

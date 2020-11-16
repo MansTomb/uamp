@@ -368,11 +368,16 @@ QPushButton:pressed {
     <signal>ThrowPlaylistName(QString)</signal>
     <signal>RemoveTrackFromPlaylist(QString,FileTags*)</signal>
     <signal>AddTrackToPlaylist(QString,FileTags*)</signal>
+    <signal>GiveMeMyPlaylistSideMenuPlease()</signal>
     <slot>updatePlaylist(QList)</slot>
-    <slot>updatePlaylists(QStringList)</slot>
+    <slot>updatePlaylists(QStringList*)</slot>
     <slot>setPlaylistName(QString)</slot>
     <slot>PlaylistDeleted(QString,MenuPlaylistItemView*)</slot>
     <slot>PlaylistChoosedSlot(MenuPlaylistItemView*)</slot>
+    <slot>setShuffle(bool)</slot>
+    <slot>setRepeat(bool)</slot>
+    <slot>NextSong()</slot>
+    <slot>PreviousSong()</slot>
    </slots>
   </customwidget>
   <customwidget>
@@ -381,6 +386,7 @@ QPushButton:pressed {
    <header>PlayerView.h</header>
    <container>1</container>
    <slots>
+    <signal>SongEnded()</signal>
     <slot>ChangeVolume(int)</slot>
     <slot>Previous()</slot>
     <slot>Play(bool)</slot>
@@ -442,13 +448,14 @@ QPushButton:pressed {
     <signal>PlaylistCreated(QString)</signal>
     <signal>PlaylistRenamedForLabel(QString)</signal>
     <signal>ThrowPlaylists(QList)</signal>
-    <signal>ThrowPlaylists(QStringList)</signal>
+    <signal>ThrowPlaylists(QStringList*)</signal>
     <signal>PlaylistChoosedName(QString)</signal>
     <signal>PlaylistChoosed(MenuPlaylistItemView*)</signal>
     <signal>EqualizerChanged(FXData)</signal>
     <signal>Shutdown()</signal>
     <slot>AddSongToPlaylist(QString,FileTags*)</slot>
     <slot>RemoveSongFromPlaylist(QString,FileTags*)</slot>
+    <slot>TakeYourPlaylistsListBoy()</slot>
    </slots>
   </customwidget>
  </customwidgets>
@@ -965,6 +972,86 @@ QPushButton:pressed {
     <hint type="destinationlabel">
      <x>661</x>
      <y>621</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>toolBar</sender>
+   <signal>Shuffle(bool)</signal>
+   <receiver>listView</receiver>
+   <slot>setShuffle(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>726</x>
+     <y>625</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>754</x>
+     <y>544</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>toolBar</sender>
+   <signal>Repeat(bool)</signal>
+   <receiver>listView</receiver>
+   <slot>setRepeat(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>731</x>
+     <y>617</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>738</x>
+     <y>575</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>playerView</sender>
+   <signal>SongEnded()</signal>
+   <receiver>listView</receiver>
+   <slot>NextSong()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>638</x>
+     <y>410</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>813</x>
+     <y>408</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>toolBar</sender>
+   <signal>Next()</signal>
+   <receiver>listView</receiver>
+   <slot>NextSong()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>831</x>
+     <y>620</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>830</x>
+     <y>546</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>toolBar</sender>
+   <signal>Previous()</signal>
+   <receiver>listView</receiver>
+   <slot>PreviousSong()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>788</x>
+     <y>612</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>798</x>
+     <y>542</y>
     </hint>
    </hints>
   </connection>
