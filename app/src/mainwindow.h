@@ -27,5 +27,6 @@ public:
     ~MainWindow();
 private:
     Ui::MainWindow *ui;
+    QSystemTrayIcon *m_icon;
     QString m_login;
 };

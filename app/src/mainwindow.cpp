@@ -23,6 +23,11 @@ MainWindow::MainWindow(const QString &name, QWidget *parent)
     setObjectName(name);
     setWindowTitle(name);
     QApplication::setAttribute(Qt::AA_UseHighDpiPixmaps);
+
+    m_icon = new QSystemTrayIcon(this);
+    m_icon->setIcon(QIcon(":/playerIcons/TrayIcon.svg"));
+    m_icon->setToolTip("Uamp" "\n""Uamp Now Executed");
+    m_icon->show();
 }
 
 MainWindow::~MainWindow() {
