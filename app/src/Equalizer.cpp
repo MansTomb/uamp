@@ -36,3 +36,6 @@ void Equalizer::OnPresetChanged(QString presetName) {
 //    ui->Compressor->setValue(it->preset.Compressor);
 //    ui->Chorus->setValue(it->preset.Chorus);
 }
+void Equalizer::OnDefault() {
+    ui->comboBox->setCurrentIndex(0);
+}

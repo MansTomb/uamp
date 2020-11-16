@@ -40,6 +40,7 @@ class Equalizer : public QDialog {
 
     void OnSavePresetSlot();
     void OnPresetChanged(QString presetName);
+    void OnDefault();
 
  signals:
     void OnApplyClicked(FXData);

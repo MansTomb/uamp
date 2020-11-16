@@ -49,6 +49,13 @@
        </property>
       </widget>
      </item>
+     <item>
+      <widget class="QPushButton" name="pushButton_2">
+       <property name="text">
+        <string>Reset To Default</string>
+       </property>
+      </widget>
+     </item>
     </layout>
    </item>
    <item>
@@ -309,8 +316,8 @@
    <slot>OnSavePresetSlot()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>617</x>
-     <y>27</y>
+     <x>547</x>
+     <y>33</y>
     </hint>
     <hint type="destinationlabel">
      <x>714</x>
@@ -325,8 +332,8 @@
    <slot>OnPresetChanged(QString)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>548</x>
-     <y>22</y>
+     <x>460</x>
+     <y>32</y>
     </hint>
     <hint type="destinationlabel">
      <x>744</x>
@@ -350,11 +357,28 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>pushButton_2</sender>
+   <signal>clicked()</signal>
+   <receiver>Equalizer</receiver>
+   <slot>OnDefault()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>622</x>
+     <y>30</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>754</x>
+     <y>144</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <signal>OnApplyClicked()</signal>
   <slot>OnApplyClickedSlot()</slot>
   <slot>OnSavePresetSlot()</slot>
   <slot>OnPresetChanged(QString)</slot>
+  <slot>OnDefault()</slot>
  </slots>
 </ui>
