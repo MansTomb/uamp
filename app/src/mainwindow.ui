@@ -381,6 +381,7 @@ QPushButton:pressed {
     <slot>setRepeat(bool)</slot>
     <slot>NextSong()</slot>
     <slot>PreviousSong()</slot>
+    <slot>InvalidFileOnPlayer(FileTags*)</slot>
    </slots>
   </customwidget>
   <customwidget>
@@ -390,6 +391,7 @@ QPushButton:pressed {
    <container>1</container>
    <slots>
     <signal>SongEnded()</signal>
+    <signal>BASSCantOpenFile(FileTags*)</signal>
     <slot>ChangeVolume(int)</slot>
     <slot>Previous()</slot>
     <slot>Play(bool)</slot>
@@ -1055,6 +1057,22 @@ QPushButton:pressed {
     <hint type="destinationlabel">
      <x>798</x>
      <y>542</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>playerView</sender>
+   <signal>BASSCantOpenFile(FileTags*)</signal>
+   <receiver>listView</receiver>
+   <slot>InvalidFileOnPlayer(FileTags*)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>623</x>
+     <y>466</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>770</x>
+     <y>472</y>
     </hint>
    </hints>
   </connection>

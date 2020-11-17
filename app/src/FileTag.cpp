@@ -144,5 +144,5 @@ FileTags::FileTags(const QSqlQuery &query) {
     tags.channels = query.value(12).toString();
     tags.length = query.value(13).toString();
     tags.lyrics = query.value(14).toString();
-    tags.picture = query.value(15).toString();
+    tags.picture = query.value(15).toString().toLatin1();
 }

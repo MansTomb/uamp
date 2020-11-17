@@ -18,13 +18,17 @@
 #include "MenuPlaylistItemView.h"
 #include "SqlDatabase.h"
 
+#define FILE_FORMATS format == "mp3" || format == "flac" || format == "mp4" || format == "wav" || format == "m4a" || format == "ogg"
 class PlaylistView : public QListWidget {
 
     Q_OBJECT
 
 public:
     explicit PlaylistView(QWidget *parent = Q_NULLPTR);
-    void addWidget(const QString& pathTrack, const QString &trackName);
+    void addWidget(const QString &pathTrack,
+                   const QString &trackName,
+                   PlayerlistItem *widget,
+                   QListWidgetItem *item);
     void addWidget(FileTags *song);
     void clearingListWidget();
 
@@ -48,6 +52,8 @@ public slots:
     void NextSong();
     void PreviousSong();
 
+    void InvalidFileOnPlayer(FileTags *song);
+
     PlayerlistItem *GetWidgetByItem(QListWidgetItem *item) {return dynamic_cast<PlayerlistItem *>(itemWidget(currentItem()));}
 
 signals:
@@ -68,9 +74,10 @@ protected:
 private:
     int getRandom(int from, int to);
     bool checkPerm(const QFileInfo &fileInfo);
-    void addSong(const QFileInfo &fileInfo);
-    void addLotOfSongs(const QList<QUrl> &droppedData);
-    void addSongsDir(const QList<QUrl> &droppedData);
+    void AddOneSong(const QUrl &fileUrl);
+    void AddDirWithSongs(const QUrl &fileUrls);
+    void AddSongToListAndToDB(const QString &pathTrack, const QString &trackName);
+    void AddSongToListWithoutDB(FileTags* song);
     static QStringList m_allFiles;
 
     bool m_shuffle {false};
@@ -80,4 +87,5 @@ private:
     QStringList m_playlistNames;
     QList<int> m_playedSongs;
     QList<PlayerlistItem *> m_widgets;
+    bool CheckIfSongAlreadyAdded(const QFileInfo &fInfo) const;
 };

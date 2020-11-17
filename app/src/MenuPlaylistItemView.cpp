@@ -11,7 +11,9 @@ MenuPlaylistItemView::~MenuPlaylistItemView() {
 }
 
 QList<FileTags *> MenuPlaylistItemView::loadPlaylist() {
-    return SqlDatabase::instance().getAllTracksFromPlaylist(m_name);
+    const QList<FileTags *> &lst = SqlDatabase::instance().getAllTracksFromPlaylist(m_name);
+    qDebug() << lst.count();
+    return lst;
 }
 
 MenuPlaylistItemView::MenuPlaylistItemView(QMediaPlaylist *playlist,

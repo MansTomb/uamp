@@ -305,8 +305,10 @@ QList<FileTags *> SqlDatabase::getAllTracksFromPlaylist(const QString &playlistN
                   "songs_info.songsName=songs.songsName AND songs_info.playlist=(:path)");
     query.bindValue(":path", path);
     query.exec();
-    for (;query.next();) {
-        tracks.push_back(new FileTags(query));
+    for (int i = 0;query.next();i++) {
+        auto song = new FileTags(query);
+        if (QFileInfo(song->tags.path).exists())
+            tracks.push_back(song);
     }
     return tracks;
 }

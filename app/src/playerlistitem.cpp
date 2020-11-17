@@ -8,7 +8,6 @@ PlayerlistItem::PlayerlistItem(QListWidgetItem *parentItem, const QString& pathT
     m_fileInfo(new FileTags(pathTrack.toStdString(), trackName.toStdString())), m_parent(parentItem) {
     ui->setupUi(this);
     setObjectName(pathTrack + trackName);
-
     CreateMenu();
     createInfo(trackName);
     m_playlists << "Default";

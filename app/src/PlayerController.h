@@ -12,32 +12,33 @@ class PlayerController : public QObject {
  public:
     explicit PlayerController();
 
-    void SetSong(const FileTags *song);
-    void SetVolume(int value) { if (!m_muted) BASS_ChannelSetAttribute(sample, BASS_ATTRIB_VOL, static_cast<float>(value) / 100);};
-    void Play() { BASS_ChannelPlay(sample, FALSE); };
-    void Pause() { BASS_ChannelPause(sample); };
+    void SetSong(FileTags *song);
+    FileTags *GetSong() {return m_song;}
+    void SetVolume(int value) { if (!m_muted) BASS_ChannelSetAttribute(m_sample, BASS_ATTRIB_VOL, static_cast<float>(value) / 100);};
+    bool Play() {return BASS_ChannelPlay(m_sample, FALSE);};
+    void Pause() { BASS_ChannelPause(m_sample); };
     void Stop() {Pause(); SetPosition(0);};
     void Next() {};
     void Previous() {};
-    void Backward() {BASS_ChannelSetPosition(sample,BASS_ChannelGetPosition(sample, BASS_POS_BYTE) - BASS_ChannelSeconds2Bytes(sample, 10),BASS_POS_BYTE);};
-    void Forward() {BASS_ChannelSetPosition(sample,BASS_ChannelGetPosition(sample, BASS_POS_BYTE) + BASS_ChannelSeconds2Bytes(sample, 10), BASS_POS_BYTE);};
-    void SetPosition(int sec) {BASS_ChannelSetPosition(sample, BASS_ChannelSeconds2Bytes(sample, sec), BASS_POS_BYTE);}
+    void Backward() {BASS_ChannelSetPosition(m_sample, BASS_ChannelGetPosition(m_sample, BASS_POS_BYTE) - BASS_ChannelSeconds2Bytes(m_sample, 10), BASS_POS_BYTE);};
+    void Forward() {BASS_ChannelSetPosition(m_sample, BASS_ChannelGetPosition(m_sample, BASS_POS_BYTE) + BASS_ChannelSeconds2Bytes(m_sample, 10), BASS_POS_BYTE);};
+    void SetPosition(int sec) {BASS_ChannelSetPosition(m_sample, BASS_ChannelSeconds2Bytes(m_sample, sec), BASS_POS_BYTE);}
     void Mute(bool state) {
         if (state) {
-            BASS_ChannelGetAttribute(sample, BASS_ATTRIB_VOL, &m_lastVolume);
-            BASS_ChannelSetAttribute(sample, BASS_ATTRIB_VOL, 0);
+            BASS_ChannelGetAttribute(m_sample, BASS_ATTRIB_VOL, &m_lastVolume);
+            BASS_ChannelSetAttribute(m_sample, BASS_ATTRIB_VOL, 0);
             m_muted = true;
         }
         else {
-            BASS_ChannelSetAttribute(sample, BASS_ATTRIB_VOL, m_lastVolume);
+            BASS_ChannelSetAttribute(m_sample, BASS_ATTRIB_VOL, m_lastVolume);
             m_muted = false;
         }
     };
 
     void ApplySettings(FXData& data);
 
-    double GetCurrentSongTime() {return BASS_ChannelBytes2Seconds(sample, BASS_ChannelGetPosition(sample, BASS_POS_BYTE));}
-    double GetSongTime() {return BASS_ChannelBytes2Seconds(sample, BASS_ChannelGetLength(sample, BASS_POS_BYTE));}
+    double GetCurrentSongTime() {return BASS_ChannelBytes2Seconds(m_sample, BASS_ChannelGetPosition(m_sample, BASS_POS_BYTE));}
+    double GetSongTime() {return BASS_ChannelBytes2Seconds(m_sample, BASS_ChannelGetLength(m_sample, BASS_POS_BYTE));}
  public slots:
     void ChangeCurrentPos(float value) {emit CurrentPosChanged(value + 1);};
 signals:
@@ -53,12 +54,14 @@ signals:
     BASS_DX8_DISTORTION m_distrotion;
     BASS_DX8_PARAMEQ m_parameq;
 
-    int fxChorusHandle;
-    int fxCompressorHandle;
-    int fxEchoHandle;
-    int fxDistortionHandle;
-    int fxParameqHandle;
+    int m_fxChorusHandle;
+    int m_fxCompressorHandle;
+    int m_fxEchoHandle;
+    int m_fxDistortionHandle;
+    int m_fxParameqHandle;
 
-    HCHANNEL channel;
-    HSAMPLE sample;
+    HCHANNEL m_channel;
+    HSAMPLE m_sample;
+
+    FileTags *m_song {Q_NULLPTR};
 };

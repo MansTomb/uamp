@@ -42,6 +42,7 @@ public slots:
 signals:
     void BarPositionChanged(float pos);
     void SongEnded();
+    void BASSCantOpenFile(FileTags *song);
 
  private:
     void setDefaultImage();

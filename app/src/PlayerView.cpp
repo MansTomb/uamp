@@ -20,8 +20,10 @@ void PlayerView::ChangeVolume(int value) {
 
 void PlayerView::Play(bool state) {
     if (state) {
-        m_player.Play();
-        m_timer->start(333);
+        if (m_player.Play())
+            m_timer->start(333);
+        else
+            emit BASSCantOpenFile(m_player.GetSong());
     }
     else {
         m_player.Pause();

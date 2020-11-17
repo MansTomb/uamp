@@ -32,6 +32,7 @@ MainWindow::MainWindow(const QString &name, QWidget *parent)
 
 MainWindow::~MainWindow() {
     BASS_Free();
+    delete m_icon;
     delete ui;
 }
 
