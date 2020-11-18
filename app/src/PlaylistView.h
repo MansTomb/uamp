@@ -17,6 +17,7 @@
 #include "playerlistitem.h"
 #include "MenuPlaylistItemView.h"
 #include "SqlDatabase.h"
+#include "FileTag.h"
 
 #define FILE_FORMATS format == "mp3" || format == "flac" || format == "mp4" || format == "wav" || format == "m4a" || format == "ogg"
 class PlaylistView : public QListWidget {
@@ -73,11 +74,12 @@ protected:
 
 private:
     int getRandom(int from, int to);
-    bool checkPerm(const QFileInfo &fileInfo);
+    static bool checkPerm(const QFileInfo &fileInfo);
     void AddOneSong(const QUrl &fileUrl);
     void AddDirWithSongs(const QUrl &fileUrls);
     void AddSongToListAndToDB(const QString &pathTrack, const QString &trackName);
     void AddSongToListWithoutDB(FileTags* song);
+    bool containedDefault(const QString& pathToTrack);
     static QStringList m_allFiles;
 
     bool m_shuffle {false};
@@ -85,6 +87,7 @@ private:
     QString m_playlistName;
     QString m_login;
     QStringList m_playlistNames;
+    QStringList m_default;
     QList<int> m_playedSongs;
     QList<PlayerlistItem *> m_widgets;
     bool CheckIfSongAlreadyAdded(const QFileInfo &fInfo) const;

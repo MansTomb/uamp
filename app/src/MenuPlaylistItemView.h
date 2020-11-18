@@ -46,6 +46,7 @@ public:
 
     void PlaylistChoosed(MenuPlaylistItemView *playlist);
 
+//    QPixmap getPicture();
  private slots:
     void actionLoad();
     void actionRename();
@@ -62,6 +63,7 @@ private:
 
     QList<FileTags *> loadPlaylist();
     void AddSongsFromPlaylistMedia(const QMediaPlaylist *playlist);
+    QPixmap m_picture;
  protected:
     void mouseDoubleClickEvent(QMouseEvent *event) override;
 };

@@ -43,7 +43,6 @@ void PlaylistView::AddOneSong(const QUrl &fileUrl) {
     QFileInfo fileInfo(fileUrl.toString().remove(0, 7));
     QString format = fileInfo.fileName();
     format.remove(0, format.lastIndexOf(".") + 1);
-
     if (!CheckIfSongAlreadyAdded(fileInfo) && checkPerm(fileInfo) && FILE_FORMATS )
         AddSongToListAndToDB(fileInfo.absolutePath() + "/", fileInfo.fileName());
 }
@@ -62,7 +61,7 @@ bool PlaylistView::checkPerm(const QFileInfo &fileInfo) {
 }
 
 void PlaylistView::RemoveTrackFromPlaylistSlot(FileTags *file, const QString &objectName) {
-    SqlDatabase::instance().deleteTrackFromPlaylist(file->tags.artist + " - " + file->tags.title, m_playlistName);
+    SqlDatabase::instance().deleteTrackFromPlaylist(file->tags.path, m_playlistName);
 
 //    for (const auto &widget : m_widgets) {
 //        if (widget->song()->tags.path == file->tags.path) {
@@ -168,10 +167,13 @@ void PlaylistView::AddSongToListAndToDB(const QString &pathTrack, const QString 
     connect(this, &PlaylistView::ThrowPlaylistName, widget, &PlayerlistItem::setPlaylistName);
     emit SetPlaylists(m_playlistNames);
     emit FileAdded(m_playlistName, widget->song());
-    emit FileAdded("Default", widget->song());
-    SqlDatabase::instance().addInfoAboutSong(widget->song(), m_login, m_playlistName);
-    SqlDatabase::instance().addInfoAboutSong(widget->song(), m_login, "Default");
-
+    if (m_playlistName != "Default" && !containedDefault(widget->song()->tags.path)) {
+        emit FileAdded("Default", widget->song());
+        SqlDatabase::instance().addInfoAboutSong(widget->song(), m_login, m_playlistName);
+        SqlDatabase::instance().addInfoAboutSong(widget->song(), m_login, "Default");
+    } else {
+        SqlDatabase::instance().addInfoAboutSong(widget->song(), m_login, m_playlistName);
+    }
 }
 
 void PlaylistView::AddSongToListWithoutDB(FileTags *song) {
@@ -202,4 +204,13 @@ void PlaylistView::InvalidFileOnPlayer(FileTags *song) {
     this->removeItemWidget(parentItem);
     delete parentItem;
     emit RemoveTrackFromPlaylist(m_playlistName, song);
+}
+
+bool PlaylistView::containedDefault(const QString& pathToTrack) {
+    m_default = SqlDatabase::instance().getAllTracksFromDefault();
+
+    if (m_default.contains(pathToTrack)) {
+        return true;
+    }
+    return false;
 }

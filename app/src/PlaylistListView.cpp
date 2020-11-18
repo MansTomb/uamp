@@ -114,6 +114,7 @@ void PlaylistListView::RenamePlaylist(const QString& old, QString newName) {
 void PlaylistListView::DeletePlaylist(const QString& playlistName) {
     delete ui->list->findChild<MenuPlaylistItemView *>(playlistName)->ParentItemForDelete();
     SqlDatabase::instance().deletePlaylist(playlistName);
+    SqlDatabase::instance().clearPlaylist(playlistName);
     ThrowPlaylists();
     emit PlaylistDeleted(playlistName, ui->list->findChild<MenuPlaylistItemView *>("Default"));
 }
@@ -131,7 +132,7 @@ void PlaylistListView::CreatePlaylistView() {
             return;
         }
         CreateNewPlaylist(text);
-        SqlDatabase::instance().addNewPlaylist(text);
+        SqlDatabase::instance().addNewPlaylist(text, QPixmap());//ui->list->findChild<MenuPlaylistItemView *>(text)->getPicture()
     } else {
         auto msg = new QErrorMessage(this);
         msg->showMessage("Playlist must have a name!");

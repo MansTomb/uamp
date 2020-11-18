@@ -1,4 +1,6 @@
 #include <QMessageBox>
+#include <QFileInfo>
+#include <QBuffer>
 #include "FileTag.h"
 
 FileTags::FileTags(const std::string &path, const std::string &fileName) {
@@ -29,7 +31,7 @@ FileTags::FileTags(const std::string &path, const std::string &fileName) {
         tags.channels = QString::number(properties->channels());
         tags.length = QString::number(minutes) + ":" + (seconds != 0 ? QString::number(seconds) : "00");
     }
-
+    tags.picture = *getImage();
 }
 
 std::ostream &operator<<(std::ostream &out, const FileTags &file) {
@@ -93,7 +95,7 @@ void FileTags::setImage(const char *image_path) {
     frame->setMimeType("image/jpeg");
     frame->setPicture(imageData);
     mpegFile.save();
-
+    tags.picture = *getImage();
 }
 
 void FileTags::setM_picture(QPixmap *picture) {
@@ -132,7 +134,7 @@ void FileTags::setLyrics() {
 
 FileTags::FileTags(const QSqlQuery &query) {
     tags.filename = query.value(2).toString();
-    tags.path = query.value(3).toString();
+    tags.path = query.value(3).toString();;
     tags.title = query.value(4).toString();
     tags.artist = query.value(5).toString();
     tags.album = query.value(6).toString();
@@ -144,5 +146,30 @@ FileTags::FileTags(const QSqlQuery &query) {
     tags.channels = query.value(12).toString();
     tags.length = query.value(13).toString();
     tags.lyrics = query.value(14).toString();
-    tags.picture = query.value(15).toString().toLatin1();
+    tags.picture.loadFromData(query.value(15).toByteArray(), "PNG");
+}
+
+QByteArray FileTags::getImage(QString pathToTrack) {
+    if (pathToTrack.isEmpty()) {
+        qDebug() << "getImage path EMPTY";
+        return QByteArray();
+    }
+    QByteArray byte_cover;
+    QImage coverQImg;
+
+    QString fileName = QFileInfo(pathToTrack).fileName();
+    QString fileType = fileName.mid(fileName.lastIndexOf(".") + 1, -1);
+
+    if (fileType == "mp3") {
+        coverQImg = getImage()->toImage();
+    }
+
+    QBuffer buffer(&byte_cover);
+    buffer.open(QIODevice::WriteOnly);
+    QPixmap pix_cover(QPixmap::fromImage(coverQImg));
+    pix_cover.save(&buffer,"PNG");
+    if (byte_cover.isEmpty()) {
+        qDebug() << "getImage empty";
+    }
+    return byte_cover;
 }

@@ -1,6 +1,7 @@
 #pragma once
 
 #include <QMainWindow>
+#include <QWidget>
 #include <QtWidgets/QTableWidgetItem>
 #include <QtWidgets/QDialog>
 #include <QtWidgets/QStyleFactory>
@@ -10,6 +11,7 @@
 #include <QMessageBox>
 #include <QSettings>
 #include <QFontDatabase>
+#include <QSystemTrayIcon>
 
 #include "ui_mainwindow.h"
 #include "SqlDatabase.h"
@@ -24,6 +26,7 @@ Q_OBJECT
 
 public:
     MainWindow(const QString &name, QWidget *parent = nullptr);
+    static void setSettings();
     ~MainWindow();
 private:
     Ui::MainWindow *ui;

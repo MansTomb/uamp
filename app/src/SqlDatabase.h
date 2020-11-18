@@ -35,20 +35,23 @@ public:
     void addUserToDataBase(const QString& login, const QString& pass);
     void addInfoAboutSong(FileTags *tag, const QString &name, const QString &path);
     void addSongNameToSongInfo(const QString& name, const QString& path);
-    void addNewPlaylist(const QString& playlistName);
+    void addNewPlaylist(const QString &playlistName, QPixmap picture);
     void addNewUsersGoogle(const QString& userName);
     void deletePlaylist(const QString &playlistName);
+    void clearPlaylist(const QString &playlistName);
     void renamePlaylist(const QString &oldName, const QString &newName);
-    void deleteTrackFromPlaylist(const QString &songName, const QString &playlistName);
+    void deleteTrackFromPlaylist(const QString &pathToTrack, const QString &playlistName);
     void addPreset(const QString &preset, const QMap<QString, int> &presets);
 
     QMap<QString, QMap<QString, int>> getPreset();
 
     bool CheckCredentials(const QString& login, const QString& pass);
+//    bool CheckCredentials(const QString& );
 
     [[nodiscard]] QString getLogin(const QString& login) const;
 
-    QStringList getAllPlaylist() const;
+    [[nodiscard]] QStringList getAllPlaylist() const;
+    [[nodiscard]] QStringList getAllTracksFromDefault() const;
     QList<FileTags *> getAllTracksFromPlaylist(const QString &playlistName);
     ~SqlDatabase();
 private:

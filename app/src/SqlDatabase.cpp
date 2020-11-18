@@ -1,3 +1,4 @@
+#include <QBuffer>
 #include "SqlDatabase.h"
 
 UINT64 SqlDatabase::getRandom(const UINT64 &begin, const UINT64 &end) {
@@ -24,6 +25,7 @@ void SqlDatabase::createTables() {
                    "userName VARCHAR(255) NOT NULL,"
                    "countTracks int,"
                    "pathToPlaylist VARCHAR(255),"
+                   "image BLOB,"
                    "FOREIGN KEY (userName) REFERENCES users(login));");
 
         //create songs table
@@ -46,10 +48,10 @@ void SqlDatabase::createTables() {
 
         //create songs_info table
         query.exec("create table if not exists songs_info (id INTEGER PRIMARY KEY AUTOINCREMENT,"
-                   "songsName VARCHAR(255) NOT NULL,"
-                   "playlist VARCHAR(255),"
-                   "FOREIGN KEY (songsName) REFERENCES songs(songsName),"
-                   "FOREIGN KEY (playlist) REFERENCES playlists(pathToPlaylist));");
+                   "pathToTrack VARCHAR(255) NOT NULL,"
+                   "pathToPlaylist VARCHAR(255),"
+                   "FOREIGN KEY (pathToTrack) REFERENCES songs(songsName),"
+                   "FOREIGN KEY (pathToPlaylist) REFERENCES playlists(pathToPlaylist));");
 
         query.exec("create table if not exists equalizer (id INTEGER PRIMARY KEY AUTOINCREMENT,"
                    "login VARCHAR(255) NOT NULL,"
@@ -171,7 +173,7 @@ void SqlDatabase::addUserToDataBase(const QString& login, const QString& pass) {
                  login.toStdString().c_str(), pass.toStdString().c_str());
     query.exec(command);
     m_login = login;
-    addNewPlaylist("Default");
+    addNewPlaylist("Default", QPixmap());
 }
 
 void SqlDatabase::addInfoAboutSong(FileTags *tag, const QString &name, const QString &path) {
@@ -198,10 +200,10 @@ void SqlDatabase::addInfoAboutSong(FileTags *tag, const QString &name, const QSt
         query.bindValue(":channels", tag->tags.channels);
         query.bindValue(":length", tag->tags.length);
         query.bindValue(":lyrics", tag->tags.lyrics);
-        query.bindValue(":picture", 0);
+        query.bindValue(":picture", tag->tags.picture);
         query.exec();
 
-        addSongNameToSongInfo(tag->tags.artist + " - " + tag->tags.title,
+        addSongNameToSongInfo(tag->tags.path,
                               qApp->applicationDirPath()
                                   + "/app/res/playlists/" + m_login + "_" + path
                                   + ".m3u");
@@ -210,24 +212,34 @@ void SqlDatabase::addInfoAboutSong(FileTags *tag, const QString &name, const QSt
     }
 }
 
-void SqlDatabase::addSongNameToSongInfo(const QString &name, const QString &path) {
+void SqlDatabase::addSongNameToSongInfo(const QString &pathToTrack, const QString &pathToPlaylist) {
     QSqlQuery query(QSqlDatabase::database(PATHTODB));
-    query.prepare("INSERT INTO songs_info(songsName, playlist) VALUES(:songsName, :playlist)");
-    query.bindValue(":songsName", name);
-    query.bindValue(":playlist", path);
+    query.prepare("INSERT INTO songs_info(pathToTrack, pathToPlaylist) VALUES(:track, :playlist)");
+    query.bindValue(":track", pathToTrack);
+    query.bindValue(":playlist", pathToPlaylist);
     query.exec();
 }
 
-void SqlDatabase::addNewPlaylist(const QString &playlistName) {
+void SqlDatabase::addNewPlaylist(const QString &playlistName, QPixmap picture) {
     qDebug() << "add new playlist: " + playlistName;
     QSqlQuery query(QSqlDatabase::database(PATHTODB));
     QString path = qApp->applicationDirPath() + "/app/res/playlists/" + m_login + "_" + playlistName + ".m3u";
 
-    query.prepare("INSERT INTO playlists(name, userName, countTracks, pathToPlaylist) VALUES(:name, :userName, :countTracks, :pathToPlaylist)");
+    query.prepare("INSERT INTO playlists(name, userName, countTracks, pathToPlaylist, image) VALUES(:name, :userName,"
+                  ":countTracks, :pathToPlaylist, :image)");
     query.bindValue(":name", playlistName);
     query.bindValue(":userName", m_login);
     query.bindValue(":countTracks", 0);
     query.bindValue(":pathToPlaylist", path);
+    QByteArray byte;
+    QBuffer buffer(&byte);
+    buffer.open(QIODevice::WriteOnly);
+    picture.save(&buffer, "PNG");
+    if (byte.isEmpty()) {
+        qDebug() << "image do not add in db!";
+    }
+    query.bindValue(":image", byte);
+
     query.exec();
 }
 
@@ -283,13 +295,13 @@ void SqlDatabase::renamePlaylist(const QString &oldName, const QString &newName)
     query.exec();
 }
 
-void SqlDatabase::deleteTrackFromPlaylist(const QString &songName, const QString &playlistName) {
-    qDebug() << "delete song: " + songName + " from playlist:" + playlistName;
+void SqlDatabase::deleteTrackFromPlaylist(const QString &pathToTrack, const QString &playlistName) {
+    qDebug() << "delete song: " + pathToTrack + "\n from playlist:" + playlistName;
     QSqlQuery query(QSqlDatabase::database(PATHTODB));
     QString path = qApp->applicationDirPath() + "/app/res/playlists/" + m_login + "_" + playlistName + ".m3u";
 
-    query.prepare("DELETE FROM songs_info WHERE songs_info.songsName=(:song) AND songs_info.playlist=(:path)");
-    query.bindValue(":song", songName);
+    query.prepare("DELETE FROM songs_info WHERE songs_info.pathToTrack=(:song) AND songs_info.pathToPlaylist=(:path)");
+    query.bindValue(":song", pathToTrack);
     query.bindValue(":path", path);
     query.exec();
 }
@@ -302,13 +314,19 @@ QList<FileTags *> SqlDatabase::getAllTracksFromPlaylist(const QString &playlistN
     QList<FileTags *> tracks;
 
     query.prepare("SELECT * FROM songs INNER JOIN songs_info ON "
-                  "songs_info.songsName=songs.songsName AND songs_info.playlist=(:path)");
+                  "songs_info.pathToTrack=songs.pathToFile AND songs_info.pathToPlaylist=(:path)");
     query.bindValue(":path", path);
     query.exec();
-    for (int i = 0;query.next();i++) {
-        auto song = new FileTags(query);
-        if (QFileInfo(song->tags.path).exists())
+    while(query.next()) {
+        if (QFileInfo::exists(query.value(3).toString())) {
+            auto song = new FileTags(query);
             tracks.push_back(song);
+        } else {
+            deleteTrackFromPlaylist(query.value(3).toString(), playlistName);
+            if (playlistName != "Default") {
+                deleteTrackFromPlaylist(query.value(3).toString(), "Default");
+            }
+        }
     }
     return tracks;
 }
@@ -327,6 +345,7 @@ void SqlDatabase::addPreset(const QString &preset, const QMap<QString, int> &pre
     query.bindValue(":chorus", presets["chorus"]);
     query.exec();
 }
+
 QMap<QString, QMap<QString, int>> SqlDatabase::getPreset() {
     QMap<QString, QMap<QString, int>> presets;
     QSqlQuery query(QSqlDatabase::database(PATHTODB));
@@ -347,3 +366,33 @@ QMap<QString, QMap<QString, int>> SqlDatabase::getPreset() {
 
     return presets;
 }
+
+void SqlDatabase::clearPlaylist(const QString &playlistName) {
+    qDebug() << "clear playlist:" + playlistName;
+    QSqlQuery query(QSqlDatabase::database(PATHTODB));
+    QString path = qApp->applicationDirPath() + "/app/res/playlists/" + m_login + "_" + playlistName + ".m3u";
+
+    query.prepare("DELETE FROM songs_info WHERE songs_info.pathToPlaylist=(:path)");
+    query.bindValue(":path", path);
+    query.exec();
+}
+
+QStringList SqlDatabase::getAllTracksFromDefault() const {
+    qDebug() << "Tracks from DEFAULT!\n";
+    QStringList setOfPaths;
+    QString path = qApp->applicationDirPath() + "/app/res/playlists/" + m_login + "_Default.m3u";
+    QSqlQuery query(QSqlDatabase::database(PATHTODB));
+
+    query.prepare("SELECT * FROM songs_info WHERE songs_info.pathToPlaylist=(:path)");
+    query.bindValue(":path", path);
+    query.exec();
+
+    for (;query.next();) {
+        qDebug() << query.value(1).toString();
+        setOfPaths << query.value(1).toString();
+    }
+    qDebug() << setOfPaths;
+    qDebug() << "============";
+    return setOfPaths;
+}
+

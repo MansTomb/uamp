@@ -37,7 +37,7 @@ class FileTags {
         QString channels;
         QString length;
         QString lyrics;
-        QByteArray picture;
+        QPixmap picture;
     } tags;
 
     FileTags(const std::string &path, const std::string &fileName);
@@ -48,6 +48,7 @@ class FileTags {
     void getLyrics();
     void setImage(const char *image_path);
     QPixmap *getImage();
+    QByteArray getImage(QString pathToTrack);
     void setM_picture(QPixmap *picture);
 
 public:
@@ -56,5 +57,5 @@ public:
 
     private:
     TagLib::FileRef m_fileRef;
-    QPixmap *m_picture = nullptr;
+    QPixmap *m_picture;
 };

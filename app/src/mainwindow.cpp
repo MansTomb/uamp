@@ -4,15 +4,7 @@ MainWindow::MainWindow(const QString &name, QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindow) {
     ui->setupUi(this);
 
-    QSettings settings;
-    QString theme = settings.value("theme").toString();
-    theme.isEmpty() ? theme = "Default" : nullptr;
-    QFile File(":/qss/" + theme + ".qss");
-    File.open(QFile::ReadOnly);
-    QString StyleSheet;
-
-    StyleSheet = QLatin1String(File.readAll());
-    qApp->setStyleSheet(StyleSheet);
+    setSettings();
 
     BASS_SetConfig(BASS_CONFIG_DEV_DEFAULT, 1);
 
@@ -32,7 +24,23 @@ MainWindow::MainWindow(const QString &name, QWidget *parent)
 
 MainWindow::~MainWindow() {
     BASS_Free();
+    QSettings settings;
+    settings.setValue("geometry", geometry());
     delete m_icon;
     delete ui;
 }
 
+void MainWindow::setSettings() {
+    QSettings settings;
+
+    QStringList keys = settings.allKeys();
+    qDebug() << keys;
+
+    QString theme = settings.value("theme").toString();
+    theme.isEmpty() ? theme = "Default" : nullptr;
+    QFile File(":/qss/" + theme + ".qss");
+    File.open(QFile::ReadOnly);
+    QString StyleSheet;
+    StyleSheet = QLatin1String(File.readAll());
+    qApp->setStyleSheet(StyleSheet);
+}

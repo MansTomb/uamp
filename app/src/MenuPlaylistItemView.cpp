@@ -46,6 +46,7 @@ MenuPlaylistItemView::MenuPlaylistItemView(QMediaPlaylist *playlist,
     connect(actionsList.at(3), &QAction::triggered, this, &MenuPlaylistItemView::actionExport);
     connect(actionsList.at(4), &QAction::triggered, this, &MenuPlaylistItemView::actionDelete);
     ui->menu->setMenu(menu);
+    m_picture = QPixmap("/Users/mmasniy/Desktop/uamp/app/res/playerIcons/default.png");
     delete playlist;
 }
 
@@ -120,6 +121,7 @@ void MenuPlaylistItemView::actionChangeImage() {
     QPixmap icon = QPixmap(QFileDialog::getOpenFileName(this,tr("Image"), "/", tr("Image (*.png *.jpg *.jpeg)")));
     if (icon.isNull() == false)
         ui->icon->setPixmap(icon);
+    m_picture = icon;
 }
 
 void MenuPlaylistItemView::Rename(QString newName) {
@@ -129,3 +131,7 @@ void MenuPlaylistItemView::Rename(QString newName) {
     ui->playListname->setText(m_name);
     setObjectName(m_name);
 }
+
+//QPixmap MenuPlaylistItemView::getPicture() {
+//    return m_picture;
+//}
