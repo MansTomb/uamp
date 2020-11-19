@@ -38,6 +38,13 @@ void Equalizer::OnSavePresetSlot() {
             return;
         }
     }
+    else if (text.isEmpty()) {
+        auto msg = new QErrorMessage(this);
+        msg->showMessage("Text cant be empty");
+        msg->exec();
+        delete msg;
+        return;
+    }
     preset["gain"] = ui->GainSlider->value();
     preset["echo"] = ui->Echo->value();
     preset["distortion"] = ui->Distortion->value();

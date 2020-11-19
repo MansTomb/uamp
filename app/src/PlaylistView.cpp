@@ -61,20 +61,19 @@ bool PlaylistView::checkPerm(const QFileInfo &fileInfo) {
 }
 
 void PlaylistView::RemoveTrackFromPlaylistSlot(FileTags *file, const QString &objectName) {
-    SqlDatabase::instance().deleteTrackFromPlaylist(file->tags.path, m_playlistName);
-
-//    for (const auto &widget : m_widgets) {
-//        if (widget->song()->tags.path == file->tags.path) {
-//            m_widgets.removeOne(widget);
-//            break;
-//        }
-//    }
     auto item = findChild<PlayerlistItem *>(objectName);
     m_widgets.removeOne(item);
     auto parentItem = item->getParentToDelete();
+    auto index = indexFromItem(parentItem).row();
+
     delete item;
     delete parentItem;
+    SqlDatabase::instance().deleteTrackFromPlaylist(file->tags.path, m_playlistName);
     emit RemoveTrackFromPlaylist(m_playlistName, file);
+    if (count() > index) {
+        setCurrentRow(index);
+        emit CurrentSongChanged(GetWidgetByItem(currentItem())->song());
+    }
 }
 
 void PlaylistView::PlaylistDeleted(QString deletedPlaylist,
@@ -193,16 +192,11 @@ void PlaylistView::AddSongToListWithoutDB(FileTags *song) {
 }
 
 void PlaylistView::InvalidFileOnPlayer(FileTags *song) {
-//    for (const auto &widget : m_widgets) {
-//        if (widget->song()->tags.path == file->tags.path) {
-//            m_widgets.removeOne(widget);
-//            break;
-//        }
-//    }
     auto item = findChild<PlayerlistItem *>(song->tags.path);
     auto parentItem = item->getParentToDelete();
     this->removeItemWidget(parentItem);
     delete parentItem;
+    SqlDatabase::instance().deleteTrackFromPlaylist(song->tags.path, m_playlistName);
     emit RemoveTrackFromPlaylist(m_playlistName, song);
 }
 

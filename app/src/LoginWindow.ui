@@ -96,7 +96,17 @@
           </widget>
          </item>
          <item>
-          <widget class="QLineEdit" name="loginPasswordEdit"/>
+          <widget class="QLineEdit" name="loginPasswordEdit">
+           <property name="inputMask">
+            <string/>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="echoMode">
+            <enum>QLineEdit::Password</enum>
+           </property>
+          </widget>
          </item>
         </layout>
        </widget>
@@ -186,7 +196,11 @@
           </widget>
          </item>
          <item>
-          <widget class="QLineEdit" name="registerPasswordEdit"/>
+          <widget class="QLineEdit" name="registerPasswordEdit">
+           <property name="echoMode">
+            <enum>QLineEdit::Password</enum>
+           </property>
+          </widget>
          </item>
          <item>
           <widget class="QLabel" name="registerPasswordConf">
@@ -196,7 +210,11 @@
           </widget>
          </item>
          <item>
-          <widget class="QLineEdit" name="registerPasswordConfEdit"/>
+          <widget class="QLineEdit" name="registerPasswordConfEdit">
+           <property name="echoMode">
+            <enum>QLineEdit::Password</enum>
+           </property>
+          </widget>
          </item>
         </layout>
        </widget>
