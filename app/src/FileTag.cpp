@@ -151,7 +151,7 @@ FileTags::FileTags(const QSqlQuery &query) {
 
 QByteArray FileTags::getImage(QString pathToTrack) {
     if (pathToTrack.isEmpty()) {
-        qDebug() << "getImage path EMPTY";
+
         return QByteArray();
     }
     QByteArray byte_cover;
@@ -169,7 +169,7 @@ QByteArray FileTags::getImage(QString pathToTrack) {
     QPixmap pix_cover(QPixmap::fromImage(coverQImg));
     pix_cover.save(&buffer,"PNG");
     if (byte_cover.isEmpty()) {
-        qDebug() << "getImage empty";
+
     }
     return byte_cover;
 }

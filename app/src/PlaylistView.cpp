@@ -117,7 +117,7 @@ void PlaylistView::NextSong() {
                 int rand = getRandom(0, count() - 1);
                 for (int i = 0; m_playedSongs.contains(rand) && i < 50; i++)
                     rand = getRandom(0, count() - 1);
-                qDebug() << rand;
+
                 setCurrentRow(rand);
                 emit CurrentSongChanged(GetWidgetByItem(item(rand))->song());
             }

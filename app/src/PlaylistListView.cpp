@@ -71,17 +71,17 @@ void PlaylistListView::SetupPlaylist(const QString &playlistName,
 }
 
 void PlaylistListView::LoadPlaylists() {
-    qDebug() << "Load playlists from db!";
+
     auto slist = SqlDatabase::instance().getAllPlaylist();
     for (const auto &playlist : slist) {
-        qDebug() << "Playlist: " + playlist;
+
         CreateNewPlaylist(playlist);
     }
     emit Playlists(slist);
 }
 
 void PlaylistListView::AddSongToPlaylist(const QString &playlistName, FileTags *song) {
-    qDebug() << playlistName << ": added song - " << song->tags.title;
+
     ui->list->findChild<MenuPlaylistItemView *>(playlistName)->AddSong(song);
 }
 
@@ -90,11 +90,11 @@ void PlaylistListView::RemoveSongFromPlaylist(const QString &playlistName, FileT
     for (auto &item : ui->list->findChildren<MenuPlaylistItemView *>())
         if (item->ContainsSong(song))
             i++;
-    qDebug() << playlistName << " " << song->tags.title;
+
     if (i != 1)
         ui->list->findChild<MenuPlaylistItemView *>(playlistName)->RemoveSong(song);
     else {
-        qDebug() << "Unsafe function usage PlaylistListView::RemoveSongFromPlaylist, message for debug. DO NOT DELETE THIS MESSAGE BEFORE END!";
+
         ui->list->findChild<MenuPlaylistItemView *>(playlistName)->RemoveSong(song);
         delete song;
     }

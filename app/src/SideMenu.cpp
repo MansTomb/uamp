@@ -47,7 +47,7 @@ void SideMenu::ChangeTheme(bool state) {
 
         StyleSheet = QLatin1String(File.readAll());
         qApp->setStyleSheet(StyleSheet);
-        qDebug() << "Obit";
+
         set.setValue("theme", "Obit");
     }
     else {
@@ -57,7 +57,7 @@ void SideMenu::ChangeTheme(bool state) {
 
         StyleSheet = QLatin1String(File.readAll());
         qApp->setStyleSheet(StyleSheet);
-        qDebug() << "default";
+
         set.setValue("theme", "Default");
     }
 }

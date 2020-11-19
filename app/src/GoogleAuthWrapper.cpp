@@ -10,7 +10,7 @@ GoogleAuthWrapper::GoogleAuthWrapper() {
     json.open(QIODevice::ReadOnly);
     const auto bytes = json.readAll();
     document = QJsonDocument(QJsonDocument::fromJson(bytes, &error));
-//    qDebug() << error.errorString();
+
     json.close();
 
     google->setModifyParametersFunction([](QAbstractOAuth::Stage stage, QVariantMap* parameters) {
@@ -58,7 +58,7 @@ void GoogleAuthWrapper::ParseProfile(const QByteArray& array) {
     auto mainObject = json.object();
     auto object = mainObject["names"].toArray();
 
-    qDebug() << object[0].toObject()["displayName"].toString();
+
     SqlDatabase::instance().addNewUsersGoogle(object[0].toObject()["displayName"].toString());
     emit AuthComplete(object[0].toObject()["displayName"].toString());
 }

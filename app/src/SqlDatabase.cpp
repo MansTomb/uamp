@@ -13,13 +13,9 @@ void SqlDatabase::createTables() {
     QSqlQuery query(QSqlDatabase::database(m_toDbPath));
 
     if (!query.exec("SELECT * FROM users")) {
-        //create users table
         query.exec("create table if not exists users (id INTEGER PRIMARY KEY AUTOINCREMENT,"
                    "login VARCHAR(255) NOT NULL UNIQUE,"
                    "password VARCHAR(255));");
-
-        //create playlists table
-
         query.exec("create table if not exists playlists (id INTEGER PRIMARY KEY AUTOINCREMENT,"
                    "name VARCHAR(255) NOT NULL,"
                    "userName VARCHAR(255) NOT NULL,"
@@ -27,8 +23,6 @@ void SqlDatabase::createTables() {
                    "pathToPlaylist VARCHAR(255),"
                    "image BLOB,"
                    "FOREIGN KEY (userName) REFERENCES users(login));");
-
-        //create songs table
         query.exec("create table if not exists songs (id INTEGER PRIMARY KEY AUTOINCREMENT,"
                    "songsName VARCHAR(255) NOT NULL," //artist + title
                    "filename VARCHAR(255) NOT NULL,"
@@ -45,8 +39,6 @@ void SqlDatabase::createTables() {
                    "length VARCHAR(255) NOT NULL,"
                    "lyrics VARCHAR(5120),"
                    "picture BLOB);");
-
-        //create songs_info table
         query.exec("create table if not exists songs_info (id INTEGER PRIMARY KEY AUTOINCREMENT,"
                    "pathToTrack VARCHAR(255) NOT NULL,"
                    "pathToPlaylist VARCHAR(255),"
@@ -62,8 +54,6 @@ void SqlDatabase::createTables() {
                    "compressor INTEGER,"
                    "chorus INTEGER,"
                    "FOREIGN KEY (login) REFERENCES users(login));");
-    } else {
-        qDebug() << "Opening existing Db";
     }
 }
 void SqlDatabase::createDefaultPreset() {
@@ -118,11 +108,8 @@ void SqlDatabase::connectDataBase() {
     m_db->setUserName("mmasniy");
     m_db->setHostName("mac");
     m_db->setPassword("pas");
-
-    if (!m_db->open()) {
-        qDebug() << "Db opening failed";
+    if (!m_db->open())
         exit(1);
-    }
     createTables();
 }
 
@@ -130,11 +117,8 @@ bool SqlDatabase::CheckCredentials(const QString& login, const QString& pass) {
     QSqlQuery query(QSqlDatabase::database(PATHTODB));
     char command[1024];
 
-    //здесь баг, когда пустые поля, оно какого-то чуда заходит в приложение!!
-    //убрать коммент перед релизом!!
-//    if (login.isEmpty() && pass.isEmpty())
-//        return false;
-
+    if (login.isEmpty() && pass.isEmpty())
+        return false;
     std::sprintf(command, R"(SELECT login, password FROM users WHERE users.login = "%s" AND users.password = "%s")",
                  login.toStdString().c_str(), pass.toStdString().c_str());
     query.exec(command);
@@ -144,7 +128,6 @@ bool SqlDatabase::CheckCredentials(const QString& login, const QString& pass) {
         m_login = login;
         return true;
     }
-    qDebug() << "login: " + query.value(0).toString() + " | pass: " + query.value(1).toString();
     return false;
 }
 
@@ -155,17 +138,15 @@ QString SqlDatabase::getLogin(const QString& login) const {
     std::sprintf(command, "SELECT login FROM users WHERE users.login=\"%s\"", login.toStdString().c_str());
     query.exec(command);
     query.first();
-    qDebug() << "get login " + query.value(0).toString();
+
     return query.value(0).toString();
 }
 
 SqlDatabase::~SqlDatabase() {
-    qDebug() << "disconnect BD";
     m_db->close();
 }
 
 void SqlDatabase::addUserToDataBase(const QString& login, const QString& pass) {
-    qDebug() << "add user " + login;
     QSqlQuery query(QSqlDatabase::database(PATHTODB));
     char command[1024];
 
@@ -177,7 +158,6 @@ void SqlDatabase::addUserToDataBase(const QString& login, const QString& pass) {
 }
 
 void SqlDatabase::addInfoAboutSong(FileTags *tag, const QString &name, const QString &path) {
-    qDebug() << "add new song to db";
     if (tag) {
         QSqlQuery query(QSqlDatabase::database(PATHTODB));
         query.prepare(
@@ -207,8 +187,6 @@ void SqlDatabase::addInfoAboutSong(FileTags *tag, const QString &name, const QSt
                               qApp->applicationDirPath()
                                   + "/app/res/playlists/" + m_login + "_" + path
                                   + ".m3u");
-    } else {
-        qDebug() << "File does not open!!";
     }
 }
 
@@ -221,7 +199,6 @@ void SqlDatabase::addSongNameToSongInfo(const QString &pathToTrack, const QStrin
 }
 
 void SqlDatabase::addNewPlaylist(const QString &playlistName, QPixmap picture) {
-    qDebug() << "add new playlist: " + playlistName;
     QSqlQuery query(QSqlDatabase::database(PATHTODB));
     QString path = qApp->applicationDirPath() + "/app/res/playlists/" + m_login + "_" + playlistName + ".m3u";
 
@@ -235,11 +212,7 @@ void SqlDatabase::addNewPlaylist(const QString &playlistName, QPixmap picture) {
     QBuffer buffer(&byte);
     buffer.open(QIODevice::WriteOnly);
     picture.save(&buffer, "PNG");
-    if (byte.isEmpty()) {
-        qDebug() << "image do not add in db!";
-    }
     query.bindValue(":image", byte);
-
     query.exec();
 }
 
@@ -249,15 +222,11 @@ void SqlDatabase::setLogin(const QString &login) {
 
 void SqlDatabase::addNewUsersGoogle(const QString &userName) {
     m_login = userName;
-    if (userName != getLogin(userName)) {
-        qDebug() << "add user from google";
+    if (userName != getLogin(userName))
         addUserToDataBase(userName.toStdString().c_str(), QString::number(getRandom(1000000, 10000000)));
-    }
-    qDebug() << m_login;
 }
 
 void SqlDatabase::deletePlaylist(const QString &playlistName) {
-    qDebug() << "delete playlist: " + playlistName;
     QSqlQuery query(QSqlDatabase::database(PATHTODB));
     QString path = qApp->applicationDirPath() + "/app/res/playlists/" + m_login + "_" + playlistName + ".m3u";
 
@@ -268,26 +237,19 @@ void SqlDatabase::deletePlaylist(const QString &playlistName) {
 }
 
 QStringList SqlDatabase::getAllPlaylist() const {
-    qDebug() << "get ALL Playlist!";
     QSqlQuery query(QSqlDatabase::database(PATHTODB));
     QStringList values;
 
     query.prepare("SELECT name FROM playlists WHERE playlists.userName=(:login)");
-    qDebug() << m_login;
     query.bindValue(":login", m_login);
     query.exec();
-
-    for (; query.next();) {
+    for (; query.next();)
         values << query.value("name").toString();
-    }
-    qDebug() << values;
     return values;
 }
 
 void SqlDatabase::renamePlaylist(const QString &oldName, const QString &newName) {
     QSqlQuery query(QSqlDatabase::database(PATHTODB));
-
-    qDebug() << "rename playlist from: " + oldName + " to: " + newName;
 
     query.prepare("UPDATE playlists SET name=:new WHERE name=:old");
     query.bindValue(":new", newName);
@@ -296,7 +258,6 @@ void SqlDatabase::renamePlaylist(const QString &oldName, const QString &newName)
 }
 
 void SqlDatabase::deleteTrackFromPlaylist(const QString &pathToTrack, const QString &playlistName) {
-    qDebug() << "delete song: " + pathToTrack + "\n from playlist:" + playlistName;
     QSqlQuery query(QSqlDatabase::database(PATHTODB));
     QString path = qApp->applicationDirPath() + "/app/res/playlists/" + m_login + "_" + playlistName + ".m3u";
 
@@ -307,8 +268,6 @@ void SqlDatabase::deleteTrackFromPlaylist(const QString &pathToTrack, const QStr
 }
 
 QList<FileTags *> SqlDatabase::getAllTracksFromPlaylist(const QString &playlistName) {
-    qDebug() << "\ngetAllTracksFromPlaylist!!!\n================================\n";
-
     QSqlQuery query(QSqlDatabase::database(PATHTODB));
     QString path = qApp->applicationDirPath() + "/app/res/playlists/" + m_login + "_" + playlistName + ".m3u";
     QList<FileTags *> tracks;
@@ -332,7 +291,7 @@ QList<FileTags *> SqlDatabase::getAllTracksFromPlaylist(const QString &playlistN
 }
 
 void SqlDatabase::addPreset(const QString &preset, const QMap<QString, int> &presets) {
-    qDebug() << "\naddPreset\n";
+
     QSqlQuery query(QSqlDatabase::database(PATHTODB));
     query.prepare("INSERT INTO equalizer(login, namePreset, gain, echo, distortion, compressor, chorus)"
                   "VALUES(:login, :namePreset, :gain, :echo, :distortion, :compressor, :chorus)");
@@ -368,7 +327,6 @@ QMap<QString, QMap<QString, int>> SqlDatabase::getPreset() {
 }
 
 void SqlDatabase::clearPlaylist(const QString &playlistName) {
-    qDebug() << "clear playlist:" + playlistName;
     QSqlQuery query(QSqlDatabase::database(PATHTODB));
     QString path = qApp->applicationDirPath() + "/app/res/playlists/" + m_login + "_" + playlistName + ".m3u";
 
@@ -378,7 +336,6 @@ void SqlDatabase::clearPlaylist(const QString &playlistName) {
 }
 
 QStringList SqlDatabase::getAllTracksFromDefault() const {
-    qDebug() << "Tracks from DEFAULT!\n";
     QStringList setOfPaths;
     QString path = qApp->applicationDirPath() + "/app/res/playlists/" + m_login + "_Default.m3u";
     QSqlQuery query(QSqlDatabase::database(PATHTODB));
@@ -387,12 +344,8 @@ QStringList SqlDatabase::getAllTracksFromDefault() const {
     query.bindValue(":path", path);
     query.exec();
 
-    for (;query.next();) {
-        qDebug() << query.value(1).toString();
+    for (;query.next();)
         setOfPaths << query.value(1).toString();
-    }
-    qDebug() << setOfPaths;
-    qDebug() << "============";
     return setOfPaths;
 }
 

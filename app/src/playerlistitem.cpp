@@ -8,7 +8,6 @@ PlayerlistItem::PlayerlistItem(QListWidgetItem *parentItem, const QString& pathT
     m_fileInfo(new FileTags(pathTrack.toStdString(), trackName.toStdString())), m_parent(parentItem) {
     ui->setupUi(this);
     setObjectName(pathTrack + trackName);
-    qDebug() << "blyat: " << pathTrack + trackName;
     CreateMenu();
     createInfo(trackName);
     m_playlists << "Default";
@@ -20,7 +19,6 @@ PlayerlistItem::PlayerlistItem(QListWidgetItem *parentItem, FileTags *song, QWid
 m_fileInfo(song), m_parent(parentItem) {
     ui->setupUi(this);
     setObjectName(song->tags.path);
-    qDebug() << song->tags.path;
     CreateMenu();
     createInfo(song->tags.filename);
 }
@@ -79,19 +77,16 @@ FileTags *PlayerlistItem::song() {
 }
 
 void PlayerlistItem::removeFromPlaylist() {
-    qDebug() << "remove from playlist: " << m_pathToTrack;
-    qDebug() << m_playlistName;
     emit RemoveTrackFromPlaylist(m_fileInfo, objectName());
 }
 
 void PlayerlistItem::addToPlaylist() {
     QInputDialog *dialog = new QInputDialog(this);
-    qDebug() << "add to playlist";
+
     dialog->setComboBoxEditable(false);
     dialog->setComboBoxItems(m_playlists);
     dialog->exec();
     QString playlist = dialog->textValue();
-    qDebug() << playlist;
     emit AddTracktoPlaylist(playlist, m_fileInfo);
     delete dialog;
 }

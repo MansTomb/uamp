@@ -9,7 +9,7 @@ MainWindow::MainWindow(const QString &name, QWidget *parent)
     BASS_SetConfig(BASS_CONFIG_DEV_DEFAULT, 1);
 
     if (!BASS_Init(-1, 44100, 0, NULL, NULL)) {
-        qDebug() << ("Can't initialize device");
+
     }
     this->setWindowTitle("uText");
     setObjectName(name);
@@ -34,7 +34,7 @@ void MainWindow::setSettings() {
     QSettings settings;
 
     QStringList keys = settings.allKeys();
-    qDebug() << keys;
+
 
     QString theme = settings.value("theme").toString();
     theme.isEmpty() ? theme = "Default" : nullptr;
